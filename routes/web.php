@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/ganadores', function () {
     return view('ganadores');
 });
+
+Route::get('/carrito', function () {
+    return view('carrito');
+});
