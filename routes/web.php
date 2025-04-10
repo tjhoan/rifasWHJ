@@ -13,3 +13,7 @@ Route::get('/ganadores', function () {
 Route::get('/carrito', function () {
     return view('carrito');
 });
+
+Route::get('/facturar', function() {
+    return view('facturar');
+});
