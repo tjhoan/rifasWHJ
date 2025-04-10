@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,14 @@
     <link rel="stylesheet" href="{{ asset('css/estilo_ganadores.css') }}">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header>
         <ul class="nav-links">
             <li><a href="{{ url('/') }}">Página de Inicio</a></li>
             <li><a href="{{ url('/ganadores') }}">Ganadores</a></li>
+            <li><a href="{{ url('/compras') }}">Compras</a></li>
+            <li><a href="{{ url('/facturar') }}">Factura</a></li>
         </ul>
         <div class="logo">
             <img src="{{ asset('img/images.png') }}" alt="Logo">
@@ -42,7 +46,7 @@
                     <p><strong>Premio:</strong> Laptop Gamer</p>
                 </div>
             </div>
-            
+
             <div class="ganador-card">
                 <img src="{{ asset('img/icono.png') }}" alt="Ícono Rifa" class="icono">
                 <div class="info">
@@ -65,4 +69,5 @@
         </div>
     </footer>
 </body>
+
 </html>

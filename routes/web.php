@@ -14,6 +14,10 @@ Route::get('/carrito', function () {
     return view('carrito');
 });
 
-Route::get('/facturar', function() {
+Route::get('/compras', function () {
+    return view('compras');
+});
+
+Route::get('/facturar', function () {
     return view('facturar');
 });

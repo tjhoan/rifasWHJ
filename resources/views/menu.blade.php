@@ -12,6 +12,8 @@
         <ul class="nav-links">
             <li><a href="{{ url('/') }}">Página de Inicio</a></li>
             <li><a href="{{ url('/ganadores') }}">Ganadores</a></li>
+            <li><a href="{{ url('/compras') }}">Compras</a></li>
+            <li><a href="{{ url('/facturar') }}">Factura</a></li>
         </ul>
         <div class="logo">
             <img src="{{ asset('img/images.png') }}" alt="Logo">
