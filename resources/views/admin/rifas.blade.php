@@ -84,5 +84,70 @@
     </section>
   </div>
 
+  <!-- Modal para crear nueva rifa -->
+  <div class="modal" id="modalRifa">
+    <div class="modal-content">
+      <span class="close" id="btnCerrarModal">&times;</span>
+      <h3>Crear Nueva Rifa</h3>
+      <form>
+        <label>
+          Nombre de la rifa:
+          <input type="text" placeholder="Nombre de la rifa">
+        </label>
+        <label>
+          Precio:
+          <input type="number" min="0" step="0.01" placeholder="Precio">
+        </label>
+        <label>
+          Fecha inicio:
+          <input type="date">
+        </label>
+        <label>
+          Fecha sorteo:
+          <input type="date">
+        </label>
+        <label>
+          Imagen:
+          <input type="file" accept="image/*">
+        </label>
+        <label>
+          Premio:
+          <input type="text" placeholder="Premio">
+        </label>
+        <label>
+          Cantidad de números:
+          <input type="number" min="1" placeholder="Ej. 1000">
+        </label>
+        <label>
+          Números (separados por comas):
+          <textarea placeholder="Ej. 1,2,3,..."></textarea>
+        </label>
+        <button type="submit" class="btn-agregar">Agregar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script para el modal -->
+  <script>
+    const btnAbrir = document.getElementById('btnAbrirModal');
+    const btnCerrar = document.getElementById('btnCerrarModal');
+    const modalRifa = document.getElementById('modalRifa');
+
+    btnAbrir.addEventListener('click', () => {
+      modalRifa.classList.add('show');
+    });
+
+    btnCerrar.addEventListener('click', () => {
+      modalRifa.classList.remove('show');
+    });
+
+    // Cerrar modal al hacer clic fuera de la ventana modal
+    window.addEventListener('click', (e) => {
+      if (e.target === modalRifa) {
+        modalRifa.classList.remove('show');
+      }
+    });
+  </script>
+
 </body>
 </html>
