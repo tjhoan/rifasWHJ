@@ -6,7 +6,7 @@
 }
 
 .rifa-image img {
-    width: 100px;
+    width: 180px;
     height: auto;
     margin-bottom: 20px;
     border: 2px solid #ccc;
@@ -54,7 +54,7 @@
 }
 
 .search-bar {
-    width: 70%;
+    width: 60%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -75,8 +75,21 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
     margin-bottom: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(70px, 1fr)
+    );
+    gap: 10px;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .number {
@@ -96,7 +109,7 @@
 .actions-section {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 150px;
 }
 
 .action-button {

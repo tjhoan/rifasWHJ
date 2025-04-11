@@ -11,65 +11,110 @@
     min-width: 20px;
     padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
+    border-radius: 8px;
+    background-color: #f9f9f9;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* Acciones para elegir separar o comprar*/
+/* Acciones */
 .acciones {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    gap: 20px;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
 }
 
 .accion {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.accion input[type="checkbox"] {
-    transform: scale(1.4);
+.accion label {
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accion input[type="radio"] {
+    transform: scale(1.2);
+    margin-top: 5px;
+}
+
+/* Estilos para las cajas de detalle */
+.detalle-accion {
     margin-top: 10px;
-}
-
-.ticket,
-.metodo-pago {
-    margin-top: 15px;
-    background-color: #ffffff;
-    padding: 15px 20px;
-    border: 2px solid #aaa;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
-    min-width: 200px;
+    background-color: #ffffff;
+    width: 250px;
+    text-align: center;
     font-size: 14px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(0.95);
 }
 
-.metodo-pago select {
+.detalle-accion[style*="visibility: visible"] {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.detalle-accion strong {
+    font-size: 16px;
+    color: #333333;
+    display: block;
+}
+
+.detalle-accion label {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.detalle-accion select {
     width: 100%;
     padding: 10px;
-    margin-top: 8px;
-    border-radius: 8px;
     border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.detalle-accion select:focus {
+    border-color: #6c757d;
+}
+
+.detalle-accion:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Botón Finalizar */
 .finalizar {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .btn-finalizar {
-    background-color: #4caf50;
+    background-color: #6c757d;
     color: white;
     padding: 12px 30px;
     font-size: 16px;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .btn-finalizar:hover {
-    background-color: #3e8e41;
+    background-color: #5a6268;
 }
