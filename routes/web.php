@@ -17,3 +17,7 @@ Route::get('/carrito', function () {
 Route::get('/facturar', function() {
     return view('facturar');
 });
+
+Route::get('/admin', function() {
+    return view('admin.rifas');
+});
