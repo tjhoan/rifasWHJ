@@ -21,3 +21,7 @@ Route::get('/compras', function () {
 Route::get('/facturar', function () {
     return view('facturar');
 });
+
+Route::get('/finalizar-recibos', function () {
+    return view('finalizar-recibos');
+});

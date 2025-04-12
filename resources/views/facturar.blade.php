@@ -53,7 +53,7 @@
   </div>
 
   <div class="finalizar">
-    <button class="btn-finalizar" type="submit">Finalizar</button>
+    <a href="/finalizar-recibos" class="btn-finalizar">Finalizar</a>
   </div>
 </form>
 
