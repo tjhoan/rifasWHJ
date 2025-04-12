@@ -25,3 +25,7 @@ Route::get('/facturar', function () {
 Route::get('/finalizar-recibos', function () {
     return view('finalizar-recibos');
 });
+
+Route::get('/login', function () {
+    return view('auth.login');
+});
