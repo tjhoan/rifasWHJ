@@ -1,0 +1,68 @@
+.rifas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+    padding: 20px;
+}
+
+.rifa-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rifa-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.rifa-card img {
+    width: 150px;
+    margin: 0 auto 15px;
+    display: block;
+}
+
+.rifa-card .info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.rifa-card .info .left,
+.rifa-card .info .right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.comprar-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 7px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto;
+    width: fit-content;
+    transition: background-color 0.2s ease;
+}
+
+.comprar-btn:hover {
+    background-color: #218838;
+}
