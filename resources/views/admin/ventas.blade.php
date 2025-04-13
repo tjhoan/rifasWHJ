@@ -19,8 +19,8 @@
       <li><a href="{{ url('/admin') }}">Rifas</a></li>
       <li class="active"><a href="{{ url('admin/ventas') }}">Ventas</a></li>
       <li><a href="{{ url('/admin/clientes') }}">Clientes</a></li>
-      <li><a href="{{ url('admin.sorteo') }}">Sorteo</a></li>
-      <li><a href="{{ url('admin.configuracion') }}">Configuración</a></li>
+      <li><a href="{{ url('admin/sorteo') }}">Sorteo</a></li>
+      <li><a href="{{ url('admin/configuracion') }}">Configuración</a></li>
     </ul>
   </div>
 

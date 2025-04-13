@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+  
+  /* Estructura principal */
+.sidebar {
+    position: fixed;         /* Fijo en la pantalla */
+    left: 0;
+    top: 0;
+    width: 220px;            /* Ancho fijo para el menú */
+    height: 100vh;           /* Ocupa toda la altura de la pantalla */
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+  
+.main-content {
+    margin-left: 220px;      /* Deja espacio para la sidebar */
+    padding: 30px;
+}
+  
+  /* Información del administrador */
+.admin-info {
+    margin-bottom: 40px;
+    font-size: 30px;
+}
+  
+.admin-info span {
+    font-size: 15px;
+    color: #bbb;
+}
+  
+.admin-info h3 {
+    font-size: 20px;
+    margin-top: 5px;
+}
+  
+  /* Menú lateral */
+.menu {
+    list-style: none;
+}
+  
+.menu li {
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 8px;
+    border-radius: 4px;
+}
+  
+.menu li:hover,
+.menu li.active {
+    background-color: #444;
+}
+  
+  /* Enlaces en el menú */
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+  
+  /* Encabezado de contenido principal */
+.main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.main-content header h2 {
+    font-size: 24px;
+    color: #333;
+}
+  
+
+
+  /* hasta aqui es el contenido de la vista de configuracion  */
+  /* Contenido Principal */
+.content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    width: 1290px;
+    margin-left: 230px;
+  }
+
+.content h1 {
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 20px;
+}
+  
+  /* Sección de Configuración */
+.section {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    color: #333;
+}
+  
+  /* Layout de campos usando grid */
+.fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+  }
+
+.field label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+}
+
+.field input {
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 17px;
+}
+  
+  /* Área de botones centrada */
+.button-area {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.button-area button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-area button:hover {
+    background-color: #218838;
+}

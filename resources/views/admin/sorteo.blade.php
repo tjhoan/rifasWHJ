@@ -15,7 +15,7 @@
       <h3>Hernando Vivas Franco</h3>
     </div>
     <ul class="menu">
-      <li><a href="{{ url('/admin/rifas') }}">Rifas</a></li>
+      <li><a href="{{ url('/admin') }}">Rifas</a></li>
       <li><a href="{{ url('/admin/ventas') }}">Ventas</a></li>
       <li><a href="{{ url('/admin/clientes') }}">Clientes</a></li>
       <li class="active"><a href="{{ url('/admin/sorteo') }}">Sorteo</a></li>
