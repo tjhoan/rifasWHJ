@@ -37,3 +37,7 @@ Route::get('/admin', function() {
 Route::get('/admin/ventas', function() {
     return view('admin.ventas');
 });
+
+Route::get('/admin/clientes', function() {
+    return view('admin.clientes');
+});
