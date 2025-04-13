@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+  }
+
+  .titulo-seccion {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  
+  /* Estructura principal */
+.sidebar {
+    position: fixed;         /* Fijo en la pantalla */
+    left: 0;
+    top: 0;
+    width: 220px;            /* Ancho fijo para el menú */
+    height: 100vh;           /* Ocupa toda la altura de la pantalla */
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+  
+  .main-content {
+    margin-left: 220px;      /* Deja espacio para la sidebar */
+    padding: 30px;
+  }
+  
+  /* Información del administrador */
+  .admin-info {
+    margin-bottom: 40px;
+    font-size: 30px;
+  }
+  
+  .admin-info span {
+    font-size: 15px;
+    color: #bbb;
+  }
+  
+  .admin-info h3 {
+    font-size: 20px;
+    margin-top: 5px;
+  }
+  
+  /* Menú lateral */
+  .menu {
+    list-style: none;
+  }
+  
+  .menu li {
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .menu li:hover,
+  .menu li.active {
+    background-color: #444;
+  }
+  
+  /* Enlaces en el menú */
+  .menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Encabezado de contenido principal */
+  .main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .main-content header h2 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Contenedor de ventas */
+.ventas-container {
+    width: 100%;
+    max-width: 10000px;
+    background-color: #fff;
+    padding: 30px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+}
+  
+.ventas-box {
+    border: 1px solid #888;
+    border-radius: 20px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+}
+  
+.ventas-box p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+.ventas-box span {
+    font-weight: bold;
+    font-size: 18px;
+}
+  

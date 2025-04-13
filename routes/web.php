@@ -33,3 +33,7 @@ Route::get('/login', function () {
 Route::get('/admin', function() {
     return view('admin.rifas');
 });
+
+Route::get('/admin/ventas', function() {
+    return view('admin.ventas');
+});
