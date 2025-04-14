@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo</title>
-  <link rel="stylesheet" href="{{ asset('css/adminPanel.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/admin/adminPanel.css') }}">
 </head>
 <body>
 
