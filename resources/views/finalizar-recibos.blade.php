@@ -74,6 +74,11 @@
                 </div>
             </div>
 
+            <!-- ↓ AÑADIDO: Total a pagar ↓ -->
+        <div class="total-pagar-container">
+            <h2 class="total-pagar">Total a pagar: <span>$2.000.000</span></h2>
+        </div>
+
             <!-- Raffle Information -->
             <section class="raffle-section">
                 <div class="raffle-grid">

@@ -3,12 +3,13 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 18px;
     padding: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .rifa-card {
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: #c3c9e9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -32,6 +33,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .rifa-card .info .left,
@@ -45,6 +47,7 @@
     margin: 0;
     font-size: 14px;
     color: #333;
+    font-family: 'Inter', sans-serif;
 }
 
 .comprar-btn {
@@ -65,4 +68,4 @@
 
 .comprar-btn:hover {
     background-color: #218838;
-}
+} 

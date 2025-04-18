@@ -306,3 +306,10 @@ input[type="checkbox"] {
         width: 100%;
     }
 }
+
+/* estilos del titulo de total a pagar  */
+.total-pagar-container {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0; /* espacio arriba y abajo */
+  }

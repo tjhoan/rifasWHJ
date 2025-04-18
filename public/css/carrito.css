@@ -16,7 +16,7 @@
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 15px;
-    background-color: #fafafa;
+    background-color: #c3c9e9; /* aqui se cambia el color */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -48,13 +48,14 @@
     border-radius: 5px;
     font-size: 18px;
     border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    background-color: #373f47;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #fff;
 }
 
 .btn-facturar:hover {
-    background-color: #eaeaea;
-    color: #333;
+    background-color: #3a9b05;
+    color: #fff;
 }

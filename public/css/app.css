@@ -2,14 +2,14 @@
 html,
 body {
     margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Inter', sans-serif;
+    background-color: #fff; /* Fondo principal suave */
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-/* Styles Layout */
+/* Layout */
 main {
     padding: 20px;
     max-width: 1100px;
@@ -18,12 +18,12 @@ main {
     width: 100%;
 }
 
-/* Header styles */
+/* Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: #373F47; /* Charcoal */
     padding: 10px 15px;
     color: white;
     height: 50px;
@@ -39,9 +39,6 @@ main {
     font-size: 24px;
     color: white;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 5px;
     background-color: transparent;
     border: none;
@@ -84,7 +81,7 @@ ul li a {
 }
 
 .nav-links a:hover {
-    background-color: #444;
+    background-color: #6C91C2; /* Azul claro en hover */
     padding-left: 15px;
     border-radius: 5px;
 }
@@ -111,7 +108,7 @@ ul li a {
 }
 
 .carrito-icon:hover {
-    color: #aaa;
+    color: #C3C9E9; /* Periwinkle */
 }
 
 .carrito-imagen {
@@ -119,14 +116,14 @@ ul li a {
     margin-right: 10px;
 }
 
-/* Sidebar styles */
+/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
     left: -340px;
     width: 230px;
     height: 100%;
-    background-color: #2c3e50;
+    background-color: #373F47; /* Charcoal */
     color: white;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
@@ -148,14 +145,14 @@ ul li a {
 .sidebar-header h3 {
     margin: 0;
     font-size: 22px;
-    color: #ecf0f1;
+    color: #C3C9E9; /* Título en periwinkle */
 }
 
-/* Close button styles */
+/* Botón cerrar */
 .close-btn {
     font-size: 28px;
     cursor: pointer;
-    color: #ecf0f1;
+    color: #C3C9E9;
     background-color: transparent;
     border: none;
     padding: 10px;
@@ -164,7 +161,7 @@ ul li a {
 }
 
 .close-btn:hover {
-    background-color: #34495e;
+    background-color: #6C91C2;
     transform: scale(1.1);
 }
 
@@ -195,15 +192,15 @@ ul li a {
 }
 
 .nav-links a:hover {
-    background-color: #34495e;
+    background-color: #6C91C2;
     transform: translateX(5px);
 }
 
-/* Footer styles */
+/* Footer */
 .footer {
     display: flex;
     justify-content: center;
-    background-color: #222;
+    background-color: #373F47; /* Fondo oscuro */
     color: white;
     padding: 15px 0;
     position: fixed;
@@ -223,10 +220,10 @@ ul li a {
 }
 
 .social-links a:hover {
-    color: #aaa;
+    color: #C3C9E9; /* Hover suave */
 }
 
-/* Overlay styles */
+/* Overlay */
 .overlay {
     position: fixed;
     top: 0;
@@ -242,4 +239,33 @@ ul li a {
 .overlay.active {
     display: block;
     opacity: 1;
+}
+
+/* Tarjetas de rifas */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+/* Botón comprar */
+.card button {
+    background-color: #6C91C2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.card button:hover {
+    background-color: #373F47;
 }

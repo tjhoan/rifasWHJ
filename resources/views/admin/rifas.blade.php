@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo</title>
   <link rel="stylesheet" href="{{ asset('css/admin/adminPanel.css') }}">
+  <!-- Fuente Inter desde Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -43,21 +45,25 @@
           <p><strong>Fecha sorteo:</strong> 30/04/2025</p>
           <p><strong>Premio:</strong> Laptop Gamer</p>
         </div>
+        <div class="actions">
+          <button class="btn-eliminar">Eliminar</button>
+          <button class="btn-modificar" id="btnModificar">Modificar</button>
+        </div>
         <div class="rifa-boletos">
           <span>234</span>
-          <span>235</span>
-          <span>236</span>
+          <span class="vendido">235</span>
+          <span class="vendido">236</span>
           <span>237</span>
           <span>238</span>
-          <span>238</span>
-          <span>231</span>
+          <span class="vendido">238</span>
+          <span class="vendido">231</span>
           <span>232</span>
           <span>233</span>
-          <span>240</span>
+          <span class="vendido">240</span>
           <span>241</span>
           <span>242</span>
           <span>243</span>
-          <span>244</span>
+          <span class="vendido">244</span>
         </div>
       </div>
 
@@ -73,12 +79,16 @@
           <p><strong>Fecha sorteo:</strong> 25/04/2025</p>
           <p><strong>Premio:</strong> Smartphone</p>
         </div>
+        <div class="actions">
+          <button class="btn-eliminar">Eliminar</button>
+          <button class="btn-modificar" id="btnModificar">Modificar</button>
+        </div>
         <div class="rifa-boletos">
-          <span>345</span>
-          <span>346</span>
+          <span class="vendido">345</span>
+          <span class="vendido">346</span>
           <span>347</span>
           <span>348</span>
-          <span>349</span>
+          <span class="vendido">349</span>
         </div>
       </div>
     </section>
@@ -127,12 +137,58 @@
     </div>
   </div>
 
+  <!-- Modal para modificar rifa rifa -->
+  <div class="modal" id="modificarRifa">
+    <div class="modal-content">
+      <span class="close" id="cerrarModal">&times;</span>
+      <h3>Modificar la rifa</h3>
+      <form>
+        <label>
+          Nombre de la rifa:
+          <input type="text" placeholder="Nombre de la rifa">
+        </label>
+        <label>
+          Precio:
+          <input type="number" min="0" step="0.01" placeholder="Precio">
+        </label>
+        <label>
+          Fecha inicio:
+          <input type="date">
+        </label>
+        <label>
+          Fecha sorteo:
+          <input type="date">
+        </label>
+        <label>
+          Imagen:
+          <input type="file" accept="image/*">
+        </label>
+        <label>
+          Premio:
+          <input type="text" placeholder="Premio">
+        </label>
+        <label>
+          Cantidad de números:
+          <input type="number" min="1" placeholder="Ej. 1000">
+        </label>
+        <label>
+          Números (separados por comas):
+          <textarea placeholder="Ej. 1,2,3,..."></textarea>
+        </label>
+        <button type="submit" class="btn-agregar">Modificar</button>
+      </form>
+    </div>
+  </div>
+
+
   <!-- Script para el modal -->
   <script>
+    // variables para el modal de crear una nueva rifa 
     const btnAbrir = document.getElementById('btnAbrirModal');
     const btnCerrar = document.getElementById('btnCerrarModal');
     const modalRifa = document.getElementById('modalRifa');
-
+    
+    // funciones para abrir y cerrar el modal para la nueva rifa 
     btnAbrir.addEventListener('click', () => {
       modalRifa.classList.add('show');
     });
@@ -141,12 +197,39 @@
       modalRifa.classList.remove('show');
     });
 
-    // Cerrar modal al hacer clic fuera de la ventana modal
+    // Cerrar modal de nueva rifa al hacer clic fuera de la ventana modal
     window.addEventListener('click', (e) => {
       if (e.target === modalRifa) {
         modalRifa.classList.remove('show');
       }
     });
+    
+
+  // variables del modal de modificar las rifas 
+  const modal = document.getElementById('modificarRifa');
+  const openButtons = document.querySelectorAll('.btn-modificar');
+  const closeButtons = modal.querySelectorAll('.close');
+
+  // 1) Asignar a TODOS los botones .btn-modificar la apertura del modal
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+  });
+
+  // 2) Asignar a TODOS los .close dentro del modal el cierre
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+  });
+
+  // 3) Cerrar modal al hacer clic fuera de .modal-content
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
   </script>
 
 </body>
