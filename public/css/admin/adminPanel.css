@@ -167,29 +167,33 @@ body {
     margin-left: 20px;
 }
 
-  .btn-eliminar,
-  .btn-modificar {
+.btn-eliminar,
+.btn-modificar {
     padding: 8px 16px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
     transition: background 0.3s ease;
-  }
-  .btn-eliminar {
+}
+
+.btn-eliminar {
     background: #e74c3c;
     color: #fff;
-  }
-  .btn-eliminar:hover {
+}
+
+.btn-eliminar:hover {
     background: #c0392b;
-  }
-  .btn-modificar {
+}
+
+.btn-modificar {
     background: #6C91C2;
     color: #fff;
-  }
-  .btn-modificar:hover {
+}
+
+.btn-modificar:hover {
     background: #5579a1;
-  }
+}
 
   
   /* MODAL */

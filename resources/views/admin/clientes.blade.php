@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clientes - Panel Administrativo</title>
   <link rel="stylesheet" href="{{ asset('css/admin/clientes.css') }}">
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    rel="stylesheet"
+  />
 </head>
 <body>
   <!-- Sidebar / Menú lateral -->
@@ -23,84 +27,126 @@
   </div>
 
   <!-- Contenido principal -->
-  <main class="main-content">
-    <h1>Clientes</h1>
+  <div class="main-content">
 
-    <div class="form-box">
-      <!-- Fila de nombres y apellidos -->
-      <div class="row">
-        <div class="field">
-          <label>Primer Nombre:</label>
-          <input type="text">
+    <!-- TÍTULO DE LA PÁGINA -->
+    <h1 class="page-title">Clientes</h1>
+
+    <!-- BUSCADOR -->
+    <div class="search-box">
+      <input type="text" placeholder="BUSCAR CÉDULA" />
+      <button class="btn-search"><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- TARJETA DE CLIENTE -->
+    <div class="client-card">
+      <!-- PRIMERA FILA DE DATOS -->
+      <div class="info-row">
+        <div class="info-item">
+          <span class="label">Primer Nombre:</span>
+          <span class="value">Juan</span>
         </div>
-        <div class="field">
-          <label>Segundo Nombre:</label>
-          <input type="text">
+        <div class="info-item">
+          <span class="label">Segundo Nombre:</span>
+          <span class="value">José</span>
         </div>
-        <div class="field">
-          <label>Primer Apellido:</label>
-          <input type="text">
+        <div class="info-item">
+          <span class="label">Primer Apellido:</span>
+          <span class="value">Soto</span>
         </div>
-        <div class="field">
-          <label>Segundo Apellido:</label>
-          <input type="text">
+        <div class="info-item">
+          <span class="label">Segundo Apellido:</span>
+          <span class="value">Pérez</span>
         </div>
       </div>
 
-      <!-- Fila de contacto -->
-      <div class="row">
-        <div class="field">
-          <label>Celular:</label>
-          <input type="number">
+      <!-- SEGUNDA FILA DE DATOS -->
+      <div class="info-row">
+        <div class="info-item">
+          <span class="label">Celular:</span>
+          <span class="value">3124567890</span>
         </div>
-        <div class="field">
-          <label>Correo electrónico:</label>
-          <input type="email">
+        <div class="info-item">
+          <span class="label">Correo electrónico:</span>
+          <span class="value">Jose@gmail.com</span>
         </div>
-        <div class="field">
-          <label>Cédula:</label>
-          <input type="number">
+        <div class="info-item">
+          <span class="label">Cédula:</span>
+          <span class="value">1113435678</span>
         </div>
       </div>
 
-      <!-- Valor a pagar -->
-      <h2 class="payment">Valor a pagar: "$"</h2>
-
-      <!-- Información de la rifa -->
-      <div class="raffle-info">
-        <!-- Columna izquierda -->
-        <div class="column">
-          <div class="field">
-            <label>Nombre Rifa:</label>
-            <p class="static-data">Rifa Día del Padre</p>
-          </div>
-          <div class="field">
-            <label>Separar:</label>
-            <p class="static-data">❌</p>
-          </div>
-          <div class="field">
-            <label>Comprar:</label>
-            <p class="static-data">✅</p>
-          </div>
-        </div>
-
-        <!-- Columna derecha -->
-        <div class="column">
-          <div class="field">
-            <label>Fecha inicio:</label>
-            <p class="static-data">2025-05-01</p>
-          </div>
-          <div class="field">
-            <label>Fecha sorteo:</label>
-            <p class="static-data">2025-06-15</p>
-          </div>
-          <div class="field">
-            <label>Premio:</label>
-            <p class="static-data">Moto AKT 125</p>
-          </div>
-        </div>
+      <!-- BOTONES ABAJO -->
+      <div class="client-buttons">
+        <button class="btn-delete">Eliminar</button>
+        <button class="btn-edit" id="openEditModal">Editar</button>
       </div>
     </div>
-  </main>
+
+    <!-- MODAL EDITAR CLIENTE -->
+  <div class="modal" id="modalEditarCliente">
+    <div class="modal-content">
+      <span class="close" id="closeEditModal">&times;</span>
+      <h3>Editar Cliente</h3>
+      <form class="edit-form">
+        <div class="edit-row">
+          <label>
+            Primer Nombre:
+            <input type="text" name="primerNombre" value="Juan">
+          </label>
+          <label>
+            Segundo Nombre:
+            <input type="text" name="segundoNombre" value="José">
+          </label>
+        </div>
+        <div class="edit-row">
+          <label>
+            Primer Apellido:
+            <input type="text" name="primerApellido" value="Toro">
+          </label>
+          <label>
+            Segundo Apellido:
+            <input type="text" name="segundoApellido" value="Pérez">
+          </label>
+        </div>
+        <div class="edit-row">
+          <label>
+            Celular:
+            <input type="text" name="celular" value="3124567890">
+          </label>
+          <label>
+            Correo electrónico:
+            <input type="email" name="correo" value="Jose@gmail.com">
+          </label>
+          <label>
+            Cédula:
+            <input type="text" name="cedula" value="1113435678">
+          </label>
+        </div>
+        <div class="edit-buttons">
+          <button type="submit" class="btn-save">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  </div>
+   <!-- JS para abrir/cerrar modal -->
+   <script>
+    const modal = document.getElementById('modalEditarCliente');
+    const openBtn = document.getElementById('openEditModal');
+    const closeBtn = document.getElementById('closeEditModal');
+
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+    // Cerrar al clicar fuera del contenido
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.classList.remove('show');
+    });
+  </script>
 </body>
 </html>

@@ -1,15 +1,17 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
+  /* Body & fuente */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-  }
+    background: #f4f4f4;
+}
   
-  /* Estructura principal */
+    /* Estructura principal de la barra de navegacion ya establecido */
 .sidebar {
     position: fixed;         /* Fijo en la pantalla */
     left: 0;
@@ -22,34 +24,34 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;
-  }
-  
+}
+    
 .main-content {
     margin-left: 220px;      /* Deja espacio para la sidebar */
     padding: 30px;
 }
-  
-  /* Información del administrador */
+    
+    /* Información del administrador */
 .admin-info {
     margin-bottom: 40px;
     font-size: 30px;
 }
-  
+    
 .admin-info span {
     font-size: 15px;
     color: #bbb;
 }
-  
+    
 .admin-info h3 {
     font-size: 20px;
     margin-top: 5px;
 }
-  
-  /* Menú lateral */
+    
+    /* Menú lateral */
 .menu {
     list-style: none;
 }
-  
+    
 .menu li {
     margin: 10px 0;
     cursor: pointer;
@@ -57,125 +59,272 @@ body {
     padding: 8px;
     border-radius: 4px;
 }
-  
+    
 .menu li:hover,
 .menu li.active {
     background-color: #444;
 }
-  
-  /* Enlaces en el menú */
+    
+    /* Enlaces en el menú */
 .menu li a {
     color: #fff;
     text-decoration: none;
     display: block;
 }
-  
-  /* Encabezado de contenido principal */
+    
+    /* Encabezado de contenido principal */
 .main-content header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-  
+    
 .main-content header h2 {
     font-size: 24px;
     color: #333;
 }
-  /* hasta aqui es la parte del menu del administrador ya establecido  */
-
-
-  /* parte del contenedor de la vista cliente  */
+  
+  /* de la vista de los clientes  */
+  /* Contenido principal */
 .main-content {
-    flex: 1;
-    padding: 30px 30px;
-}
-  
-h1 {
-    margin-left: 10px;
-    margin-top: 10px;
-}
-  
-.form-box {
-    background-color: white;
+    margin-left: 240px;
     padding: 30px;
-    border-radius: 25px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    margin-top: 20px;
 }
   
-.row {
-    display: flex;
-    flex-wrap: wrap;
+  /* Título de la página */
+.page-title {
+    font-size: 33px;
+    color: #333;
     margin-bottom: 20px;
-    gap: 15px;
+    /* text-align: center; */
 }
   
-.field {
+  /* BUSCADOR */
+.search-box {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    display: flex;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.search-box input {
     flex: 1;
-    min-width: 180px;
-    display: flex;
-    flex-direction: column;
-}
-  
-.field label {
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-  
-.field input {
-    padding: 8px;
-    border: 1px solid #aaa;
-    border-radius: 6px;
-    font-size: 18px;
-}
-  
-.payment {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-}
-  
-.checkboxes {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 10px;
-}
-  
-.checkboxes label {
-    font-weight: bold;
-}
-
-  
-.static-data {
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-weight: bold;
-    width: 500px;
-}
-  
-.checkboxes p {
+    border: none;
+    padding: 12px 20px;
     font-size: 16px;
-    margin: 10px;
+    outline: none;
 }
 
+.search-box .btn-search {
+    background: transparent;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    background-color: #6c91c2;
+}
 
-.raffle-info {
+.search-box .btn-search i {
+    font-size: 20px;
+    color: #333;
+}
+  
+  /* TARJETA DE CLIENTE */
+.client-card {
+    background: #fff;
+    border-radius: 30px;
+    padding: 30px 40px;
+    width: 90%;
+    margin: 0 auto 40px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    height: 300px;
+}
+  
+  /* FILAS DE INFO */
+.info-row {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
-    gap: 40px;
+    margin-bottom: 60px;
 }
-  
-.raffle-info .column {
+
+.info-item {
     flex: 1;
+    text-align: center;
+}
+
+.info-item .label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.info-item .value {
+    display: block;
+    font-size: 16px;
+    color: #333;
 }
   
-.raffle-info .field {
-    margin-bottom: 15px;
+  /* BOTONES */
+.client-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+.client-buttons button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}
+
+.btn-edit {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background: #2563eb;
 }
   
+  
+  /* Responsive */
+@media (max-width: 768px) {
+    .info-row {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .info-item {
+      text-align: left;
+    }
+    .search-box {
+      max-width: 95%;
+    }
+    .client-card {
+      padding: 20px;
+    }
+}
+  
+ /*==========================
+ MODAL OVERLAY & CONTENIDO
+ ========================== */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+}
+    
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 30px;
+    width: 650px;           /* ++ ancho */
+    max-width: 95%;
+    position: relative;
+}
+    
+    
+/* título y cierre */
+.modal-content h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 25px;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+    transition: color .2s;
+}
+
+.modal-content .close:hover {
+    color: #333;
+}
+    
+/*==========================
+    FORMULARIO GRIDS
+========================== */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;              /* separación entrefilas */
+}
+    
+    /* cada fila adapta sus columnas al número de hijos */
+.edit-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+    
+    /* etiquetas + inputs */
+.edit-row label {
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+}
+
+.edit-row input {
+    margin-top: 6px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 17px;
+    outline: none;
+}
+    
+/* botón guardar centrado bajo todas las filas */
+.edit-buttons {
+    text-align: center;
+}
+
+.btn-save {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-save:hover {
+    background: #218838;
+}
+    
+/* responsivo: filas pasan a 1 columna */
+@media (max-width: 768px) {
+    .edit-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+    
