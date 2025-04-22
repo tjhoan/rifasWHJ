@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('nombre_admin');
             $table->string('correo')->unique();
             $table->string('contrasena');
-            $table->timestamps();
         });
     }
 

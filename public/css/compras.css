@@ -50,30 +50,65 @@
 .search-section {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
+    gap: 0;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.search-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 42rem;
 }
 
 .search-bar {
-    width: 60%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 25px 0 0 25px;
+    background-color: #f9f9f9;
     color: #333;
+    font-size: 15px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    border-color: #007bff;
 }
 
 .search-button {
-    padding: 10px;
-    background-color: #6c91c2;
+    width: 45px;
+    height: 43px;
+    background-color: #007bff;
     border: none;
-    border-radius: 5px;
+    border-radius: 0 25px 25px 0;
     color: #fff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.search-button i {
+    font-size: 22px;
 }
 
 .numbers-section {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     margin-bottom: 20px;
     max-width: 80%;
@@ -83,17 +118,14 @@
 
 .numbers-grid {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(70px, 1fr)
-    );
+    grid-template-columns: repeat(11, 1fr);
     gap: 10px;
     justify-content: center;
     max-width: 100%;
 }
 
 .number {
-    padding: 10px 20px;
+    padding: 12px 22px;
     background-color: #e9ecef;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -106,17 +138,74 @@
     color: #fff;
 }
 
+.number.comprado {
+    background-color: #ffcccc;
+}
+
+.number.empty {
+    visibility: hidden;
+    background-color: transparent;
+    border: none;
+    cursor: default;
+}
+
 .actions-section {
     display: flex;
     justify-content: center;
-    gap: 150px;
+    gap: 130px;
 }
 
 .action-button {
-    padding: 10px 20px;
+    padding: 12px 22px;
     background-color: #28a745;
     border: none;
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
+    font-size: 16px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination ul {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.pagination .page-item {
+    margin: 0;
+}
+
+.pagination .page-link {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #666;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+    cursor: not-allowed;
+    border-color: #ddd;
 }

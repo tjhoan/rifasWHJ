@@ -6,47 +6,61 @@
 <link rel="stylesheet" href="{{ asset('css/compras.css') }}">
 @endpush
 
+@push('scripts')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="rifa-id" content="{{ $rifa->id_rifa }}">
+<script src="{{ asset('js/compras.js') }}" defer></script>
+@endpush
+
 @section('content')
+
 <section class="info-section">
     <div class="rifa-image">
-        <img src="{{ asset('https://cdn.clarosports.com/clarosports/2024/06/balotook12-071239-1024x576.jpg') }}" alt="Imagen de la Rifa">
+        <img src="{{ $rifa->imagenes->first()->ruta_imagen }}" alt="Imagen de la Rifa">
     </div>
     <div class="info-container">
         <div class="left-info">
-            <p><strong>Nombre Rifa:</strong> Baloto</p>
+            <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre }}</p>
             <label class="option"><input type="checkbox"> Separar</label>
             <label class="option"><input type="checkbox"> Comprar</label>
         </div>
         <div class="right-info">
-            <p class="pp"><strong>Fecha inicio:</strong> 01/04/2025</p>
-            <p><strong>Fecha sorteo:</strong> 30/04/2025</p>
-            <p><strong>Premio:</strong> $1.2000.000</p>
+            <p class="pp"><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>
+            <p><strong>Fecha sorteo:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_sorteo)->format('d/m/Y') }}</p>
+            <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
         </div>
     </div>
 </section>
 <section class="search-section">
-    <input type="text" placeholder="Barra de búsqueda números" class="search-bar">
-    <button class="search-button"><i class="fas fa-search"></i></button>
+    <form method="GET" action="{{ route('compras.show', $rifa->id_rifa) }}" class="search-content">
+        <input type="text" name="search" placeholder="Buscar números..." class="search-bar" value="{{ request('search') }}">
+        <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
 </section>
 <section class="numbers-section">
     <div class="numbers-grid">
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number selected">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number selected">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
-        <button class="number">2345</button>
+        @foreach ($numeros as $numero)
+        <button class="number {{ $numero->estado == 'comprado' ? 'comprado' : '' }}" data-id="{{ $numero->id }}">
+            {{ $numero->numero }}
+        </button>
+        @endforeach
+
+        @for ($i = $numeros->count(); $i < 22; $i++)
+            <div class="number empty">
     </div>
+    @endfor
+    </div>
+    {{ $numeros->links() }}
 </section>
 <section class="actions-section">
-    <button class="action-button">Añadir al carrito</button>
-    <button class="action-button" onclick="window.location.href='/facturar'">Facturar</button>
+    <form method="POST" action="{{ route('carrito.addSelected') }}">
+        @csrf
+        <input type="hidden" name="selected_numbers" id="selected-numbers">
+        <input type="hidden" name="id_rifa" value="{{ $rifa->id_rifa }}">
+        <button type="submit" class="action-button">Añadir al carrito</button>
+    </form>
+    <button class="action-button">Facturar</button>
 </section>
 @endsection

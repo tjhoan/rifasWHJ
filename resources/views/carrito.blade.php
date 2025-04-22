@@ -10,40 +10,42 @@
 <h1 class="titulo-carrito">Carrito</h1>
 
 <div class="carrito-container">
+  @forelse ($carrito as $item)
   <div class="carrito-item">
-    <img alt="Icono" class="item-icono" src="{{ asset('https://cdn.clarosports.com/clarosports/2024/06/balotook12-071239-1024x576.jpg') }}">
+    <img alt="Icono" class="item-icono" src="{{ $item->rifa->imagenes->first()->ruta_imagen }}">
     <div class="item-info">
       <div class="info-left">
-        <span><strong>Nombre Rifa:</strong> Baloto</span><br>
-        <span><strong>Boleto Seleccionado:</strong> 4532</span><br>
-        <span><strong>Para:</strong> cancelar</span>
+        <h3>{{ $item->rifa->nombre }}</h3>
+        <p>Boleto: <strong>{{ $item->numero->numero }}</strong></p>
+        <p>Cantidad: <strong>{{ $item->cantidad }}</strong></p>
       </div>
       <div class="info-right">
-        <span><strong>Fecha inicio:</strong> 05/12/2025</span><br>
-        <span><strong>Fecha sorteo:</strong> 05/12/2025</span><br>
-        <span><strong>Premio:</strong> $1.200.000</span>
+        <p>Inicio: <strong>{{ \Carbon\Carbon::parse($item->rifa->fecha_inicio)->format('d/m/Y') }}</strong></p>
+        <p>Sorteo: <strong>{{ \Carbon\Carbon::parse($item->rifa->fecha_sorteo)->format('d/m/Y') }}</strong></p>
+        <p>Premio: <strong>{{ $item->rifa->premio }}</strong></p>
       </div>
     </div>
+    <form method="POST" action="{{ route('carrito.remove') }}" class="form-inline">
+      @csrf
+      <input type="hidden" name="id_carrito" value="{{ $item->id_carrito }}">
+      <button type="submit" class="btn btn-remove">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </form>
   </div>
-
-  <div class="carrito-item">
-    <img alt="Icono" class="item-icono" src="{{ asset('https://caracoltv.brightspotcdn.com/dims4/default/c5c6777/2147483647/strip/true/crop/1280x720+0+0/resize/800x450!/quality/75/?url=http%3A%2F%2Fcaracol-brightspot.s3.us-west-2.amazonaws.com%2F9c%2F0a%2Fc45d6e02461dbf01d4c0bf9d0d20%2Floteria-del-valle.jpg') }}">
-    <div class="item-info">
-      <div class="info-left">
-        <span><strong>Nombre Rifa:</strong> cualquiera</span><br>
-        <span><strong>Boleto Seleccionado:</strong> 455545</span><br>
-        <span><strong>Para:</strong> cancelar o separar</span>
-      </div>
-      <div class="info-right">
-        <span><strong>Fecha inicio:</strong> 05/12/2025</span><br>
-        <span><strong>Fecha sorteo:</strong> 05/12/2025</span><br>
-        <span><strong>Premio:</strong> televisión</span>
-      </div>
-    </div>
-  </div>
+  @empty
+  <p class="empty-message">No hay elementos en el carrito.</p>
+  @endforelse
 </div>
 
-<form action="{{ url('/facturar') }}" method="GET">
-  <button type="submit" class="btn-facturar">Facturar</button>
-</form>
+<div class="carrito-actions">
+  <form method="POST" action="{{ route('carrito.clear') }}">
+    @csrf
+    <button type="submit" class="btn btn-clear">Vaciar Carrito</button>
+  </form>
+
+  <form action="{{ url('/facturar') }}" method="GET">
+    <button type="submit" class="btn btn-facturar">Facturar</button>
+  </form>
+</div>
 @endsection

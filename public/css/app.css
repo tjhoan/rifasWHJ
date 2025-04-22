@@ -3,27 +3,23 @@ html,
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: #fff; /* Fondo principal suave */
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Layout */
 main {
-    padding: 20px;
-    max-width: 1100px;
-    margin: auto;
+    padding: 20px 0;
     margin-top: -5px;
-    width: 100%;
 }
 
-/* Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #373F47; /* Charcoal */
+    background-color: #373F47;
     padding: 10px 15px;
     color: white;
     height: 50px;
@@ -81,7 +77,7 @@ ul li a {
 }
 
 .nav-links a:hover {
-    background-color: #6C91C2; /* Azul claro en hover */
+    background-color: #6C91C2;
     padding-left: 15px;
     border-radius: 5px;
 }
@@ -108,7 +104,7 @@ ul li a {
 }
 
 .carrito-icon:hover {
-    color: #C3C9E9; /* Periwinkle */
+    color: #C3C9E9;
 }
 
 .carrito-imagen {
@@ -116,14 +112,13 @@ ul li a {
     margin-right: 10px;
 }
 
-/* Sidebar */
 .sidebar {
     position: fixed;
     top: 0;
     left: -340px;
     width: 230px;
     height: 100%;
-    background-color: #373F47; /* Charcoal */
+    background-color: #373F47;
     color: white;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
@@ -145,7 +140,7 @@ ul li a {
 .sidebar-header h3 {
     margin: 0;
     font-size: 22px;
-    color: #C3C9E9; /* Título en periwinkle */
+    color: #C3C9E9;
 }
 
 /* Botón cerrar */
@@ -196,11 +191,10 @@ ul li a {
     transform: translateX(5px);
 }
 
-/* Footer */
 .footer {
     display: flex;
     justify-content: center;
-    background-color: #373F47; /* Fondo oscuro */
+    background-color: #373F47;
     color: white;
     padding: 15px 0;
     position: fixed;
@@ -220,10 +214,9 @@ ul li a {
 }
 
 .social-links a:hover {
-    color: #C3C9E9; /* Hover suave */
+    color: #C3C9E9;
 }
 
-/* Overlay */
 .overlay {
     position: fixed;
     top: 0;

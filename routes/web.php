@@ -1,61 +1,53 @@
 <?php
 
+use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\GanadoresController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CarritoController;
 use Illuminate\Support\Facades\Route;
 
-// ruta para acceder a la pagina de inicio  
 Route::get('/', [HomeController::class, 'index']);
-
-// ruta para acceder a la vista de ganadores 
 Route::get('/ganadores', [GanadoresController::class, 'index']);
+Route::get('/compras/{id}', [ComprasController::class, 'show'])->name('compras.show');
 
-// ruta para acceder a la vista del carrito de compras 
-Route::get('/carrito', function () {
-    return view('carrito');
+Route::prefix('carrito')->group(function () {
+    Route::get('/', [CarritoController::class, 'index'])->name('carrito.index');
+    Route::post('/add', [CarritoController::class, 'add'])->name('carrito.add');
+    Route::post('/add-selected', [CarritoController::class, 'addSelected'])->name('carrito.addSelected');
+    Route::post('/remove', [CarritoController::class, 'remove'])->name('carrito.remove');
+    Route::post('/clear', [CarritoController::class, 'clear'])->name('carrito.clear');
 });
 
-// ruta para acceder la vista de comprar los tickets de las rifas 
-Route::get('/compras', function () {
-    return view('compras');
-});
-
-// ruta para ecceder a la vista del proceso de facturacion 
 Route::get('/facturar', function () {
     return view('facturar');
 });
 
-// ruta para acceder a la vista que generar el tickets 
 Route::get('/finalizar-recibos', function () {
     return view('finalizar-recibos');
 });
 
-// ruta para acceder a la vista del login del administrador 
 Route::get('/login', function () {
     return view('auth.login');
 });
 
-// ruta para acceder al panel administrativo 
-Route::get('/admin', function() {
-    return view('admin.rifas');
-});
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin.rifas');
+    });
 
-// vista para acceder a la vista de las ventas 
-Route::get('/admin/ventas', function() {
-    return view('admin.ventas');
-});
+    Route::get('/ventas', function () {
+        return view('admin.ventas');
+    });
 
-// ruta para acceder a la vista de los clientes en el panel administrativo 
-Route::get('/admin/clientes', function() {
-    return view('admin.clientes');
-});
+    Route::get('/clientes', function () {
+        return view('admin.clientes');
+    });
 
-// ruta para acceder a la vista del sorteo para las rifas 
-Route::get('/admin/sorteo', function() {
-    return view('admin.sorteo');
-});
+    Route::get('/sorteo', function () {
+        return view('admin.sorteo');
+    });
 
-// ruta para acceder a la vista de la configuracion de la empresa 
-Route::get('/admin/configuracion', function() {
-    return view('admin.configuracion');
+    Route::get('/configuracion', function () {
+        return view('admin.configuracion');
+    });
 });

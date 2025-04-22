@@ -79,6 +79,7 @@
             overlay.classList.remove('active');
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>

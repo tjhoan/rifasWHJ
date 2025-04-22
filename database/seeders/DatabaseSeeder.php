@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
             SorteosSeeder::class,
             RifasSeeder::class,
             ImagenRifaSeeder::class,
-            GanadoresSeeder::class
+            GanadoresSeeder::class,
+            NumerosRifaSeeder::class,
         ]);
     }
 }

@@ -1,9 +1,18 @@
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
 .rifas-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
     gap: 18px;
     padding: 20px;
     font-family: 'Inter', sans-serif;
+    margin: 0 auto;
+    max-width: 70%;
 }
 
 .rifa-card {
@@ -23,7 +32,7 @@
 }
 
 .rifa-card img {
-    width: 150px;
+    width: 170px;
     margin: 0 auto 15px;
     display: block;
 }

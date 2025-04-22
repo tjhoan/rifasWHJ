@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('carrito', function (Blueprint $table) {
             $table->id('id_carrito');
-            $table->integer('cantidad');
-            $table->date('fecha_creacion');
             $table->unsignedBigInteger('id_rifa');
-            $table->foreign('id_rifa')->references('id_rifa')->on('rifas');
-            $table->timestamps();
+            $table->unsignedBigInteger('id_numero');
+            $table->integer('cantidad')->default(1);
+            $table->foreign('id_rifa')->references('id_rifa')->on('rifas')->onDelete('cascade');
+            $table->foreign('id_numero')->references('id')->on('numeros_rifas')->onDelete('cascade');
+            $table->timestamp('fecha_creacion')->useCurrent();
         });
     }
 
