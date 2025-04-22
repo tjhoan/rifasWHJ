@@ -1,16 +1,14 @@
 <?php
 
+use App\Http\Controllers\GanadoresController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 // ruta para acceder a la pagina de inicio  
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 // ruta para acceder a la vista de ganadores 
-Route::get('/ganadores', function () {
-    return view('ganadores');
-});
+Route::get('/ganadores', [GanadoresController::class, 'index']);
 
 // ruta para acceder a la vista del carrito de compras 
 Route::get('/carrito', function () {

@@ -1,21 +1,20 @@
 .ganadores-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 15px;
     margin-bottom: auto;
-    margin-left: -80px;
+    margin-left: 0;
 }
 
 .ganador-card {
     display: flex;
     flex-direction: row;
-    background: #c3c9e9;  /* aqui se cambia el color */
-    padding: 25px;
+    background: oklch(98.5% 0 0);
+    padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 200px;
-    width: 590px;
+    width: 90%;
 }
 
 .ganador-card:hover {
@@ -44,7 +43,9 @@
 
 /* Icono/imagen a la izquierda */
 .icono {
-    width: auto;
+    width: 16rem;
     height: auto;
     margin-right: 20px;
-  }
+    border-radius: 8px;
+    object-fit: cover;
+}

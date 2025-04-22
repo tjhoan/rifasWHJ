@@ -7,43 +7,31 @@
 @endpush
 
 @section('content')
-  <h1>Ganadores de Rifas</h1>
-  <section class="ganadores-container">
+<h1>Ganadores de Rifas</h1>
 
+<section class="ganadores-container">
+  @forelse ($ganadores as $ganador)
     <div class="ganador-card">
-      <!-- Imagen a la izquierda -->
-      <img src="{{ asset('img/pc-gamer.png') }}" alt="Ícono Rifa" class="icono">
+      <img 
+        src="{{ $ganador->rifa->imagenes->first()?->ruta_imagen ?? asset('img/default.png') }}" 
+        alt="Imagen de la Rifa" 
+        class="icono">
 
       <div class="info">
         <div class="col">
-          <p><strong>Nombre de la rifa:</strong> cualquier</p>
-          <p><strong>Número de boleto:</strong> 12345</p>
-          <p><strong>Nombre del ganador:</strong> Juan Pérez</p>
+          <p><strong>Nombre de la rifa:</strong> {{ $ganador->rifa->nombre ?? 'N/A' }}</p>
+          <p><strong>Número de boleto:</strong> {{ $ganador->boletos_ganador }}</p>
+          <p><strong>Nombre del ganador:</strong> {{ $ganador->nombre_ganador }}</p>
         </div>
         <div class="col">
-          <p><strong>Fecha inicio:</strong> 01/03/2025</p>
-          <p><strong>Fecha sorteo:</strong> 10/03/2025</p>
-          <p><strong>Premio:</strong> Laptop Gamer</p>
+          <p><strong>Fecha inicio:</strong> {{ $ganador->rifa->fecha_inicio ?? 'N/A' }}</p>
+          <p><strong>Fecha sorteo:</strong> {{ $ganador->rifa->fecha_sorteo ?? 'N/A' }}</p>
+          <p><strong>Premio:</strong> {{ $ganador->rifa->premio ?? 'N/A' }}</p>
         </div>
       </div>
     </div>
-
-    <div class="ganador-card">
-      <img src="{{ asset('img/iphone.jpg') }}" alt="Ícono Rifa" class="icono">
-
-      <div class="info">
-        <div class="col">
-          <p><strong>Nombre de la rifa:</strong> cualquier</p>
-          <p><strong>Número de boleto:</strong> 67890</p>
-          <p><strong>Nombre del ganador:</strong> María Gómez</p>
-        </div>
-        <div class="col">
-          <p><strong>Fecha inicio:</strong> 05/03/2025</p>
-          <p><strong>Fecha sorteo:</strong> 15/03/2025</p>
-          <p><strong>Premio:</strong> Smartphone</p>
-        </div>
-      </div>
-    </div>
-
-  </section>
+  @empty
+    <p>No hay ganadores registrados.</p>
+  @endforelse
+</section>
 @endsection
