@@ -9,6 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        session()->forget(['total', 'tipoAccion']);
+
         $rifas = DB::table('rifas')
             ->leftJoin('imagen_rifa', 'rifas.id_rifa', '=', 'imagen_rifa.id_rifa')
             ->select('rifas.*', 'imagen_rifa.ruta_imagen')

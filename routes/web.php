@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ComprasController;
+use App\Http\Controllers\FacturarController;
+use App\Http\Controllers\FinalizarReciboController;
 use App\Http\Controllers\GanadoresController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -18,17 +21,17 @@ Route::prefix('carrito')->group(function () {
     Route::post('/clear', [CarritoController::class, 'clear'])->name('carrito.clear');
 });
 
-Route::get('/facturar', function () {
-    return view('facturar');
-});
+Route::get('/facturar', [FacturarController::class, 'index'])->name('facturar.index');
+Route::post('/facturar', [FacturarController::class, 'store'])->name('facturar.store');
 
-Route::get('/finalizar-recibos', function () {
-    return view('finalizar-recibos');
-});
+Route::get('/finalizar-recibos', [CarritoController::class, 'finalizar'])->name('finalizar-recibos');
+Route::post('/guardar-datos-empresa', [FinalizarReciboController::class, 'store'])->name('datos-empresa.store');
 
 Route::get('/login', function () {
     return view('auth.login');
 });
+
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {

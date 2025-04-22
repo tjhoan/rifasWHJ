@@ -13,6 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_rifa');
             $table->unsignedBigInteger('id_numero');
             $table->integer('cantidad')->default(1);
+            $table->string('estado')->default('activo');
             $table->foreign('id_rifa')->references('id_rifa')->on('rifas')->onDelete('cascade');
             $table->foreign('id_numero')->references('id')->on('numeros_rifas')->onDelete('cascade');
             $table->timestamp('fecha_creacion')->useCurrent();

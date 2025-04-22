@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Carrito;
 use App\Models\NumeroRifa;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
     public function index()
     {
-        $carrito = Carrito::with(['rifa', 'numero'])->get();
+        $carrito = Carrito::with(['rifa', 'numero'])->where('estado', 'activo')->get();
         return view('carrito', compact('carrito'));
     }
 
@@ -68,6 +69,63 @@ class CarritoController extends Controller
 
             return redirect()->back()->with('success', 'Números agregados al carrito');
         } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+        }
+    }
+
+    public function finalizar(Request $request)
+    {
+        try {
+            $carrito = Carrito::with(['rifa', 'numero', 'rifa.imagenes'])->where('estado', 'activo')->get();
+
+            if ($carrito->isEmpty()) {
+                $carrito = session('carrito', collect());
+                $total = session('total', 0);
+                $tipoAccion = session('tipoAccion', 'separar');
+            }
+
+            $cliente = session('cliente');
+            $tipoAccion = $request->input('tipo_accion', 'separar');
+
+            $total = $carrito->sum(function ($item) {
+                $precio = is_numeric($item->rifa->precio) ? (float) $item->rifa->precio : 0;
+                return $precio * $item->cantidad;
+            });
+
+            session(['carrito' => $carrito, 'total' => $total, 'tipoAccion' => $tipoAccion]);
+
+            if ($carrito->isEmpty()) {
+                return view('finalizar-recibos', [
+                    'carrito' => $carrito,
+                    'cliente' => $cliente,
+                    'total' => $total,
+                ])->with('warning', 'El carrito está vacío.');
+            }
+
+            if (!$cliente) {
+                return view('finalizar-recibos', [
+                    'carrito' => $carrito,
+                    'cliente' => $cliente,
+                    'total' => $total,
+                ])->with('warning', 'No se encontraron datos del cliente.');
+            }
+
+            // mostrar en un log la url de la imagen que está en carrito
+            Log::info('URL de la imagen en carrito', [
+                'url' => $carrito->first()->rifa->imagenes->first()->ruta_imagen ?? null
+            ]);
+
+            return view('finalizar-recibos', [
+                'carrito' => $carrito,
+                'cliente' => $cliente,
+                'total' => (float) $total,
+                'tipoAccion' => $tipoAccion
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error al finalizar: ' . $e->getMessage(), [
+                'request' => $request->all(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
         }
     }

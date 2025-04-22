@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('segundo_apellido', 50)->nullable();
             $table->string('correo', 100)->unique();
             $table->string('celular', 20)->nullable();
-            $table->timestamps();
         });
     }
 

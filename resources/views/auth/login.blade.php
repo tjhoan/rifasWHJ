@@ -12,14 +12,20 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form>
+        @if ($errors->has('login_error'))
+            <div class="error-message">
+                {{ $errors->first('login_error') }}
+            </div>
+        @endif
+        <form method="POST" action="{{ route('login.authenticate') }}">
+            @csrf
             <div class="input-field">
-                <input type="text" id="username" placeholder=" " required>
-                <label for="username">Usuario</label>
+                <input type="email" id="correo" name="correo" placeholder=" " required>
+                <label for="correo">Correo</label>
             </div>
             <div class="input-field password-container">
-                <input type="password" id="password" placeholder=" " required>
-                <label for="password">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder=" " required>
+                <label for="contrasena">Contraseña</label>
                 <i class="fas fa-eye toggle-password" id="togglePassword"></i>
             </div>
             <button type="submit">Ingresar</button>
@@ -28,7 +34,7 @@
 
     <script>
         const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
+        const passwordInput = document.getElementById('contrasena');
 
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';

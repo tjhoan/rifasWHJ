@@ -8,7 +8,7 @@ class Carrito extends Model
 {
     protected $table = 'carrito';
     protected $primaryKey = 'id_carrito';
-    protected $fillable = ['id_rifa', 'id_numero', 'cantidad', 'fecha_creacion'];
+    protected $fillable = ['id_rifa', 'id_numero', 'cantidad', 'fecha_creacion', 'estado'];
 
     public $timestamps = false;
 

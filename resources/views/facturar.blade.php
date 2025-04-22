@@ -9,19 +9,25 @@
 @section('content')
 
 <h1>Proceso de facturación</h1>
-
-<form class="formulario" method="POST" action="{{ url('/facturar') }}">
+<form class="formulario" id="form-facturar" method="POST" action="{{ route('facturar.store') }}">
   @csrf
   <div class="row">
     <input type="text" name="primer_nombre" placeholder="Primer Nombre" required>
+    @error('primer_nombre') <div class="error">{{ $message }}</div> @enderror
     <input type="text" name="segundo_nombre" placeholder="Segundo Nombre">
+    @error('segundo_nombre') <div class="error">{{ $message }}</div> @enderror
     <input type="text" name="primer_apellido" placeholder="Primer Apellido" required>
+    @error('primer_apellido') <div class="error">{{ $message }}</div> @enderror
     <input type="text" name="segundo_apellido" placeholder="Segundo Apellido">
+    @error('segundo_apellido') <div class="error">{{ $message }}</div> @enderror
   </div>
   <div class="row">
     <input type="tel" name="celular" placeholder="Celular" required>
+    @error('celular') <div class="error">{{ $message }}</div> @enderror
     <input type="email" name="correo" placeholder="Correo electrónico" required>
+    @error('correo') <div class="error">{{ $message }}</div> @enderror
     <input type="text" name="cedula" placeholder="Cédula" required>
+    @error('cedula') <div class="error">{{ $message }}</div> @enderror
   </div>
 
   <div class="acciones">
@@ -52,23 +58,28 @@
     </div>
   </div>
 
-  <div class="finalizar">
-    <a href="/finalizar-recibos" class="btn-finalizar">Finalizar</a>
+  <input type="hidden" name="tipo_accion" id="tipo_accion" value="separar">
+
+  <div style="text-align: center;">
+    <button type="submit" class="btn-finalizar">Finalizar</button>
   </div>
 </form>
 
 <script>
   function toggleAccion(id) {
-    // Ocultar todas las cajas de detalle
     document.querySelectorAll('.detalle-accion').forEach(el => {
       el.style.visibility = 'hidden';
       el.style.opacity = '0';
     });
 
-    // Mostrar la caja seleccionada
     const selected = document.getElementById(id);
     selected.style.visibility = 'visible';
     selected.style.opacity = '1';
+
+    const tipoAccion = document.querySelector('input[name="accion"]:checked').value;
+    document.getElementById('tipo_accion').value = tipoAccion;
   }
 </script>
+
+
 @endsection
