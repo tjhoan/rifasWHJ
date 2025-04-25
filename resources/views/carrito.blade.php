@@ -17,7 +17,6 @@
       <div class="info-left">
         <h3>{{ $item->rifa->nombre }}</h3>
         <p>Boleto: <strong>{{ $item->numero->numero }}</strong></p>
-        <p>Cantidad: <strong>{{ $item->cantidad }}</strong></p>
       </div>
       <div class="info-right">
         <p>Inicio: <strong>{{ \Carbon\Carbon::parse($item->rifa->fecha_inicio)->format('d/m/Y') }}</strong></p>

@@ -10,12 +10,10 @@ return new class extends Migration
     {
         Schema::create('ganadores', function (Blueprint $table) {
             $table->id('id_ganador');
-            $table->string('boletos_ganador', 100);
-            $table->string('nombre_ganador', 100);
-            $table->unsignedBigInteger('id_sorteo');
-            $table->unsignedBigInteger('id_rifa');
-            $table->foreign('id_sorteo')->references('id_sorteo')->on('sorteos');
-            $table->foreign('id_rifa')->references('id_rifa')->on('rifas');
+            $table->foreignId('id_sorteo')->constrained('sorteos');
+            $table->foreignId('id_cliente')->constrained('clientes');
+            $table->timestamp('fecha_ganador')->useCurrent();
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
     }

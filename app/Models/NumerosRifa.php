@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ganador extends Model
+class NumerosRifa extends Model
 {
     use HasFactory;
 
-    protected $table = 'ganadores';
+    protected $table = 'numeros_rifa';
 
     protected $fillable = [
-        'id_sorteo',
+        'id_rifa',
+        'numero',
         'id_cliente',
-        'fecha_ganador',
+        'fecha_accion',
         'estado',
     ];
 
@@ -22,9 +23,9 @@ class Ganador extends Model
         'estado' => 'string',
     ];
 
-    public function sorteo()
+    public function rifa()
     {
-        return $this->belongsTo(Sorteo::class, 'id_sorteo');
+        return $this->belongsTo(Rifa::class, 'id_rifa');
     }
 
     public function cliente()

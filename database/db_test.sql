@@ -69,7 +69,6 @@ CREATE TABLE IMAGEN_RIFA (
 
 CREATE TABLE CARRITO (
     id_carrito INT PRIMARY KEY AUTO_INCREMENT,
-    cantidad INT,
     fecha_creacion DATE,
     id_rifa INT,
     FOREIGN KEY (id_rifa) REFERENCES RIFA(id_rifa)

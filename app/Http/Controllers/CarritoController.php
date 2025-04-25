@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Carrito;
 use App\Models\NumeroRifa;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
@@ -15,53 +14,22 @@ class CarritoController extends Controller
         return view('carrito', compact('carrito'));
     }
 
-    public function add(Request $request)
-    {
-        $numero = NumeroRifa::findOrFail($request->id_numero);
-
-        $item = Carrito::where('id_numero', $numero->id)->first();
-
-        if ($item) {
-            $item->cantidad += 1;
-            $item->save();
-        } else {
-            Carrito::create([
-                'id_rifa' => $numero->id_rifa,
-                'id_numero' => $numero->id,
-                'cantidad' => 1,
-            ]);
-        }
-
-        return response()->json(['message' => 'Número agregado al carrito']);
-    }
-
     public function addSelected(Request $request)
     {
         try {
             $selectedNumbers = json_decode($request->input('selected_numbers', '[]'), true);
             $rifaId = $request->input('id_rifa');
 
-            if (!is_array($selectedNumbers)) {
-                return redirect()->back()->with('error', 'Los números seleccionados no son válidos.');
-            }
-
             foreach ($selectedNumbers as $numeroId) {
                 $numero = NumeroRifa::find($numeroId);
-
-                if (!$numero) {
-                    return redirect()->back()->with('error', "El número con ID {$numeroId} no existe.");
-                }
-
                 $item = Carrito::where('id_numero', $numero->id)->first();
 
                 if ($item) {
-                    $item->cantidad += 1;
                     $item->save();
                 } else {
                     Carrito::create([
                         'id_rifa' => $rifaId,
                         'id_numero' => $numero->id,
-                        'cantidad' => 1,
                         'fecha_creacion' => now(),
                     ]);
                 }
@@ -89,7 +57,7 @@ class CarritoController extends Controller
 
             $total = $carrito->sum(function ($item) {
                 $precio = is_numeric($item->rifa->precio) ? (float) $item->rifa->precio : 0;
-                return $precio * $item->cantidad;
+                return $precio;
             });
 
             session(['carrito' => $carrito, 'total' => $total, 'tipoAccion' => $tipoAccion]);
@@ -102,19 +70,6 @@ class CarritoController extends Controller
                 ])->with('warning', 'El carrito está vacío.');
             }
 
-            if (!$cliente) {
-                return view('finalizar-recibos', [
-                    'carrito' => $carrito,
-                    'cliente' => $cliente,
-                    'total' => $total,
-                ])->with('warning', 'No se encontraron datos del cliente.');
-            }
-
-            // mostrar en un log la url de la imagen que está en carrito
-            Log::info('URL de la imagen en carrito', [
-                'url' => $carrito->first()->rifa->imagenes->first()->ruta_imagen ?? null
-            ]);
-
             return view('finalizar-recibos', [
                 'carrito' => $carrito,
                 'cliente' => $cliente,
@@ -122,10 +77,6 @@ class CarritoController extends Controller
                 'tipoAccion' => $tipoAccion
             ]);
         } catch (\Exception $e) {
-            Log::error('Error al finalizar: ' . $e->getMessage(), [
-                'request' => $request->all(),
-                'trace' => $e->getTraceAsString()
-            ]);
             return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
         }
     }

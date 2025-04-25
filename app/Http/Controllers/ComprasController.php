@@ -21,13 +21,4 @@ class ComprasController extends Controller
 
         return view('compras', compact('rifa', 'numeros'));
     }
-
-    public function updateNumeroEstado(Request $request)
-    {
-        // Cambiar el estado de los números seleccionados
-        $numeroIds = $request->input('numeros');
-        NumeroRifa::whereIn('id', $numeroIds)->update(['estado' => 'comprado']);
-
-        return response()->json(['success' => true]);
-    }
 }

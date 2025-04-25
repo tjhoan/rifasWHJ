@@ -9,13 +9,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->string('cedula', 20)->primary();
-            $table->string('primer_nombre', 50);
-            $table->string('segundo_nombre', 50)->nullable();
-            $table->string('primer_apellido', 50);
-            $table->string('segundo_apellido', 50)->nullable();
-            $table->string('correo', 100)->unique();
-            $table->string('celular', 20)->nullable();
+            $table->id('id_cliente');
+            $table->string('nombre_cliente');
+            $table->string('correo_cliente')->unique();
+            $table->string('telefono_cliente', 15)->nullable();
+            $table->text('direccion_cliente')->nullable();
+            $table->timestamps(); // Añade created_at y updated_at
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
         });
     }
 

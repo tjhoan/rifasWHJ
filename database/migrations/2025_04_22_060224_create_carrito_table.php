@@ -10,13 +10,9 @@ return new class extends Migration
     {
         Schema::create('carrito', function (Blueprint $table) {
             $table->id('id_carrito');
-            $table->unsignedBigInteger('id_rifa');
-            $table->unsignedBigInteger('id_numero');
-            $table->integer('cantidad')->default(1);
-            $table->string('estado')->default('activo');
-            $table->foreign('id_rifa')->references('id_rifa')->on('rifas')->onDelete('cascade');
-            $table->foreign('id_numero')->references('id')->on('numeros_rifas')->onDelete('cascade');
-            $table->timestamp('fecha_creacion')->useCurrent();
+            $table->foreignId('id_cliente')->constrained('clientes');
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
+            $table->timestamps();
         });
     }
 

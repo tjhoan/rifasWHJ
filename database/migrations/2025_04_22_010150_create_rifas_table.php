@@ -10,16 +10,15 @@ return new class extends Migration
     {
         Schema::create('rifas', function (Blueprint $table) {
             $table->id('id_rifa');
-            $table->string('nombre', 100);
-            $table->string('premio', 100);
-            $table->decimal('precio', 10, 2);
-            $table->integer('cantidad_numero');
+            $table->string('nombre_rifa');
+            $table->string('imagen_rifa')->nullable();
+            $table->decimal('precio_boleto', 10, 2);
+            $table->integer('cantidad_boletos');
             $table->date('fecha_inicio');
+            $table->date('fecha_fin');
             $table->date('fecha_sorteo');
-            $table->unsignedBigInteger('id_administrador');
-            $table->unsignedBigInteger('id_sorteo');
-            $table->foreign('id_administrador')->references('id_administrador')->on('administradores');
-            $table->foreign('id_sorteo')->references('id_sorteo')->on('sorteos');
+            $table->text('premio');
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
     }

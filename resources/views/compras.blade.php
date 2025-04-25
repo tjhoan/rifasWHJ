@@ -21,8 +21,6 @@
     <div class="info-container">
         <div class="left-info">
             <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre }}</p>
-            <label class="option"><input type="checkbox"> Separar</label>
-            <label class="option"><input type="checkbox"> Comprar</label>
         </div>
         <div class="right-info">
             <p class="pp"><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>

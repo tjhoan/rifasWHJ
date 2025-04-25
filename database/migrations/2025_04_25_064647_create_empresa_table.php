@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('metodos_pago', function (Blueprint $table) {
-            $table->id('id_pago');
-            $table->string('nombre_metodo');
-            $table->string('digito_cuenta');
+        Schema::create('empresa', function (Blueprint $table) {
+            $table->id('id_empresa');
+            $table->string('nombre');
+            $table->string('direccion');
+            $table->string('telefono', 15);
+            $table->text('redes_sociales')->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
@@ -19,6 +21,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('metodos_pago');
+        Schema::dropIfExists('empresa');
     }
 };
