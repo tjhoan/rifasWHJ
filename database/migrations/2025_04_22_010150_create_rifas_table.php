@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('rifas', function (Blueprint $table) {
             $table->id('id_rifa');
             $table->string('nombre_rifa');
-            $table->string('imagen_rifa')->nullable();
+            $table->string('imagen_rifa', 512)->nullable();
             $table->decimal('precio_boleto', 10, 2);
             $table->integer('cantidad_boletos');
             $table->date('fecha_inicio');

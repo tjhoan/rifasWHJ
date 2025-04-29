@@ -27,8 +27,14 @@ class Rifa extends Model
         'estado' => 'string',
     ];
 
+    protected $primaryKey = 'id_rifa';
+
     public function numeros()
     {
         return $this->hasMany(NumerosRifa::class, 'id_rifa');
+    }
+    public function sorteos()
+    {
+        return $this->hasMany(Sorteo::class, 'id_rifa');
     }
 }

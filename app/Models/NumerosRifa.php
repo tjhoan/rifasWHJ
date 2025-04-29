@@ -23,6 +23,8 @@ class NumerosRifa extends Model
         'estado' => 'string',
     ];
 
+    protected $primaryKey = 'id_numero';
+
     public function rifa()
     {
         return $this->belongsTo(Rifa::class, 'id_rifa');

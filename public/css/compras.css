@@ -131,11 +131,18 @@
     border-radius: 5px;
     color: #333;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .number.selected {
     background-color: #ffc107;
     color: #fff;
+    transform: scale(1.1);
+}
+
+.number.hover {
+    background-color: lightblue;
+    transform: scale(1.05);
 }
 
 .number.comprado {

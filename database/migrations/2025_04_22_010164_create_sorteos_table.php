@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('sorteos', function (Blueprint $table) {
             $table->id('id_sorteo');
-            $table->foreignId('id_rifa')->constrained('rifas');
+            $table->foreignId('id_rifa')->constrained('rifas', 'id_rifa');
             $table->date('fecha_sorteo');
-            $table->foreignId('ganador_id_cliente')->nullable()->constrained('clientes');
+            $table->foreignId('ganador_id_cliente')->nullable()->constrained('clientes', 'id_cliente');
             $table->integer('numero_ganador')->nullable();
             $table->enum('estado', ['realizado', 'sin_ganador', 'sin_reclamo', 'anulado'])->default('sin_ganador');
             $table->timestamps();

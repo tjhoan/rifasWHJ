@@ -12,14 +12,17 @@ class Empresa extends Model
     protected $table = 'empresa';
 
     protected $fillable = [
+        'NIT',
         'nombre',
         'direccion',
         'telefono',
         'redes_sociales',
-        'estado',
+        'estado'
     ];
 
     protected $casts = [
-        'estado' => 'string',
+        'estado' => 'string'
     ];
+
+    protected $primaryKey = 'id_empresa';
 }

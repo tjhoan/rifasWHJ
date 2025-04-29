@@ -22,6 +22,8 @@ class Ganador extends Model
         'estado' => 'string',
     ];
 
+    protected $primaryKey = 'id_ganador';
+
     public function sorteo()
     {
         return $this->belongsTo(Sorteo::class, 'id_sorteo');

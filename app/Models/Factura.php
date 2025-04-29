@@ -21,6 +21,8 @@ class Factura extends Model
         'tipo_compra',
     ];
 
+    protected $primaryKey = 'id_factura';
+
     public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'id_cliente');

@@ -10,11 +10,14 @@ return new class extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id('id_cliente');
-            $table->string('nombre_cliente');
+            $table->string('primer_nombre_cliente');
+            $table->string('segundo_nombre_cliente')->nullable();
+            $table->string('primer_apellido_cliente');
+            $table->string('segundo_apellido_cliente')->nullable();
             $table->string('correo_cliente')->unique();
             $table->string('telefono_cliente', 15)->nullable();
-            $table->text('direccion_cliente')->nullable();
-            $table->timestamps(); // Añade created_at y updated_at
+            $table->string('cedula')->unique();
+            $table->timestamps(); 
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
         });
     }

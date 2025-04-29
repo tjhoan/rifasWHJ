@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('ganadores', function (Blueprint $table) {
             $table->id('id_ganador');
-            $table->foreignId('id_sorteo')->constrained('sorteos');
-            $table->foreignId('id_cliente')->constrained('clientes');
+            $table->foreignId('id_sorteo')->constrained('sorteos', 'id_sorteo');
+            $table->foreignId('id_cliente')->constrained('clientes', 'id_cliente');
             $table->timestamp('fecha_ganador')->useCurrent();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();

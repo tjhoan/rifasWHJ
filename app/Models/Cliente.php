@@ -12,10 +12,13 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-        'nombre_cliente',
+        'primer_nombre_cliente',
+        'segundo_nombre_cliente',
+        'primer_apellido_cliente',
+        'segundo_apellido_cliente',
         'correo_cliente',
         'telefono_cliente',
-        'direccion_cliente',
+        'cedula',
         'estado',
     ];
 
@@ -23,8 +26,10 @@ class Cliente extends Model
         'estado' => 'string',
     ];
 
+    protected $primaryKey = 'id_cliente';
+
     public function carritos()
     {
-        return $this->hasMany(Carrito::class, 'id_cliente');
+        return $this->hasMany(Carrito::class, 'id_cliente', 'id_cliente');
     }
 }

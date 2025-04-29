@@ -11,6 +11,8 @@ class Carrito extends Model
 
     protected $table = 'carrito';
 
+    protected $primaryKey = 'id_carrito';
+
     protected $fillable = [
         'id_cliente',
         'estado',
@@ -24,5 +26,14 @@ class Carrito extends Model
     public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
+
+    public function calculateTotal()
+    {
+        $total = 0;
+        foreach ($this->numeros as $numero) {
+            $total += $numero->rifa->precio_boleto;
+        }
+        return $total;
     }
 }

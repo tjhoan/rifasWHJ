@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('carrito', function (Blueprint $table) {
             $table->id('id_carrito');
-            $table->foreignId('id_cliente')->constrained('clientes');
+            $table->foreignId('id_cliente')->constrained('clientes', 'id_cliente');
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });

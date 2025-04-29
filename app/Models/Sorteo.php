@@ -11,16 +11,14 @@ class Sorteo extends Model
 
     protected $table = 'sorteos';
 
+    protected $primaryKey = 'id_sorteo';
+
     protected $fillable = [
         'id_rifa',
         'fecha_sorteo',
         'ganador_id_cliente',
         'numero_ganador',
         'estado',
-    ];
-
-    protected $casts = [
-        'estado' => 'string',
     ];
 
     public function rifa()
@@ -30,6 +28,6 @@ class Sorteo extends Model
 
     public function ganador()
     {
-        return $this->belongsTo(Cliente::class, 'ganador_id_cliente');
+        return $this->hasOne(Ganador::class, 'id_sorteo');
     }
 }

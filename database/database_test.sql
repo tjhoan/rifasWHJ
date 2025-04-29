@@ -4,7 +4,6 @@ CREATE TABLE
         nombre_cliente VARCHAR(255) NOT NULL,
         correo_cliente VARCHAR(255) UNIQUE NOT NULL,
         telefono_cliente VARCHAR(15),
-        direccion_cliente TEXT,
         fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         estado ENUM ('activo', 'inactivo') DEFAULT 'activo'
     );

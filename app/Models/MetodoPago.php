@@ -20,4 +20,6 @@ class MetodoPago extends Model
     protected $casts = [
         'estado' => 'string',
     ];
+
+    protected $primaryKey = 'id_pago';
 }
