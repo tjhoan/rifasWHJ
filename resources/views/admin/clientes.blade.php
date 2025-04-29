@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clientes - Panel Administrativo</title>
   <link rel="stylesheet" href="{{ asset('css/admin/clientes.css') }}">
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body>
   <!-- Sidebar / Menú lateral -->
   <div class="sidebar">
@@ -28,95 +27,108 @@
 
   <!-- Contenido principal -->
   <div class="main-content">
-
-    <!-- TÍTULO DE LA PÁGINA -->
     <h1 class="page-title">Clientes</h1>
 
-    <!-- BUSCADOR -->
-    <div class="search-box">
-      <input type="text" placeholder="BUSCAR CÉDULA" />
-      <button class="btn-search"><i class="fas fa-search"></i></button>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
     </div>
+    @endif
 
-    <!-- TARJETA DE CLIENTE -->
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @endif
+
+    <!-- Lista de clientes -->
+    @foreach ($clientes as $cliente)
     <div class="client-card">
-      <!-- PRIMERA FILA DE DATOS -->
       <div class="info-row">
         <div class="info-item">
           <span class="label">Primer Nombre:</span>
-          <span class="value">Juan</span>
+          <span class="value">{{ $cliente->primer_nombre_cliente }}</span>
         </div>
         <div class="info-item">
           <span class="label">Segundo Nombre:</span>
-          <span class="value">José</span>
+          <span class="value">{{ $cliente->segundo_nombre_cliente }}</span>
         </div>
         <div class="info-item">
           <span class="label">Primer Apellido:</span>
-          <span class="value">Soto</span>
+          <span class="value">{{ $cliente->primer_apellido_cliente }}</span>
         </div>
         <div class="info-item">
           <span class="label">Segundo Apellido:</span>
-          <span class="value">Pérez</span>
+          <span class="value">{{ $cliente->segundo_apellido_cliente }}</span>
         </div>
       </div>
 
-      <!-- SEGUNDA FILA DE DATOS -->
       <div class="info-row">
         <div class="info-item">
           <span class="label">Celular:</span>
-          <span class="value">3124567890</span>
+          <span class="value">{{ $cliente->telefono_cliente }}</span>
         </div>
         <div class="info-item">
           <span class="label">Correo electrónico:</span>
-          <span class="value">Jose@gmail.com</span>
+          <span class="value">{{ $cliente->correo_cliente }}</span>
         </div>
         <div class="info-item">
           <span class="label">Cédula:</span>
-          <span class="value">1113435678</span>
+          <span class="value">{{ $cliente->cedula }}</span>
         </div>
       </div>
 
-      <!-- BOTONES ABAJO -->
       <div class="client-buttons">
-        <button class="btn-delete">Eliminar</button>
-        <button class="btn-edit" id="openEditModal">Editar</button>
+        <form action="{{ route('admin.clientes.destroy', $cliente->id_cliente) }}" method="POST">
+          @csrf
+          @method('DELETE')
+          <button class="btn-delete" type="submit">Eliminar</button>
+        </form>
+        <button class="btn-edit" data-cliente='{{ json_encode($cliente) }}' onclick="openEditModal(this)">Editar</button>
       </div>
     </div>
-
-    <!-- MODAL EDITAR CLIENTE -->
+    @endforeach
+  </div>
+  <!-- MODAL EDITAR CLIENTE -->
   <div class="modal" id="modalEditarCliente">
     <div class="modal-content">
       <span class="close" id="closeEditModal">&times;</span>
       <h3>Editar Cliente</h3>
-      <form class="edit-form">
+      <form class="edit-form" method="POST">
+        @csrf
+        @method('PUT')
         <div class="edit-row">
           <label>
             Primer Nombre:
-            <input type="text" name="primerNombre" value="Juan">
+            <input type="text" name="primer_nombre_cliente" value="Juan">
           </label>
           <label>
             Segundo Nombre:
-            <input type="text" name="segundoNombre" value="José">
+            <input type="text" name="segundo_nombre_cliente" value="José">
           </label>
         </div>
         <div class="edit-row">
           <label>
             Primer Apellido:
-            <input type="text" name="primerApellido" value="Toro">
+            <input type="text" name="primer_apellido_cliente" value="Toro">
           </label>
           <label>
             Segundo Apellido:
-            <input type="text" name="segundoApellido" value="Pérez">
+            <input type="text" name="segundo_apellido_cliente" value="Pérez">
           </label>
         </div>
         <div class="edit-row">
           <label>
             Celular:
-            <input type="text" name="celular" value="3124567890">
+            <input type="text" name="telefono_cliente" value="3124567890">
           </label>
           <label>
             Correo electrónico:
-            <input type="email" name="correo" value="Jose@gmail.com">
+            <input type="email" name="correo_cliente" value="Jose@gmail.com">
           </label>
           <label>
             Cédula:
@@ -129,24 +141,37 @@
       </form>
     </div>
   </div>
-
-  </div>
-   <!-- JS para abrir/cerrar modal -->
-   <script>
+  <!-- JS para abrir/cerrar modal -->
+  <script>
     const modal = document.getElementById('modalEditarCliente');
     const openBtn = document.getElementById('openEditModal');
     const closeBtn = document.getElementById('closeEditModal');
 
-    openBtn.addEventListener('click', () => {
-      modal.classList.add('show');
-    });
     closeBtn.addEventListener('click', () => {
       modal.classList.remove('show');
     });
-    // Cerrar al clicar fuera del contenido
+
     modal.addEventListener('click', e => {
-      if (e.target === modal) modal.classList.remove('show');
+      if (e.target === modal) {
+        modal.classList.remove('show');
+      }
     });
+
+    function openEditModal(button) {
+      const cliente = JSON.parse(button.getAttribute('data-cliente'));
+      const modal = document.getElementById('modalEditarCliente');
+      modal.querySelector('input[name="primer_nombre_cliente"]').value = cliente.primer_nombre_cliente;
+      modal.querySelector('input[name="segundo_nombre_cliente"]').value = cliente.segundo_nombre_cliente;
+      modal.querySelector('input[name="primer_apellido_cliente"]').value = cliente.primer_apellido_cliente;
+      modal.querySelector('input[name="segundo_apellido_cliente"]').value = cliente.segundo_apellido_cliente;
+      modal.querySelector('input[name="telefono_cliente"]').value = cliente.telefono_cliente;
+      modal.querySelector('input[name="correo_cliente"]').value = cliente.correo_cliente;
+      modal.querySelector('input[name="cedula"]').value = cliente.cedula;
+
+      modal.querySelector('form').action = `/admin/clientes/${cliente.id_cliente}`;
+      modal.classList.add('show');
+    }
   </script>
 </body>
+
 </html>

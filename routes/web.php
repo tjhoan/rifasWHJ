@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminClientesController;
 use App\Http\Controllers\admin\AdminRifasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\FacturarController;
@@ -37,12 +38,12 @@ Route::prefix('admin')->group(function () {
     Route::put('/rifas/{id}', [AdminRifasController::class, 'update'])->name('admin.rifas.update');
     Route::delete('/rifas/{id}', [AdminRifasController::class, 'destroy'])->name('admin.rifas.destroy');
 
+    Route::get('/clientes', [AdminClientesController::class, 'index'])->name('admin.clientes.index');
+    Route::delete('/clientes/{id}', [AdminClientesController::class, 'destroy'])->name('admin.clientes.destroy');
+    Route::put('/clientes/{id}', [AdminClientesController::class, 'update'])->name('admin.clientes.update');
+    
     Route::get('/ventas', function () {
         return view('admin.ventas');
-    });
-
-    Route::get('/clientes', function () {
-        return view('admin.clientes');
     });
 
     Route::get('/sorteo', function () {
