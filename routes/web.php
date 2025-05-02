@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\admin\AdminRifasController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\FacturarController;
 use App\Http\Controllers\FinalizarReciboController;
 use App\Http\Controllers\GanadoresController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarritoController;
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/ganadores', [GanadoresController::class, 'index']);
@@ -24,19 +25,17 @@ Route::prefix('carrito')->group(function () {
 Route::get('/facturar', [FacturarController::class, 'index'])->name('facturar.index');
 Route::post('/facturar', [FacturarController::class, 'store'])->name('facturar.store');
 
-Route::get('/finalizar-recibos', [CarritoController::class, 'finalizar'])->name('finalizar-recibos');
+Route::get('/finalizar-recibos', [FinalizarReciboController::class, 'index'])->name('finalizar-recibos');
 Route::post('/guardar-datos-empresa', [FinalizarReciboController::class, 'store'])->name('datos-empresa.store');
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
-
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.rifas');
-    });
+    Route::get('/', [AdminRifasController::class, 'index'])->name('admin.dashboard');
+    Route::post('/rifas', [AdminRifasController::class, 'store'])->name('admin.rifas.store');
+    Route::put('/rifas/{id}', [AdminRifasController::class, 'update'])->name('admin.rifas.update');
+    Route::delete('/rifas/{id}', [AdminRifasController::class, 'destroy'])->name('admin.rifas.destroy');
 
     Route::get('/ventas', function () {
         return view('admin.ventas');

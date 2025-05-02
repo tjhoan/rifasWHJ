@@ -2,20 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
+    use HasFactory;
+
     protected $table = 'clientes';
-    protected $primaryKey = 'cedula';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['cedula', 'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'celular'];
 
-    public $timestamps = false;
+    protected $fillable = [
+        'primer_nombre_cliente',
+        'segundo_nombre_cliente',
+        'primer_apellido_cliente',
+        'segundo_apellido_cliente',
+        'correo_cliente',
+        'telefono_cliente',
+        'cedula',
+        'estado',
+    ];
 
-    public function ventas()
+    protected $casts = [
+        'estado' => 'string',
+    ];
+
+    protected $primaryKey = 'id_cliente';
+
+    public function carritos()
     {
-        return $this->hasMany(Venta::class, 'cedula_cliente');
+        return $this->hasMany(Carrito::class, 'id_cliente', 'id_cliente');
     }
 }

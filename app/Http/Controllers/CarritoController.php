@@ -2,145 +2,115 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carrito;
-use App\Models\NumeroRifa;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Carrito;
+use App\Models\CarritoNumero;
+use App\Models\Cliente;
+use App\Models\NumerosRifa;
 
 class CarritoController extends Controller
 {
     public function index()
     {
-        $carrito = Carrito::with(['rifa', 'numero'])->where('estado', 'activo')->get();
-        return view('carrito', compact('carrito'));
-    }
+        $cliente = $this->getOrCreateCliente();
+        $carrito = $cliente->carritos()->where('estado', 'activo')->first();
 
-    public function add(Request $request)
-    {
-        $numero = NumeroRifa::findOrFail($request->id_numero);
-
-        $item = Carrito::where('id_numero', $numero->id)->first();
-
-        if ($item) {
-            $item->cantidad += 1;
-            $item->save();
+        if ($carrito) {
+            $carrito->load('numeros');
         } else {
-            Carrito::create([
-                'id_rifa' => $numero->id_rifa,
-                'id_numero' => $numero->id,
-                'cantidad' => 1,
-            ]);
+            $carrito = [];
         }
 
-        return response()->json(['message' => 'Número agregado al carrito']);
+        return view('carrito', compact('carrito'));
     }
 
     public function addSelected(Request $request)
     {
-        try {
-            $selectedNumbers = json_decode($request->input('selected_numbers', '[]'), true);
-            $rifaId = $request->input('id_rifa');
+        $cliente = $this->getOrCreateCliente();
+        $carrito = $cliente->carritos()->where('estado', 'activo')->first();
 
-            if (!is_array($selectedNumbers)) {
-                return redirect()->back()->with('error', 'Los números seleccionados no son válidos.');
-            }
+        if (!$carrito) {
+            $carrito = Carrito::create([
+                'id_cliente' => $cliente->id_cliente,
+                'estado' => 'activo',
+            ]);
+        }
 
-            foreach ($selectedNumbers as $numeroId) {
-                $numero = NumeroRifa::find($numeroId);
+        $selectedNumbers = json_decode($request->selected_numbers);
 
-                if (!$numero) {
-                    return redirect()->back()->with('error', "El número con ID {$numeroId} no existe.");
-                }
+        DB::transaction(function () use ($selectedNumbers, $carrito) {
+            foreach ($selectedNumbers as $numberId) {
+                $numero = NumerosRifa::find($numberId);
 
-                $item = Carrito::where('id_numero', $numero->id)->first();
+                if ($numero && $numero->estado == 'disponible') {
+                    $numero->update(['estado' => 'reservado']);
 
-                if ($item) {
-                    $item->cantidad += 1;
-                    $item->save();
-                } else {
-                    Carrito::create([
-                        'id_rifa' => $rifaId,
-                        'id_numero' => $numero->id,
-                        'cantidad' => 1,
-                        'fecha_creacion' => now(),
+                    CarritoNumero::create([
+                        'id_carrito' => $carrito->id_carrito,
+                        'id_numero' => $numero->id_numero,
                     ]);
                 }
             }
+        });
 
-            return redirect()->back()->with('success', 'Números agregados al carrito');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
-        }
-    }
-
-    public function finalizar(Request $request)
-    {
-        try {
-            $carrito = Carrito::with(['rifa', 'numero', 'rifa.imagenes'])->where('estado', 'activo')->get();
-
-            if ($carrito->isEmpty()) {
-                $carrito = session('carrito', collect());
-                $total = session('total', 0);
-                $tipoAccion = session('tipoAccion', 'separar');
-            }
-
-            $cliente = session('cliente');
-            $tipoAccion = $request->input('tipo_accion', 'separar');
-
-            $total = $carrito->sum(function ($item) {
-                $precio = is_numeric($item->rifa->precio) ? (float) $item->rifa->precio : 0;
-                return $precio * $item->cantidad;
-            });
-
-            session(['carrito' => $carrito, 'total' => $total, 'tipoAccion' => $tipoAccion]);
-
-            if ($carrito->isEmpty()) {
-                return view('finalizar-recibos', [
-                    'carrito' => $carrito,
-                    'cliente' => $cliente,
-                    'total' => $total,
-                ])->with('warning', 'El carrito está vacío.');
-            }
-
-            if (!$cliente) {
-                return view('finalizar-recibos', [
-                    'carrito' => $carrito,
-                    'cliente' => $cliente,
-                    'total' => $total,
-                ])->with('warning', 'No se encontraron datos del cliente.');
-            }
-
-            // mostrar en un log la url de la imagen que está en carrito
-            Log::info('URL de la imagen en carrito', [
-                'url' => $carrito->first()->rifa->imagenes->first()->ruta_imagen ?? null
-            ]);
-
-            return view('finalizar-recibos', [
-                'carrito' => $carrito,
-                'cliente' => $cliente,
-                'total' => (float) $total,
-                'tipoAccion' => $tipoAccion
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Error al finalizar: ' . $e->getMessage(), [
-                'request' => $request->all(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
-        }
+        return redirect()->route('carrito.index');
     }
 
     public function remove(Request $request)
     {
-        $item = Carrito::findOrFail($request->id_carrito);
-        $item->delete();
+        $carrito = Carrito::find($request->id_carrito);
+        $numero = NumerosRifa::find($request->id_numero);
 
-        return redirect()->back()->with('success', 'Número eliminado del carrito');
+        if ($carrito && $numero) {
+            $carrito->numeros()->detach($numero->id_numero);
+            $numero->update(['estado' => 'disponible']);
+        } else {
+            return response()->json(['error' => 'Carrito o Numero no encontrado'], 404);
+        }
+
+        return redirect()->route('carrito.index');
     }
 
-    public function clear()
+    public function clear(Request $request)
     {
-        Carrito::truncate();
-        return redirect()->back()->with('success', 'Carrito vaciado');
+        $carrito = Carrito::find($request->id_carrito);
+
+        if ($carrito) {
+            foreach ($carrito->numeros as $numero) {
+                $numero->update(['estado' => 'disponible']);
+            }
+
+            $carrito->numeros()->detach();
+        } else {
+            return response()->json(['error' => 'Carrito no encontrado'], 404);
+        }
+
+        return redirect()->route('carrito.index');
+    }
+
+    private function getOrCreateCliente()
+    {
+        if (!Session::has('cliente_id')) {
+            $uniqueEmail = 'temporal_' . uniqid() . '@correo.com';
+
+            $cliente = Cliente::create([
+                'primer_nombre_cliente' => 'Cliente',
+                'segundo_nombre_cliente' => 'Temporal',
+                'primer_apellido_cliente' => '',
+                'segundo_apellido_cliente' => '',
+                'estado' => 'activo',
+                'correo_cliente' => $uniqueEmail,
+                'telefono_cliente' => '0000000000',
+                'cedula' => '00000000',
+            ]);
+
+            Session::put('cliente_id', $cliente->id_cliente);
+        } else {
+            $cliente = Cliente::find(Session::get('cliente_id'));
+        }
+
+        return $cliente;
     }
 }

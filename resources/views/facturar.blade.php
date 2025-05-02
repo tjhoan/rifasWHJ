@@ -22,7 +22,7 @@
     @error('segundo_apellido') <div class="error">{{ $message }}</div> @enderror
   </div>
   <div class="row">
-    <input type="tel" name="celular" placeholder="Celular" required>
+    <input type="tel" name="telefono" placeholder="Celular" required>
     @error('celular') <div class="error">{{ $message }}</div> @enderror
     <input type="email" name="correo" placeholder="Correo electrónico" required>
     @error('correo') <div class="error">{{ $message }}</div> @enderror
@@ -80,6 +80,5 @@
     document.getElementById('tipo_accion').value = tipoAccion;
   }
 </script>
-
 
 @endsection

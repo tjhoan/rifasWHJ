@@ -11,16 +11,16 @@ class GanadoresSeeder extends Seeder
     {
         DB::table('ganadores')->insert([
             [
-                'boletos_ganador' => '34601',
-                'nombre_ganador' => 'Juan Pérez',
                 'id_sorteo' => 1,
-                'id_rifa' => 1
+                'id_cliente' => 1,
+                'fecha_ganador' => now(),
+                'estado' => 'activo'
             ],
             [
-                'boletos_ganador' => '67890',
-                'nombre_ganador' => 'María Gómez',
                 'id_sorteo' => 2,
-                'id_rifa' => 2
+                'id_cliente' => 2,
+                'fecha_ganador' => now(),
+                'estado' => 'activo'
             ],
         ]);
     }

@@ -9,12 +9,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('metodos_pago', function (Blueprint $table) {
-            $table->id('id_metodo_pago');
-            $table->date('fecha_pago');
-            $table->decimal('total_pago', 10, 2);
-            $table->string('metodo_pago', 50);
-            $table->unsignedBigInteger('id_administrador');
-            $table->foreign('id_administrador')->references('id_administrador')->on('administradores');
+            $table->id('id_pago');
+            $table->string('nombre_metodo');
+            $table->string('digito_cuenta');
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
     }

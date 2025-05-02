@@ -10,39 +10,42 @@
 <h1 class="titulo-carrito">Carrito</h1>
 
 <div class="carrito-container">
-  @forelse ($carrito as $item)
+  @if (!empty($carrito) && is_iterable($carrito->numeros))
+  @foreach ($carrito->numeros as $numero)
   <div class="carrito-item">
-    <img alt="Icono" class="item-icono" src="{{ $item->rifa->imagenes->first()->ruta_imagen }}">
+    <img alt="Icono" class="item-icono" src="{{ $numero->rifa->imagen_rifa }}">
     <div class="item-info">
       <div class="info-left">
-        <h3>{{ $item->rifa->nombre }}</h3>
-        <p>Boleto: <strong>{{ $item->numero->numero }}</strong></p>
-        <p>Cantidad: <strong>{{ $item->cantidad }}</strong></p>
+        <h3>{{ $numero->rifa->nombre_rifa }}</h3>
+        <p>Boleto: <strong>{{ $numero->numero }}</strong></p>
       </div>
       <div class="info-right">
-        <p>Inicio: <strong>{{ \Carbon\Carbon::parse($item->rifa->fecha_inicio)->format('d/m/Y') }}</strong></p>
-        <p>Sorteo: <strong>{{ \Carbon\Carbon::parse($item->rifa->fecha_sorteo)->format('d/m/Y') }}</strong></p>
-        <p>Premio: <strong>{{ $item->rifa->premio }}</strong></p>
+        <p>Inicio: <strong>{{ \Carbon\Carbon::parse($numero->rifa->fecha_inicio)->format('d/m/Y') }}</strong></p>
+        <p>Sorteo: <strong>{{ \Carbon\Carbon::parse($numero->rifa->fecha_sorteo)->format('d/m/Y') }}</strong></p>
+        <p>Premio: <strong>{{ $numero->rifa->premio }}</strong></p>
       </div>
     </div>
     <form method="POST" action="{{ route('carrito.remove') }}" class="form-inline">
       @csrf
-      <input type="hidden" name="id_carrito" value="{{ $item->id_carrito }}">
+      <input type="hidden" name="id_carrito" value="{{ $carrito->id_carrito }}">
+      <input type="hidden" name="id_numero" value="{{ $numero->id_numero }}">
       <button type="submit" class="btn btn-remove">
         <i class="fa-solid fa-trash"></i>
       </button>
     </form>
   </div>
-  @empty
-  <p class="empty-message">No hay elementos en el carrito.</p>
-  @endforelse
+  @endforeach
+  @else
+  <p>No hay elementos en el carrito.</p>
+  @endif
 </div>
 
 <div class="carrito-actions">
   <form method="POST" action="{{ route('carrito.clear') }}">
     @csrf
+    <input type="hidden" name="id_carrito" value="{{ $carrito->id_carrito }}">
     <button type="submit" class="btn btn-clear">Vaciar Carrito</button>
-  </form>
+</form>
 
   <form action="{{ url('/facturar') }}" method="GET">
     <button type="submit" class="btn btn-facturar">Facturar</button>

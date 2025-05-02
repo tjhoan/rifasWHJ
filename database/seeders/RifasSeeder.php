@@ -11,24 +11,46 @@ class RifasSeeder extends Seeder
     {
         DB::table('rifas')->insert([
             [
-                'nombre' => 'Baloto',
-                'premio' => '$1.200.000',
-                'precio' => 2000,
-                'cantidad_numero' => 50,
+                'id_rifa' => 1,
+                'nombre_rifa' => 'Baloto',
+                'imagen_rifa' => 'https://www.ganagana.com.co/images/Logo-baloto.png',
+                'precio_boleto' => 5000,
+                'cantidad_boletos' => 1000,
                 'fecha_inicio' => '2025-04-01',
-                'fecha_sorteo' => '2025-04-30',
-                'id_administrador' => 1,
-                'id_sorteo' => 1
+                'fecha_fin' => '2025-04-21',
+                'fecha_sorteo' => '2025-04-22',
+                'premio' => '1.000.000',
+                'estado' => 'activo',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
-                'nombre' => 'Loteria del Valle',
-                'premio' => '$2.000.000',
-                'precio' => 1500,
-                'cantidad_numero' => 120,
-                'fecha_inicio' => '2025-04-05',
-                'fecha_sorteo' => '2025-04-25',
-                'id_administrador' => 1,
-                'id_sorteo' => 2
+                'id_rifa' => 2,
+                'nombre_rifa' => 'Lotería Del Valle',
+                'imagen_rifa' => 'https://caracoltv.brightspotcdn.com/dims4/default/940e1cd/2147483647/strip/true/crop/1280x720+0+0/resize/1280x720!/format/webp/quality/75/?url=http%3A%2F%2Fcaracol-brightspot.s3.us-west-2.amazonaws.com%2F9c%2F0a%2Fc45d6e02461dbf01d4c0bf9d0d20%2Floteria-del-valle.jpg',
+                'precio_boleto' => 2300,
+                'cantidad_boletos' => 2000,
+                'fecha_inicio' => '2025-05-01',
+                'fecha_fin' => '2025-05-21',
+                'fecha_sorteo' => '2025-05-22',
+                'premio' => '500.000',
+                'estado' => 'activo',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id_rifa' => 3,
+                'nombre_rifa' => 'Chontico Día',
+                'imagen_rifa' => 'https://loteriasdehoy.co/images/chontico-dia.jpg',
+                'precio_boleto' => 2000,
+                'cantidad_boletos' => 2000,
+                'fecha_inicio' => '2025-06-01',
+                'fecha_fin' => '2025-06-21',
+                'fecha_sorteo' => '2025-06-22',
+                'premio' => '200.000',
+                'estado' => 'activo',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
         ]);
     }

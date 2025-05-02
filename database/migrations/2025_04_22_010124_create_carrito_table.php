@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('ganadores', function (Blueprint $table) {
-            $table->id('id_ganador');
-            $table->foreignId('id_sorteo')->constrained('sorteos', 'id_sorteo');
+        Schema::create('carrito', function (Blueprint $table) {
+            $table->id('id_carrito');
             $table->foreignId('id_cliente')->constrained('clientes', 'id_cliente');
-            $table->timestamp('fecha_ganador')->useCurrent();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();
         });
@@ -20,6 +18,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('ganadores');
+        Schema::dropIfExists('carrito');
     }
 };

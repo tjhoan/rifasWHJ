@@ -12,14 +12,34 @@ class SorteosSeeder extends Seeder
         DB::table('sorteos')->insert([
             [
                 'id_sorteo' => 1,
-                'fecha_realizacion' => '2025-04-30',
-                'estado' => 'Pendiente'
+                'id_rifa' => 1,
+                'fecha_sorteo' => '2025-04-22',
+                'ganador_id_cliente' => 1,
+                'numero_ganador' => 123456,
+                'estado' => 'realizado',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id_sorteo' => 2,
-                'fecha_realizacion' => '2025-04-25',
-                'estado' => 'Pendiente'
+                'id_rifa' => 2,
+                'fecha_sorteo' => '2025-05-22',
+                'ganador_id_cliente' => 1,
+                'numero_ganador' => 223,
+                'estado' => 'sin_ganador',
+                'created_at' => now(),
+                'updated_at' => now()
             ],
+            [
+                'id_sorteo' => 3,
+                'id_rifa' => 3,
+                'fecha_sorteo' => '2025-06-22',
+                'ganador_id_cliente' => 2,
+                'numero_ganador' => 5467,
+                'estado' => 'sin_reclamo',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 }

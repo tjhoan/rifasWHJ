@@ -16,13 +16,11 @@
 
 <section class="info-section">
     <div class="rifa-image">
-        <img src="{{ $rifa->imagenes->first()->ruta_imagen }}" alt="Imagen de la Rifa">
+        <img src="{{ $rifa->imagen_rifa }}" alt="Imagen de la Rifa">
     </div>
     <div class="info-container">
         <div class="left-info">
             <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre }}</p>
-            <label class="option"><input type="checkbox"> Separar</label>
-            <label class="option"><input type="checkbox"> Comprar</label>
         </div>
         <div class="right-info">
             <p class="pp"><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>
@@ -42,7 +40,7 @@
 <section class="numbers-section">
     <div class="numbers-grid">
         @foreach ($numeros as $numero)
-        <button class="number {{ $numero->estado == 'comprado' ? 'comprado' : '' }}" data-id="{{ $numero->id }}">
+        <button class="number {{ $numero->estado == 'comprado' ? 'comprado' : ($numero->estado == 'reservado' ? 'selected' : '') }}" data-id="{{ $numero->id_numero }}">
             {{ $numero->numero }}
         </button>
         @endforeach

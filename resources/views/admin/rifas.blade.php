@@ -1,236 +1,257 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo</title>
   <link rel="stylesheet" href="{{ asset('css/admin/adminPanel.css') }}">
-  <!-- Fuente Inter desde Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
 
-  <!-- Sidebar / Menú lateral -->
-  <div class="sidebar">
-    <div class="admin-info">
-      <span>ADMINISTRADOR</span>
-      <h3>Hernando Vivas Franco</h3>
-    </div>
-    <ul class="menu">
-      <li class="active"><a href="{{ url('/admin') }}">Rifas</a></li>
-      <li><a href="{{ url('/admin/ventas') }}">Ventas</a></li>
-      <li><a href="{{ url('/admin/clientes') }}">Clientes</a></li>
-      <li><a href="{{ url('/admin/sorteo') }}">Sorteo</a></li>
-      <li><a href="{{ url('/admin/configuracion') }}">Configuración</a></li>
-    </ul>
+<body></body>
+
+<!-- Sidebar / Menú lateral -->
+<div class="sidebar">
+  <div class="admin-info">
+    <span>ADMINISTRADOR</span>
+    <h3>Hernando Vivas Franco</h3>
   </div>
+  <ul class="menu">
+    <li class="active"><a href="{{ url('/admin') }}">Rifas</a></li>
+    <li><a href="{{ url('/admin/ventas') }}">Ventas</a></li>
+    <li><a href="{{ url('/admin/clientes') }}">Clientes</a></li>
+    <li><a href="{{ url('/admin/sorteo') }}">Sorteo</a></li>
+    <li><a href="{{ url('/admin/configuracion') }}">Configuración</a></li>
+  </ul>
+</div>
+<!-- Contenido principal -->
+<div class="main-content">
+  <header>
+    <h1>Rifas</h1>
+    <button class="btn-nueva" id="btnAbrirModal">+ Nueva</button>
+  </header>
 
-  <!-- Contenido principal -->
-  <div class="main-content">
-    <header>
-      <h1>Rifas</h1>
-      <button class="btn-nueva" id="btnAbrirModal">+ Nueva</button>
-    </header>
-
-    <section class="rifas-container">
-      <div class="rifa-card">
-        <div class="rifa-icon">
-          <img src="{{ asset('img/pc-gamer.png') }}" alt="Ícono Rifa">
-        </div>
-        <div class="rifa-info">
-          <p><strong>Nombre:</strong> Rifa Especial</p>
-          <p><strong>Cantidad vendida:</strong> 50</p>
-          <p><strong>Precio:</strong> $10</p>
-          <p><strong>Fecha inicio:</strong> 01/04/2025</p>
-          <p><strong>Fecha sorteo:</strong> 30/04/2025</p>
-          <p><strong>Premio:</strong> Laptop Gamer</p>
-        </div>
-        <div class="actions">
-          <button class="btn-eliminar">Eliminar</button>
-          <button class="btn-modificar" id="btnModificar">Modificar</button>
-        </div>
-        <div class="rifa-boletos">
-          <span>234</span>
-          <span class="vendido">235</span>
-          <span class="vendido">236</span>
-          <span>237</span>
-          <span>238</span>
-          <span class="vendido">238</span>
-          <span class="vendido">231</span>
-          <span>232</span>
-          <span>233</span>
-          <span class="vendido">240</span>
-          <span>241</span>
-          <span>242</span>
-          <span>243</span>
-          <span class="vendido">244</span>
-        </div>
+  <section class="rifas-container">
+    @foreach ($rifas as $rifa)
+    <div class="rifa-card">
+      <div class="rifa-icon">
+        <img
+          src="{{ filter_var($rifa->imagen_rifa, FILTER_VALIDATE_URL) ? $rifa->imagen_rifa : asset('storage/' . $rifa->imagen_rifa) }}" alt="Ícono Rifa">
       </div>
-
-      <div class="rifa-card">
-        <div class="rifa-icon">
-          <img src="{{ asset('img/iphone.jpg') }}" alt="Ícono Rifa">
-        </div>
-        <div class="rifa-info">
-          <p><strong>Nombre:</strong> Rifa Oro</p>
-          <p><strong>Cantidad vendida:</strong> 30</p>
-          <p><strong>Precio:</strong> $5</p>
-          <p><strong>Fecha inicio:</strong> 05/04/2025</p>
-          <p><strong>Fecha sorteo:</strong> 25/04/2025</p>
-          <p><strong>Premio:</strong> Smartphone</p>
-        </div>
-        <div class="actions">
-          <button class="btn-eliminar">Eliminar</button>
-          <button class="btn-modificar" id="btnModificar">Modificar</button>
-        </div>
-        <div class="rifa-boletos">
-          <span class="vendido">345</span>
-          <span class="vendido">346</span>
-          <span>347</span>
-          <span>348</span>
-          <span class="vendido">349</span>
-        </div>
+      <div class="rifa-info">
+        <p><strong>Nombre:</strong> {{ $rifa->nombre_rifa }}</p>
+        <p><strong>Cantidad vendida:</strong> {{ $rifa->numeros()->where('estado', 'vendido')->count() }}</p>
+        <p><strong>Precio:</strong> ${{ $rifa->precio_boleto }}</p>
+        <p><strong>Fecha inicio:</strong> {{ $rifa->fecha_inicio }}</p>
+        <p><strong>Fecha sorteo:</strong> {{ $rifa->fecha_sorteo }}</p>
+        <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
       </div>
-    </section>
-  </div>
-
-  <!-- Modal para crear nueva rifa -->
-  <div class="modal" id="modalRifa">
-    <div class="modal-content">
-      <span class="close" id="btnCerrarModal">&times;</span>
-      <h3>Crear Nueva Rifa</h3>
-      <form>
-        <label>
-          Nombre de la rifa:
-          <input type="text" placeholder="Nombre de la rifa">
-        </label>
-        <label>
-          Precio:
-          <input type="number" min="0" step="0.01" placeholder="Precio">
-        </label>
-        <label>
-          Fecha inicio:
-          <input type="date">
-        </label>
-        <label>
-          Fecha sorteo:
-          <input type="date">
-        </label>
-        <label>
-          Imagen:
-          <input type="file" accept="image/*">
-        </label>
-        <label>
-          Premio:
-          <input type="text" placeholder="Premio">
-        </label>
-        <label>
-          Cantidad de números:
-          <input type="number" min="1" placeholder="Ej. 1000">
-        </label>
-        <label>
-          Números (separados por comas):
-          <textarea placeholder="Ej. 1,2,3,..."></textarea>
-        </label>
-        <button type="submit" class="btn-agregar">Agregar</button>
-      </form>
+      <div class="actions">
+        <button class="btn-eliminar" data-id="{{ $rifa->id_rifa }}">Eliminar</button>
+        <button class="btn-modificar" data-rifa="{{ $rifa->toJson() }}">Modificar</button>
+      </div>
+      <div class="rifa-boletos">
+        <p><strong>Números reservados:</strong> {{ $rifa->reservados_count }}</p>
+      </div>
     </div>
+    @endforeach
+  </section>
+</div>
+
+<!-- Modal para crear nueva rifa -->
+<div class="modal" id="modalRifa">
+  <div class="modal-content">
+    <span class="close" id="btnCerrarModal">&times;</span>
+    <h3>Crear Nueva Rifa</h3>
+    <form action="{{ route('admin.rifas.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <label>
+        Nombre de la rifa:
+        <input type="text" name="nombre_rifa" placeholder="Nombre de la rifa" required>
+      </label>
+      <label>
+        Precio:
+        <input type="number" name="precio_boleto" min="0" step="0.01" placeholder="Precio" required>
+      </label>
+      <label>
+        Fecha inicio:
+        <input type="date" name="fecha_inicio" required>
+      </label>
+      <label>
+        Fecha sorteo:
+        <input type="date" name="fecha_sorteo" required>
+      </label>
+      <label>
+        Imagen:
+        <input type="file" name="imagen_rifa" accept="image/*">
+      </label>
+      <label>
+        Premio:
+        <input type="text" name="premio" placeholder="Premio" required>
+      </label>
+      <label>
+        Cantidad de números:
+        <input type="number" name="cantidad_boletos" min="1" placeholder="Ej. 1000" required>
+      </label>
+      <label>
+        Fecha fin:
+        <input type="date" name="fecha_fin" required>
+      </label>
+      <button type="submit" class="btn-agregar">Agregar</button>
+    </form>
   </div>
+</div>
 
-  <!-- Modal para modificar rifa rifa -->
-  <div class="modal" id="modificarRifa">
-    <div class="modal-content">
-      <span class="close" id="cerrarModal">&times;</span>
-      <h3>Modificar la rifa</h3>
-      <form>
-        <label>
-          Nombre de la rifa:
-          <input type="text" placeholder="Nombre de la rifa">
-        </label>
-        <label>
-          Precio:
-          <input type="number" min="0" step="0.01" placeholder="Precio">
-        </label>
-        <label>
-          Fecha inicio:
-          <input type="date">
-        </label>
-        <label>
-          Fecha sorteo:
-          <input type="date">
-        </label>
-        <label>
-          Imagen:
-          <input type="file" accept="image/*">
-        </label>
-        <label>
-          Premio:
-          <input type="text" placeholder="Premio">
-        </label>
-        <label>
-          Cantidad de números:
-          <input type="number" min="1" placeholder="Ej. 1000">
-        </label>
-        <label>
-          Números (separados por comas):
-          <textarea placeholder="Ej. 1,2,3,..."></textarea>
-        </label>
-        <button type="submit" class="btn-agregar">Modificar</button>
-      </form>
-    </div>
+<!-- Modal para modificar rifa rifa -->
+<div class="modal" id="modificarRifa">
+  <div class="modal-content">
+    <span class="close" id="cerrarModal">&times;</span>
+    <h3>Modificar la rifa</h3>
+    <form id="formModificarRifa" action="{{ route('admin.rifas.update', ['id' => 0]) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('PUT')
+      <input type="hidden" name="id_rifa" id="id_rifa">
+      <label>
+        Nombre de la rifa:
+        <input type="text" name="nombre_rifa" id="nombre_rifa" placeholder="Nombre de la rifa">
+      </label>
+      <label>
+        Precio:
+        <input type="number" name="precio_boleto" id="precio_boleto" min="0" step="0.01" placeholder="Precio">
+      </label>
+      <label>
+        Fecha inicio:
+        <input type="date" name="fecha_inicio" id="fecha_inicio">
+      </label>
+      <label>
+        Fecha sorteo:
+        <input type="date" name="fecha_sorteo" id="fecha_sorteo">
+      </label>
+      <label>
+        Imagen actual:
+        <div id="imagen_actual_container" style="text-align: center; margin-bottom: 10px;">
+          <img id="imagen_actual" src="" alt="Imagen actual" style="max-width: 100px; border-radius: 5px; margin-bottom: 5px;">
+          <p style="font-size: 0.9em; color: #555;">Cambiar imagen:</p>
+          <input type="file" name="imagen_rifa" id="imagen_rifa" accept="image/*">
+        </div>
+      </label>
+      <label>
+        Premio:
+        <input type="text" name="premio" id="premio" placeholder="Premio">
+      </label>
+      <label>
+        Cantidad de números:
+        <input type="number" name="cantidad_boletos" id="cantidad_boletos" min="1" placeholder="Ej. 1000">
+      </label>
+      <label>
+        Fecha fin:
+        <input type="date" name="fecha_fin" id="fecha_fin">
+      </label>
+      <button type="submit" class="btn-agregar">Modificar</button>
+    </form>
   </div>
+</div>
 
+<!-- Script para el modal -->
+<script>
+  // variables para el modal de crear una nueva rifa 
+  const btnAbrir = document.getElementById('btnAbrirModal');
+  const btnCerrar = document.getElementById('btnCerrarModal');
+  const modalRifa = document.getElementById('modalRifa');
 
-  <!-- Script para el modal -->
-  <script>
-    // variables para el modal de crear una nueva rifa 
-    const btnAbrir = document.getElementById('btnAbrirModal');
-    const btnCerrar = document.getElementById('btnCerrarModal');
-    const modalRifa = document.getElementById('modalRifa');
-    
-    // funciones para abrir y cerrar el modal para la nueva rifa 
-    btnAbrir.addEventListener('click', () => {
-      modalRifa.classList.add('show');
-    });
+  // funciones para abrir y cerrar el modal para la nueva rifa 
+  btnAbrir.addEventListener('click', () => {
+    modalRifa.classList.add('show');
+  });
 
-    btnCerrar.addEventListener('click', () => {
+  btnCerrar.addEventListener('click', () => {
+    modalRifa.classList.remove('show');
+  });
+
+  // Cerrar modal de nueva rifa al hacer clic fuera de la ventana modal
+  window.addEventListener('click', (e) => {
+    if (e.target === modalRifa) {
       modalRifa.classList.remove('show');
-    });
+    }
+  });
 
-    // Cerrar modal de nueva rifa al hacer clic fuera de la ventana modal
-    window.addEventListener('click', (e) => {
-      if (e.target === modalRifa) {
-        modalRifa.classList.remove('show');
-      }
-    });
-    
-
-  // variables del modal de modificar las rifas 
-  const modal = document.getElementById('modificarRifa');
   const openButtons = document.querySelectorAll('.btn-modificar');
-  const closeButtons = modal.querySelectorAll('.close');
+  const modal = document.getElementById('modificarRifa');
+  const form = document.getElementById('formModificarRifa');
 
-  // 1) Asignar a TODOS los botones .btn-modificar la apertura del modal
   openButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      const rifa = JSON.parse(btn.dataset.rifa);
+
+      // Rellenar los campos del formulario
+      form.action = `{{ url('/admin/rifas') }}/${rifa.id_rifa}`;
+      document.getElementById('id_rifa').value = rifa.id_rifa;
+      document.getElementById('nombre_rifa').value = rifa.nombre_rifa;
+      document.getElementById('precio_boleto').value = rifa.precio_boleto;
+      document.getElementById('fecha_inicio').value = rifa.fecha_inicio;
+      document.getElementById('fecha_sorteo').value = rifa.fecha_sorteo;
+      document.getElementById('premio').value = rifa.premio;
+      document.getElementById('cantidad_boletos').value = rifa.cantidad_boletos;
+      document.getElementById('fecha_fin').value = rifa.fecha_fin;
+
+      // Imagen actual
+      const imagenActual = document.getElementById('imagen_actual');
+      if (rifa.imagen_rifa) {
+        imagenActual.src = `{{ asset('storage') }}/${rifa.imagen_rifa}`;
+        imagenActual.style.display = 'block';
+      } else {
+        imagenActual.style.display = 'none';
+      }
+
       modal.classList.add('show');
     });
   });
 
-  // 2) Asignar a TODOS los .close dentro del modal el cierre
+  // Cerrar modal al hacer clic fuera de .modal-content
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+
+  const closeButtons = modal.querySelectorAll('.close');
   closeButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       modal.classList.remove('show');
     });
   });
 
-  // 3) Cerrar modal al hacer clic fuera de .modal-content
-  modal.addEventListener('click', e => {
-    if (e.target === modal) {
-      modal.classList.remove('show');
-    }
-  });
-  </script>
+  const deleteButtons = document.querySelectorAll('.btn-eliminar');
 
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const rifaId = button.dataset.id;
+
+      if (confirm('¿Estás seguro de que deseas eliminar esta rifa?')) {
+        fetch(`{{ url('/admin/rifas') }}/${rifaId}`, {
+            method: 'DELETE',
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);
+              location.reload();
+            } else {
+              alert('Ocurrió un error al intentar eliminar la rifa.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Ocurrió un error al intentar eliminar la rifa.');
+          });
+      }
+    });
+  });
+</script>
 </body>
+
 </html>

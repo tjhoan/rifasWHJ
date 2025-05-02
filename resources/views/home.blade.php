@@ -11,12 +11,12 @@
 <section class="rifas-container">
     @foreach ($rifas as $rifa)
     <div class="rifa-card">
-        <img alt="Rifa" src="{{ $rifa->ruta_imagen }}">
+        <img alt="Rifa" src="{{ $rifa->imagen_rifa }}">
         <div class="info">
             <div class="left">
-                <p><strong>Nombre:</strong> {{ $rifa->nombre }}</p>
-                <p><strong>Cantidad vendida:</strong> {{ $rifa->cantidad_numero }}</p>
-                <p><strong>Precio:</strong> ${{ number_format($rifa->precio, 0, ',', '.') }}</p>
+                <p><strong>Nombre:</strong> {{ $rifa->nombre_rifa }}</p>
+                <p><strong>Cantidad de boletos:</strong> {{ $rifa->cantidad_boletos }}</p>
+                <p><strong>Precio por boleto:</strong> ${{ number_format($rifa->precio_boleto, 2, ',', '.') }}</p>
             </div>
             <div class="right">
                 <p><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>
