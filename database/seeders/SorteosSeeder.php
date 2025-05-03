@@ -16,7 +16,7 @@ class SorteosSeeder extends Seeder
                 'fecha_sorteo' => '2025-04-22',
                 'ganador_id_cliente' => 1,
                 'numero_ganador' => 123456,
-                'estado' => 'realizado',
+                'estado' => 'sin_reclamo',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -26,7 +26,7 @@ class SorteosSeeder extends Seeder
                 'fecha_sorteo' => '2025-05-22',
                 'ganador_id_cliente' => 1,
                 'numero_ganador' => 223,
-                'estado' => 'sin_ganador',
+                'estado' => 'sin_reclamo',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

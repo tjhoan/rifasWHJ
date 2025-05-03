@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('id_rifa')->constrained('rifas', 'id_rifa');
             $table->integer('numero');
             $table->foreignId('id_cliente')->nullable()->constrained('clientes', 'id_cliente');
-            $table->date('fecha_accion')->nullable();
             $table->enum('estado', ['disponible', 'vendido', 'reservado'])->default('disponible');
             $table->timestamps();
         });

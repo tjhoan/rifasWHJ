@@ -14,7 +14,7 @@ class EmpresaSeeder extends Seeder
             'nombre' => 'Mi Empresa',
             'direccion' => 'Calle Falsa 123',
             'telefono' => '1234567890',
-            'redes_sociales' => '{"facebook": "https://facebook.com/miempresa", "twitter": "https://twitter.com/miempresa"}',
+            'redes_sociales' => '{"WhatsApp": "+57 317 836 2354", "Facebook": "https://facebook.com/miempresa", "Instagram": "https://instagram.com/miempresa"}',
             'estado' => 'activo'
         ]);
     }

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('metodos_pago', function (Blueprint $table) {
             $table->id('id_pago');
-            $table->string('nombre_metodo');
+            $table->string('nombre_metodo')->unique();
             $table->string('digito_cuenta');
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamps();

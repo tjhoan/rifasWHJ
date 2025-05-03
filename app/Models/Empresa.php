@@ -21,7 +21,8 @@ class Empresa extends Model
     ];
 
     protected $casts = [
-        'estado' => 'string'
+        'estado' => 'string',
+        'redes_sociales' => 'array'
     ];
 
     protected $primaryKey = 'id_empresa';

@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Configuración - Panel Administrativo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ asset('css/admin/configuracion.css') }}">
-  <!-- Fuente Inter desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
-<body>
 
+<body>
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="admin-info">
@@ -25,91 +24,102 @@
       <li class="active"><a href="{{ url('/admin/configuracion') }}">Configuración</a></li>
     </ul>
   </div>
-
   <!-- Contenido principal -->
   <div class="content">
     <h1>Configuración</h1>
-
-    <!-- Sección 1: Datos de la Empresa -->
     <div class="section">
       <h2>Datos Empresa</h2>
-      <div class="fields">
+      <form class="fields" action="{{ route('admin.configuracion.updateEmpresa') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id_empresa" value="{{ $empresa->id_empresa ?? '' }}">
         <div class="field">
           <label>Nombre Empresa:</label>
-          <input type="text" placeholder="Nombre o razón social">
+          <input type="text" name="nombre" value="{{ $empresa->nombre ?? '' }}" placeholder="Nombre o razón social">
         </div>
         <div class="field">
           <label>NIT:</label>
-          <input type="text" placeholder="123456789-0">
+          <input type="text" name="NIT" value="{{ $empresa->NIT ?? '' }}" placeholder="123456789-0">
         </div>
         <div class="field">
           <label>Dirección:</label>
-          <input type="text" placeholder="Cra 12 #34-56">
+          <input type="text" name="direccion" value="{{ $empresa->direccion ?? '' }}" placeholder="Cra 12 #34-56">
         </div>
         <div class="field">
           <label>Celular:</label>
-          <input type="text" placeholder="+57 300 123 4567">
+          <input type="text" name="telefono" value="{{ $empresa->telefono ?? '' }}" placeholder="+57 300 123 4567">
         </div>
-      </div>
-      <div class="button-area">
-        <button>Modificar</button>
-      </div>
+        <div class="button-area">
+          <button type="submit">Modificar</button>
+        </div>
+      </form>
     </div>
-
-    <!-- Sección 2: Medios de Comunicación -->
     <div class="section">
       <h2>Medios de Comunicación</h2>
-      <div class="fields">
-        <div class="field">
-          <label>WhatsApp:</label>
-          <input type="text" placeholder="+57 300 123 4567">
+      <form action="{{ route('admin.configuracion.updateMedios') }}" method="POST">
+        @csrf
+        <div class="fields">
+          <div class="field">
+            <label>WhatsApp:</label>
+            <input type="text" name="whatsapp" value="{{ $empresa->redes_sociales['WhatsApp'] ?? '' }}">
+          </div>
+          <div class="field">
+            <label>Facebook:</label>
+            <input type="text" name="facebook" value="{{ $empresa->redes_sociales['Facebook'] ?? '' }}">
+          </div>
+          <div class="field">
+            <label>Instagram:</label>
+            <input type="text" name="instagram" value="{{ $empresa->redes_sociales['Instagram'] ?? '' }}">
+          </div>
         </div>
-        <div class="field">
-          <label>Facebook:</label>
-          <input type="text" placeholder="https://facebook.com/empresa">
+        <div class="button-area">
+          <button type="submit">Modificar</button>
         </div>
-        <div class="field">
-          <label>Instagram:</label>
-          <input type="text" placeholder="https://instagram.com/empresa">
-        </div>
-      </div>
-      <div class="button-area">
-        <button>Modificar</button>
-      </div>
+      </form>
     </div>
-
-    <!-- Sección 3: Usuario - Contraseña Administrador -->
     <div class="section">
       <h2>Usuario - Contraseña Administrador</h2>
-      <div class="fields">
-        <div class="field">
-          <label>Usuario:</label>
-          <input type="text" placeholder="admin123">
+      <form action="{{ route('admin.configuracion.updateAdmin') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id_admin" value="{{ $admin->id_admin ?? '' }}">
+        <div class="fields">
+          <div class="field">
+            <label>Usuario (Correo):</label>
+            <input type="email" name="correo" value="{{ $admin->correo ?? '' }}" required>
+          </div>
+          <div class="field">
+            <label>Nueva Contraseña:</label>
+            <input type="password" name="contrasena" placeholder="Dejar en blanco para no cambiar">
+          </div>
+          <div class="field">
+            <label>Confirmar Contraseña:</label>
+            <input type="password" name="contrasena_confirmation" placeholder="Repite la nueva contraseña">
+          </div>
         </div>
-        <div class="field">
-          <label>Contraseña:</label>
-          <input type="password" placeholder="********">
+        <div class="button-area">
+          <button type="submit">Modificar</button>
         </div>
-      </div>
-      <div class="button-area">
-        <button>Modificar</button>
-      </div>
+      </form>
     </div>
-
-    <!-- Sección 4: Métodos de Pago -->
     <div class="section">
       <h2>Métodos de Pago</h2>
-      <div class="fields">
-        <div class="field">
-          <label>Método adicional:</label>
-          <input type="text" placeholder="Ej. Nequi, PayPal, Daviplata, etc.">
+      <form action="{{ route('admin.configuracion.addMetodoPago') }}" method="POST">
+        @csrf
+        <div class="fields">
+          <div class="field">
+            <label>Método adicional:</label>
+            <input type="text" name="nombre_metodo" placeholder="Ej. Nequi, PayPal, Daviplata, etc.">
+          </div>
+          <div class="field">
+            <label>Cuenta:</label>
+            <input type="text" name="digito_cuenta" placeholder="Número de cuenta o referencia">
+          </div>
         </div>
-      </div>
-      <div class="button-area">
-        <button>Agregar</button>
-      </div>
+        <div class="button-area">
+          <button type="submit">Agregar</button>
+        </div>
+      </form>
     </div>
-
   </div>
 </body>
+
 </html>

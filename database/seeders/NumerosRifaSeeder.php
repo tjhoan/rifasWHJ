@@ -22,7 +22,6 @@ class NumerosRifaSeeder extends Seeder
                     'id_rifa' => $idRifa,
                     'numero' => $i,
                     'id_cliente' => null,
-                    'fecha_accion' => null,
                     'estado' => 'disponible',
                     'created_at' => now(),
                     'updated_at' => now(),

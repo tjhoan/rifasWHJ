@@ -15,7 +15,6 @@ class NumerosRifa extends Model
         'id_rifa',
         'numero',
         'id_cliente',
-        'fecha_accion',
         'estado',
     ];
 

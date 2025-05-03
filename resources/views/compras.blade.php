@@ -40,7 +40,9 @@
 <section class="numbers-section">
     <div class="numbers-grid">
         @foreach ($numeros as $numero)
-        <button class="number {{ $numero->estado == 'comprado' ? 'comprado' : ($numero->estado == 'reservado' ? 'selected' : '') }}" data-id="{{ $numero->id_numero }}">
+        <button class="number {{ $numero->estado == 'comprado' ? 'comprado' : ($numero->estado == 'vendido' || $numero->estado == 'reservado' ? 'selected' : '') }}"
+            data-id="{{ $numero->id_numero }}"
+            {{ $numero->estado == 'vendido' || $numero->estado == 'reservado' ? 'disabled' : '' }}>
             {{ $numero->numero }}
         </button>
         @endforeach
@@ -59,6 +61,5 @@
         <input type="hidden" name="id_rifa" value="{{ $rifa->id_rifa }}">
         <button type="submit" class="action-button">Añadir al carrito</button>
     </form>
-    <button class="action-button">Facturar</button>
 </section>
 @endsection

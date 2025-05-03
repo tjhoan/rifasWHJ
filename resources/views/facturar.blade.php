@@ -50,9 +50,9 @@
       <div id="metodo-pago" class="detalle-accion">
         <label>Métodos de pago</label>
         <select name="metodo_pago">
-          <option>Nequi</option>
-          <option>Daviplata</option>
-          <option>Paypal</option>
+          @foreach ($metodoPago as $metodo)
+          <option value="{{ $metodo->nombre_metodo }}">{{ $metodo->nombre_metodo }}</option>
+          @endforeach
         </select>
       </div>
     </div>

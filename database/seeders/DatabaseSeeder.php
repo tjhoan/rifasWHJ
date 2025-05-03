@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             ClientesSeeder::class,
             SorteosSeeder::class,
             GanadoresSeeder::class,
-            EmpresaSeeder::class
+            EmpresaSeeder::class,
+            MetodoPagoSeeder::class
         ]);
     }
 }

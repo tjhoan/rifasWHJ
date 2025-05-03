@@ -38,7 +38,6 @@ CREATE TABLE
         numero INT NOT NULL,
         estado ENUM ('disponible', 'vendido', 'separado') DEFAULT 'disponible',
         id_cliente INT,
-        fecha_accion DATE,
         FOREIGN KEY (id_rifa) REFERENCES rifas (id_rifa),
         FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
     );

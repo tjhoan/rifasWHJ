@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\admin\AdminClientesController;
 use App\Http\Controllers\admin\AdminRifasController;
+use App\Http\Controllers\admin\AdminSorteosController;
+use App\Http\Controllers\Admin\AdminVentasController;
+use App\Http\Controllers\Admin\ConfiguracionController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\FacturarController;
 use App\Http\Controllers\FinalizarReciboController;
@@ -39,18 +42,19 @@ Route::prefix('admin')->group(function () {
     Route::delete('/rifas/{id}', [AdminRifasController::class, 'destroy'])->name('admin.rifas.destroy');
 
     Route::get('/clientes', [AdminClientesController::class, 'index'])->name('admin.clientes.index');
-    Route::delete('/clientes/{id}', [AdminClientesController::class, 'destroy'])->name('admin.clientes.destroy');
     Route::put('/clientes/{id}', [AdminClientesController::class, 'update'])->name('admin.clientes.update');
-    
-    Route::get('/ventas', function () {
-        return view('admin.ventas');
-    });
+    Route::delete('/clientes/{id}', [AdminClientesController::class, 'destroy'])->name('admin.clientes.destroy');
 
-    Route::get('/sorteo', function () {
-        return view('admin.sorteo');
-    });
+    Route::get('/sorteo', [AdminSorteosController::class, 'index'])->name('admin.sorteo.index');
+    Route::post('/sorteo/sortear', [AdminSorteosController::class, 'sortear'])->name('admin.sorteo.sortear');
+    Route::post('/sorteo/publicar-ganador', [AdminSorteosController::class, 'publicarGanador'])->name('admin.sorteo.publicarGanador');
+    Route::put('/sorteo/{id}/fecha', [AdminSorteosController::class, 'updateFechaSorteo'])->name('admin.sorteo.updateFecha');
 
-    Route::get('/configuracion', function () {
-        return view('admin.configuracion');
-    });
+    Route::get('/ventas', [AdminVentasController::class, 'index'])->name('admin.ventas.index');
+
+    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('admin.configuracion.index');
+    Route::post('/configuracion/updateEmpresa', [ConfiguracionController::class, 'updateEmpresa'])->name('admin.configuracion.updateEmpresa');
+    Route::post('/configuracion/updateMedios', [ConfiguracionController::class, 'updateMedios'])->name('admin.configuracion.updateMedios');
+    Route::post('/configuracion/updateAdmin', [ConfiguracionController::class, 'updateAdmin'])->name('admin.configuracion.updateAdmin');
+    Route::post('/configuracion/addMetodoPago', [ConfiguracionController::class, 'addMetodoPago'])->name('admin.configuracion.addMetodoPago');
 });
