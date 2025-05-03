@@ -9,8 +9,12 @@ h1 {
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
-    max-width: 70%;
-    margin: 0 auto;
+    margin-bottom: auto;
+    margin-left: 60px;
+}
+
+h1{
+    margin-left: 60px;
 }
 
 .ganador-card {
