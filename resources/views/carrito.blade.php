@@ -9,6 +9,20 @@
 @section('content')
 <h1 class="titulo-carrito">Carrito</h1>
 
+@if (session('error'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "error",
+                title: "¡Error!",
+                text: "{{ session('error') }}",
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Aceptar",
+            });
+        });
+    </script>
+@endif
+
 <div class="carrito-container">
   @if (!empty($carrito) && is_iterable($carrito->numeros))
   @foreach ($carrito->numeros as $numero)

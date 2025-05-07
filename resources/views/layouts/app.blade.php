@@ -48,11 +48,20 @@
         @yield('content')
     </main>
 
+
     <footer class="footer">
         <div class="social-links">
-            <a href="#"><i class="fab fa-whatsapp"></i> Número</a>
-            <a href="#"><i class="fab fa-facebook"></i> Perfil</a>
-            <a href="#"><i class="fab fa-instagram"></i> Perfil</a>
+            @if (!empty($redesSociales))
+                @foreach ($redesSociales as $key => $value)
+                    @if ($value)
+                        <a href="{{ $value }}" target="_blank">
+                            <i class="fab fa-{{ strtolower($key) }}"></i> {{ ucfirst($key) }}
+                        </a>
+                    @endif
+                @endforeach
+            @else
+                <p>No hay redes sociales disponibles.</p>
+            @endif
         </div>
     </footer>
 

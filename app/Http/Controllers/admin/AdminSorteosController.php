@@ -59,7 +59,7 @@ class AdminSorteosController extends Controller
             }
 
             $intentos = 0;
-            $maxIntentos = 50;
+            $maxIntentos = 1;
             $numeroGanador = null;
             $numeroRifa = null;
 
@@ -139,6 +139,9 @@ class AdminSorteosController extends Controller
             }
 
             $sorteo->update(['fecha_sorteo' => $request->fecha_sorteo]);
+
+            $rifa = Rifa::findOrFail($sorteo->id_rifa);
+            $rifa->update(['fecha_sorteo' => $request->fecha_sorteo]);
 
             return response()->json([
                 'success' => true,

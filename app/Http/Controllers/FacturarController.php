@@ -17,10 +17,17 @@ class FacturarController extends Controller
     public function index()
     {
         try {
+            $cliente = $this->getOrCreateCliente();
+            $carrito = $cliente->carritos()->where('estado', 'activo')->first();
+
+            if (!$carrito || $carrito->numeros->isEmpty()) {
+                return redirect()->route('carrito.index')->with('error', 'El carrito está vacío. No puedes facturar.');
+            }
+
             $metodoPago = MetodoPago::where('estado', 'activo')->get();
             return view('facturar', compact('metodoPago'));
         } catch (\Exception $e) {
-            redirect()->back()->with('error', 'Hubo un problema al cargar la página. Por favor, intenta nuevamente.');
+            return redirect()->back()->with('error', 'Hubo un problema al cargar la página. Por favor, intenta nuevamente.');
         }
     }
 

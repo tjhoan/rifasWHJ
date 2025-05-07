@@ -14,9 +14,11 @@ class AdminRifasController extends Controller
     public function index()
     {
         try {
-            $rifas = Rifa::withCount(['numeros as reservados_count' => function ($query) {
-                $query->where('estado', 'reservado');
-            }])->get();
+            $rifas = Rifa::where('estado', 'activo')
+                ->withCount(['numeros as reservados_count' => function ($query) {
+                    $query->where('estado', 'reservado');
+                }])
+                ->get();
 
             return view('admin.rifas', compact('rifas'));
         } catch (\Exception $e) {
@@ -80,9 +82,21 @@ class AdminRifasController extends Controller
             $rifa->update(['estado' => 'inactivo']);
             DB::table('numeros_rifa')->where('id_rifa', $id)->delete();
 
-            return redirect()->route('admin.dashboard')->with('success', 'La rifa ha sido eliminada correctamente.');
+            // Cambiar el estado de los sorteos asociados a la rifa a anulado, solo se debe editar el estado
+            $sorteos = Sorteo::where('id_rifa', $id)->get();
+            foreach ($sorteos as $sorteo) {
+                $sorteo->update(['estado' => 'anulado']);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'La rifa ha sido eliminada correctamente.',
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Hubo un problema al eliminar la rifa. Por favor, intenta nuevamente.');
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un problema al eliminar la rifa. Por favor, intenta nuevamente.',
+            ], 500);
         }
     }
 
