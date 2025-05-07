@@ -8,7 +8,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('js/alerts.js') }}" defer></script>
 @endpush
 
 @section('content')
@@ -84,6 +83,31 @@
     const tipoAccion = document.querySelector('input[name="accion"]:checked').value;
     document.getElementById('tipo_accion').value = tipoAccion;
   }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const successMessage = "{{ session('success') }}";
+    const errorMessage = "{{ session('error') }}";
+
+    if (successMessage) {
+      Swal.fire({
+        icon: "success",
+        title: "¡Éxito!",
+        text: successMessage,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Aceptar",
+      });
+    }
+
+    if (errorMessage) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: errorMessage,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  });
 </script>
 
 @endsection

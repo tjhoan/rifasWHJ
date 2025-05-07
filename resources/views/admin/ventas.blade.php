@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="{{ asset('js/alerts.js') }}" defer></script>
 </head>
 
 <body>
@@ -87,6 +86,32 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const successMessage = "{{ session('success') }}";
+      const errorMessage = "{{ session('error') }}";
+
+      if (successMessage) {
+        Swal.fire({
+          icon: "success",
+          title: "¡Éxito!",
+          text: successMessage,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Aceptar",
+        });
+      }
+
+      if (errorMessage) {
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: errorMessage,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Aceptar",
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>

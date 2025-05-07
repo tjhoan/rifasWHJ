@@ -10,7 +10,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="rifa-id" content="{{ $rifa->id_rifa }}">
 <script src="{{ asset('js/compras.js') }}" defer></script>
-<script src="{{ asset('js/alerts.js') }}" defer></script>
 @endpush
 
 @section('content')
@@ -63,4 +62,30 @@
         <button type="submit" class="action-button">Añadir al carrito</button>
     </form>
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const successMessage = "{{ session('success') }}";
+        const errorMessage = "{{ session('error') }}";
+
+        if (successMessage) {
+            Swal.fire({
+                icon: "success",
+                title: "¡Éxito!",
+                text: successMessage,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Aceptar",
+            });
+        }
+
+        if (errorMessage) {
+            Swal.fire({
+                icon: "error",
+                title: "¡Error!",
+                text: errorMessage,
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Aceptar",
+            });
+        }
+    });
+</script>
 @endsection

@@ -20,7 +20,7 @@ class FacturarController extends Controller
             $metodoPago = MetodoPago::where('estado', 'activo')->get();
             return view('facturar', compact('metodoPago'));
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Hubo un problema al cargar la página. Por favor, intenta nuevamente.']);
+            redirect()->back()->with('error', 'Hubo un problema al cargar la página. Por favor, intenta nuevamente.');
         }
     }
 
@@ -41,7 +41,7 @@ class FacturarController extends Controller
 
             $carrito = $cliente->carritos()->where('estado', 'activo')->first();
             if (!$carrito) {
-                return back()->withErrors(['error' => 'No se encontró un carrito activo.']);
+                redirect()->back()->with('error', 'Hubo un problema al encontrar el carrito activo.');
             }
 
             $factura = Factura::create([
@@ -63,7 +63,7 @@ class FacturarController extends Controller
             try {
                 Mail::to($cliente->correo_cliente)->send(new FacturaMailable($factura, $cliente, $carrito));
             } catch (\Exception $e) {
-                return back()->withErrors(['error' => 'Error al enviar la factura por correo.']);
+                redirect()->back()->with('error', 'Error al enviar la factura por correo.');
             }
 
             Carrito::create([
@@ -82,7 +82,7 @@ class FacturarController extends Controller
                 'tipoAccion' => $request->tipo_accion,
             ])->with('success', 'La factura se generó correctamente.');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Hubo un problema al procesar la factura. Por favor, intenta nuevamente.']);
+            redirect()->back()->with('error', 'Hubo un problema al procesar la factura. Por favor, intenta nuevamente.');
         }
     }
 
@@ -116,7 +116,7 @@ class FacturarController extends Controller
 
             return $cliente;
         } catch (\Exception $e) {
-            throw new \Exception('Hubo un problema al gestionar el cliente.');
+            redirect()->back()->with('error', 'Hubo un problema al gestionar el cliente.');
         }
     }
 }
