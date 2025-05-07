@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="{{ asset('css/admin/ventas.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="{{ asset('js/alerts.js') }}" defer></script>
 </head>
 
 <body>
@@ -68,7 +69,7 @@
         <p class="value">{{ $clienteMasActivo->primer_nombre_cliente }} {{ $clienteMasActivo->primer_apellido_cliente }}</p>
         <p class="description">{{ $clienteMasActivo->boletos_comprados }} boletos comprados</p>
         @else
-        <p class="value">N/A</p>
+        <p class="value">No Hay</p>
         <p class="description">No hay datos disponibles</p>
         @endif
       </div>

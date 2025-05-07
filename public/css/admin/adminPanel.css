@@ -1,24 +1,21 @@
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-  
-  /* Fuente general */
+
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     background-color: #f5f5f5;
-    
 }
-  
-  /* Estructura principal */
+
+/* Estructura principal */
 .sidebar {
-    position: fixed;         /* Fijo en la pantalla */
+    position: fixed;
     left: 0;
     top: 0;
     width: 220px;
-    height: 100vh;          
+    height: 100vh;
     background-color: #333;
     color: #fff;
     display: flex;
@@ -26,33 +23,32 @@ body {
     justify-content: flex-start;
     padding: 20px;
 }
-  
+
 .main-content {
-    margin-left: 220px;     
+    margin-left: 220px;
     padding: 30px;
 }
-  
-  /* Información del administrador */
+
+/* Información del administrador */
 .admin-info {
     margin-bottom: 40px;
     font-size: 30px;
 }
-  
+
 .admin-info span {
     font-size: 15px;
     color: #bbb;
 }
-  
+
 .admin-info h3 {
     font-size: 20px;
     margin-top: 5px;
 }
-  
-  /* Menú lateral */
+
 .menu {
     list-style: none;
 }
-  
+
 .menu li {
     margin: 10px 0;
     cursor: pointer;
@@ -60,32 +56,30 @@ body {
     padding: 8px;
     border-radius: 4px;
 }
-  
+
 .menu li:hover,
 .menu li.active {
     background-color: #444;
 }
-  
-  /* Enlaces en el menú */
+
 .menu li a {
     color: #fff;
     text-decoration: none;
     display: block;
 }
-  
-  /* Encabezado de contenido principal */
+
 .main-content header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-  
+
 .main-content header h2 {
     font-size: 24px;
     color: #333;
 }
-  
+
 .btn-nueva {
     background-color: #28a745;
     color: #fff;
@@ -97,23 +91,21 @@ body {
     transition: background 0.3s;
     width: 100px;
 }
-  
+
 .btn-nueva:hover {
     background-color: #218838;
 }
-  
-  /* Contenedor de rifas */
+
 .rifas-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
-  
-  /* Tarjeta de rifa */
+
 .rifa-card {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     padding: 20px;
     gap: 30px;
@@ -122,27 +114,27 @@ body {
     overflow: hidden;
     height: 300px;
 }
-  
+
 .rifa-icon img {
     width: 15rem;
     height: 7rem;
 }
-  
+
 .rifa-info p {
     margin-bottom: 5px;
     font-size: 16px;
     padding: 3px;
 }
-  
+
 .rifa-boletos {
-    margin-left: auto; 
+    margin-left: auto;
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     gap: 5px;
     align-items: center;
     max-width: 500px;
 }
-  
+
 .rifa-boletos span {
     background-color: #eee;
     border-radius: 4px;
@@ -154,11 +146,10 @@ body {
     margin: 6px;
 }
 
-.rifa-boletos .vendido{
+.rifa-boletos .vendido {
     background-color: #0fda3e;
 }
 
-/* Acciones al pie */
 .actions {
     display: flex;
     justify-content: center;
@@ -187,7 +178,7 @@ body {
 }
 
 .btn-modificar {
-    background: #6C91C2;
+    background: #6c91c2;
     color: #fff;
 }
 
@@ -195,57 +186,53 @@ body {
     background: #5579a1;
 }
 
-  
-  /* MODAL */
+/* MODAL */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: none;         
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1;
 }
-  
+
 .modal.show {
     display: flex;
-}         
-  
+}
+
 .modal-content {
     background-color: #fff;
-    width: 900px;         /* Más ancho para que se vea más grande */
+    width: 900px;
     max-width: 90%;
     border-radius: 10px;
     padding: 20px;
     position: relative;
 }
-  
-  /* Título del modal */
+
 .modal-content h3 {
     margin-bottom: 20px;
     color: #333;
     text-align: center;
     font-size: 23px;
 }
-  
-  /* Formulario en grid de 2 columnas */
+
 .modal-content form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
-  
-  /* Etiquetas e inputs */
+
 .modal-content label {
     display: flex;
     flex-direction: column;
     font-size: 17px;
     color: #333;
 }
-  
+
 .modal-content input,
 .modal-content textarea,
 .modal-content select {
@@ -256,10 +243,9 @@ body {
     font-size: 14px;
     outline: none;
 }
-  
-  /* Ajustar la ultima fila para que el boton abarque todo */
+
 .btn-agregar {
-    grid-column: span 2; /* Ocupar las 2 columnas en la última fila */
+    grid-column: span 2;
     margin-top: 5px;
     background-color: #007bff;
     color: #fff;
@@ -272,12 +258,11 @@ body {
     width: 200px;
     margin-left: 325px;
 }
-  
+
 .btn-agregar:hover {
     background-color: #0056b3;
 }
-  
-  /* Botón para cerrar modal */
+
 .close {
     position: absolute;
     top: 15px;
@@ -286,7 +271,7 @@ body {
     cursor: pointer;
     color: #aaa;
 }
-  
+
 .close:hover {
     color: #333;
 }

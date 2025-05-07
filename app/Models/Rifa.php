@@ -17,7 +17,6 @@ class Rifa extends Model
         'precio_boleto',
         'cantidad_boletos',
         'fecha_inicio',
-        'fecha_fin',
         'fecha_sorteo',
         'premio',
         'estado',

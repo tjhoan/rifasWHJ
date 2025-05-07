@@ -7,15 +7,16 @@
     <title>Login</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
         @if ($errors->has('login_error'))
-            <div class="error-message">
-                {{ $errors->first('login_error') }}
-            </div>
+        <div class="error-message">
+            {{ $errors->first('login_error') }}
+        </div>
         @endif
         <form method="POST" action="{{ route('login.authenticate') }}">
             @csrf
@@ -42,6 +43,40 @@
 
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
+        });
+
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: result.message,
+                }).then(() => {
+                    window.location.href = result.redirect;
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: result.message,
+                });
+            }
         });
     </script>
 </body>

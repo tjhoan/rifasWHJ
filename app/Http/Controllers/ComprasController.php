@@ -10,15 +10,19 @@ class ComprasController extends Controller
 {
     public function show($id, Request $request)
     {
-        $rifa = Rifa::with(['sorteos'])->findOrFail($id);
-        $query = NumerosRifa::where('id_rifa', $id);
+        try {
+            $rifa = Rifa::with(['sorteos'])->findOrFail($id);
+            $query = NumerosRifa::where('id_rifa', $id);
 
-        if ($request->has('search') && $request->search !== null) {
-            $query->where('numero', 'like', '%' . $request->search . '%');
+            if ($request->has('search') && $request->search !== null) {
+                $query->where('numero', 'like', '%' . $request->search . '%');
+            }
+
+            $numeros = $query->paginate(22);
+
+            return view('compras', compact('rifa', 'numeros'));
+        } catch (\Exception $e) {
+            return redirect()->route('home')->with('error', 'Hubo un problema al cargar la información. Por favor, intenta nuevamente.');
         }
-
-        $numeros = $query->paginate(22);
-
-        return view('compras', compact('rifa', 'numeros'));
     }
 }

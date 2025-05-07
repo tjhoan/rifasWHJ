@@ -8,7 +8,13 @@ class GanadoresController extends Controller
 {
     public function index()
     {
-        $ganadores = Ganador::with(['sorteo.rifa', 'cliente'])->get();
-        return view('ganadores', compact('ganadores'));
+        try {
+            $ganadores = Ganador::with(['sorteo.rifa', 'cliente'])->get();
+
+            return view('ganadores', compact('ganadores'));
+        } catch (\Exception $e) {
+            return view('ganadores', ['ganadores' => []])
+                ->with('error', 'Hubo un problema al cargar la lista de ganadores. Por favor, intenta nuevamente.');
+        }
     }
 }

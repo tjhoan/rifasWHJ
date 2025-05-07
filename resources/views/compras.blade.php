@@ -10,22 +10,23 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="rifa-id" content="{{ $rifa->id_rifa }}">
 <script src="{{ asset('js/compras.js') }}" defer></script>
+<script src="{{ asset('js/alerts.js') }}" defer></script>
 @endpush
 
 @section('content')
 
 <section class="info-section">
     <div class="rifa-image">
-        <img src="{{ $rifa->imagen_rifa }}" alt="Imagen de la Rifa">
+        <img src="{{ filter_var($rifa->imagen_rifa, FILTER_VALIDATE_URL) ? $rifa->imagen_rifa : asset('storage/' . $rifa->imagen_rifa) }}" alt="Imagen de la ">
     </div>
     <div class="info-container">
         <div class="left-info">
-            <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre }}</p>
+            <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre_rifa }}</p>
+            <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
         </div>
         <div class="right-info">
             <p class="pp"><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>
             <p><strong>Fecha sorteo:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_sorteo)->format('d/m/Y') }}</p>
-            <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
         </div>
     </div>
 </section>

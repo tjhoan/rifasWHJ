@@ -21,14 +21,28 @@ class LoginController extends Controller
             'contrasena' => 'required',
         ]);
 
-        $admin = Admin::where('correo', $request->correo)->first();
+        try {
+            $admin = Admin::where('correo', $request->correo)->first();
 
-        if ($admin && Hash::check($request->contrasena, $admin->contrasena)) {
-            session(['admin' => $admin]);
+            if ($admin && Hash::check($request->contrasena, $admin->contrasena)) {
+                session(['admin' => $admin]);
 
-            return redirect('/admin');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Inicio de sesión exitoso.',
+                    'redirect' => url('/admin'),
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Credenciales incorrectas.',
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un problema, por favor intenta nuevamente.',
+            ], 500);
         }
-
-        return back()->withErrors(['login_error' => 'Credenciales incorrectas.']);
     }
 }

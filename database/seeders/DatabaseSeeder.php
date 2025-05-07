@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
             NumerosRifaSeeder::class,
             ClientesSeeder::class,
             SorteosSeeder::class,
-            GanadoresSeeder::class,
             EmpresaSeeder::class,
             MetodoPagoSeeder::class
         ]);

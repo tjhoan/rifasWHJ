@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class FacturaMailable extends Mailable
 {
@@ -20,12 +19,6 @@ class FacturaMailable extends Mailable
         $this->factura = $factura;
         $this->cliente = $cliente;
         $this->carrito = $carrito;
-
-        Log::info('FacturaMailable creado.', [
-            'factura' => $factura,
-            'cliente' => $cliente,
-            'carrito' => $carrito
-        ]);
     }
 
     public function build()

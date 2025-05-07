@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="{{ asset('css/facturar.css') }}">
 @endpush
 
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/alerts.js') }}" defer></script>
+@endpush
+
 @section('content')
 
 <h1>Proceso de facturación</h1>

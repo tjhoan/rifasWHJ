@@ -6,6 +6,10 @@ class FinalizarReciboController extends Controller
 {
     public function index()
     {
-        return view('finalizar-recibos');
+        try {
+            return view('finalizar-recibos');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un problema al cargar la página. Por favor, intenta nuevamente.');
+        }
     }
 }

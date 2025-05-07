@@ -40,6 +40,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/rifas', [AdminRifasController::class, 'store'])->name('admin.rifas.store');
     Route::put('/rifas/{id}', [AdminRifasController::class, 'update'])->name('admin.rifas.update');
     Route::delete('/rifas/{id}', [AdminRifasController::class, 'destroy'])->name('admin.rifas.destroy');
+    Route::post('/rifa/modificar-fecha/{id}', [AdminRifasController::class, 'modificarFecha'])->name('admin.rifa.modificarFecha');
 
     Route::get('/clientes', [AdminClientesController::class, 'index'])->name('admin.clientes.index');
     Route::put('/clientes/{id}', [AdminClientesController::class, 'update'])->name('admin.clientes.update');
@@ -47,8 +48,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/sorteo', [AdminSorteosController::class, 'index'])->name('admin.sorteo.index');
     Route::post('/sorteo/sortear', [AdminSorteosController::class, 'sortear'])->name('admin.sorteo.sortear');
+    Route::post('/sorteo/modificar-fecha/{id}', [AdminSorteosController::class, 'modificarFecha'])->name('admin.sorteo.modificarFecha');
     Route::post('/sorteo/publicar-ganador', [AdminSorteosController::class, 'publicarGanador'])->name('admin.sorteo.publicarGanador');
     Route::put('/sorteo/{id}/fecha', [AdminSorteosController::class, 'updateFechaSorteo'])->name('admin.sorteo.updateFecha');
+    Route::get('/sorteo/{id}/data', [AdminSorteosController::class, 'getSorteoData'])->name('admin.sorteo.data');
 
     Route::get('/ventas', [AdminVentasController::class, 'index'])->name('admin.ventas.index');
 

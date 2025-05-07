@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ asset('css/admin/sorteo.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -24,11 +25,9 @@
       <li><a href="{{ url('/admin/configuracion') }}">Configuración</a></li>
     </ul>
   </div>
-
   <!-- Contenido principal -->
   <div class="content">
     <h1>Sorteo</h1>
-
     @if ($errors->any())
     <div class="error-box">
       <ul>
@@ -38,7 +37,6 @@
       </ul>
     </div>
     @endif
-
     <!-- Seleccionar Rifa y Botón Sortear -->
     <div class="sortear-box">
       <form action="{{ route('admin.sorteo.sortear') }}" method="POST">
@@ -53,87 +51,188 @@
       </form>
     </div>
 
-    <!-- Datos del Ganador -->
-    <div class="ganador-box">
+    <!-- Sección Ganador (Oculta por defecto) -->
+    <div class="ganador-box" style="display: none;">
       <h2>GANADOR</h2>
       <div class="fields">
         <div class="field">
           <label>Primer Nombre:</label>
-          <p class="valor" id="ganador-primer-nombre"></p>
+          <p class="valor" id="ganador-primer-nombre">N/A</p>
         </div>
         <div class="field">
           <label>Segundo Nombre:</label>
-          <p class="valor" id="ganador-segundo-nombre"></p>
+          <p class="valor" id="ganador-segundo-nombre">N/A</p>
         </div>
         <div class="field">
           <label>Primer Apellido:</label>
-          <p class="valor" id="ganador-primer-apellido"></p>
+          <p class="valor" id="ganador-primer-apellido">N/A</p>
         </div>
         <div class="field">
           <label>Segundo Apellido:</label>
-          <p class="valor" id="ganador-segundo-apellido"></p>
+          <p class="valor" id="ganador-segundo-apellido">N/A</p>
         </div>
         <div class="field">
           <label>Nombre de la Rifa:</label>
-          <p class="valor" id="ganador-nombre-rifa"></p>
+          <p class="valor" id="ganador-nombre-rifa">N/A</p>
         </div>
         <div class="field">
           <label>Fecha Inicio:</label>
-          <p class="valor" id="ganador-fecha-inicio"></p>
+          <p class="valor" id="ganador-fecha-inicio">N/A</p>
         </div>
         <div class="field">
           <label>Fecha Sorteo:</label>
-          <p class="valor" id="ganador-fecha-sorteo"></p>
+          <p class="valor" id="ganador-fecha-sorteo">N/A</p>
         </div>
         <div class="field">
           <label>Premio:</label>
-          <p class="valor" id="ganador-premio"></p>
+          <p class="valor" id="ganador-premio">N/A</p>
         </div>
         <div class="field">
           <label>Número Ganador:</label>
-          <p class="valor" id="ganador-numero"></p>
+          <p class="valor" id="ganador-numero">N/A</p>
         </div>
       </div>
+    </div>
+
+    <!-- Sección Modificar Fecha (Oculta por defecto) -->
+    <div class="fecha-sorteo-container" style="display: none;">
+      <label for="fechaSorteo">Fecha del sorteo:</label>
+      <input type="date" id="fechaSorteo" value="{{ $sorteo->fecha_sorteo }}">
+      <button class="btn-modificar-fecha">Modificar fecha</button>
     </div>
   </div>
 
   <script>
-    document.querySelector('.btn-sortear').addEventListener('click', function(event) {
-      event.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnSortear = document.querySelector('.btn-sortear');
+      const fechaSorteoInput = document.getElementById('fechaSorteo');
+      const btnModificarFecha = document.querySelector('.btn-modificar-fecha');
 
-      const idSorteo = document.getElementById('id_sorteo').value;
+      if (btnSortear) {
+        btnSortear.addEventListener('click', function(event) {
+          event.preventDefault();
 
-      fetch("{{ route('admin.sorteo.sortear') }}", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-          },
-          body: JSON.stringify({
-            id_sorteo: idSorteo
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (!data.success || !data.ganador) {
-            alert(data.message || 'Error al realizar el sorteo.');
+          const idSorteo = document.getElementById('id_sorteo').value;
+
+          fetch("{{ route('admin.sorteo.sortear') }}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+              },
+              body: JSON.stringify({
+                id_sorteo: idSorteo
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              const ganadorBox = document.querySelector('.ganador-box');
+              const fechaSorteoContainer = document.querySelector('.fecha-sorteo-container');
+
+              if (data.success) {
+                if (ganadorBox) {
+                  ganadorBox.style.display = 'block';
+
+                  document.getElementById('ganador-primer-nombre').textContent = data.ganador.primer_nombre || 'N/A';
+                  document.getElementById('ganador-segundo-nombre').textContent = data.ganador.segundo_nombre || 'N/A';
+                  document.getElementById('ganador-primer-apellido').textContent = data.ganador.primer_apellido || 'N/A';
+                  document.getElementById('ganador-segundo-apellido').textContent = data.ganador.segundo_apellido || 'N/A';
+                  document.getElementById('ganador-nombre-rifa').textContent = data.ganador.nombre_rifa || 'N/A';
+                  document.getElementById('ganador-fecha-inicio').textContent = data.ganador.fecha_inicio || 'N/A';
+                  document.getElementById('ganador-fecha-sorteo').textContent = data.ganador.fecha_sorteo || 'N/A';
+                  document.getElementById('ganador-premio').textContent = data.ganador.premio || 'N/A';
+                  document.getElementById('ganador-numero').textContent = data.ganador.numero_ganador || 'N/A';
+                }
+
+                if (fechaSorteoContainer) {
+                  fechaSorteoContainer.style.display = 'none';
+                }
+
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Se ha encontrado un ganador',
+                  text: 'El sorteo se ha realizado con éxito.',
+                });
+              } else {
+                if (fechaSorteoContainer) {
+                  fechaSorteoContainer.style.display = 'block';
+
+                  fechaSorteoInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+                }
+
+                if (ganadorBox) {
+                  ganadorBox.style.display = 'none';
+                }
+
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: data.message || 'No se pudo determinar un ganador.',
+                });
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al realizar el sorteo.',
+              });
+            });
+        });
+      }
+
+      if (btnModificarFecha) {
+        btnModificarFecha.addEventListener('click', function() {
+          const idSorteo = document.getElementById('id_sorteo').value;
+          const nuevaFecha = fechaSorteoInput.value;
+
+          if (!nuevaFecha || new Date(nuevaFecha) <= new Date()) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Fecha inválida',
+              text: 'La fecha del sorteo debe ser mayor a la fecha actual.',
+            });
             return;
           }
 
-          document.getElementById('ganador-primer-nombre').textContent = data.ganador.primer_nombre || '';
-          document.getElementById('ganador-segundo-nombre').textContent = data.ganador.segundo_nombre || '';
-          document.getElementById('ganador-primer-apellido').textContent = data.ganador.primer_apellido || '';
-          document.getElementById('ganador-segundo-apellido').textContent = data.ganador.segundo_apellido || '';
-          document.getElementById('ganador-nombre-rifa').textContent = data.ganador.nombre_rifa || '';
-          document.getElementById('ganador-fecha-inicio').textContent = data.ganador.fecha_inicio || '';
-          document.getElementById('ganador-fecha-sorteo').textContent = data.ganador.fecha_sorteo || '';
-          document.getElementById('ganador-premio').textContent = data.ganador.premio || '';
-          document.getElementById('ganador-numero').textContent = data.ganador.numero_ganador || '';
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Error al realizar el sorteo.');
+          fetch(`{{ url('/admin/sorteo/modificar-fecha') }}/${idSorteo}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+              },
+              body: JSON.stringify({
+                fecha_sorteo: nuevaFecha
+              })
+            })
+            .then(async response => {
+              const data = await response.json();
+
+              if (!response.ok) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: data.message || 'No se pudo actualizar la fecha del sorteo.',
+                });
+                throw new Error(data.message || 'Error al actualizar la fecha del sorteo.');
+              }
+
+              Swal.fire({
+                icon: 'success',
+                title: 'Fecha actualizada',
+                text: data.message || 'La fecha del sorteo se actualizó correctamente.',
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al actualizar la fecha del sorteo.',
+              });
+            });
         });
+      }
     });
   </script>
 </body>

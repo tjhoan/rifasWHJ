@@ -119,6 +119,7 @@
             </section>
         </form>
     </main>
+    <script src="{{ asset('js/alerts.js') }}" defer></script>
 </body>
 
 </html>

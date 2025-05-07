@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Carrito;
-use App\Models\CarritoNumero;
 use App\Models\Sorteo;
 use App\Models\Rifa;
 use App\Models\Ganador;
@@ -12,22 +10,16 @@ use App\Models\NumerosRifa;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class AdminSorteosController extends Controller
 {
     public function index()
     {
         try {
-            $sorteos = Sorteo::with('rifa')->whereIn('estado', ['sin_reclamo', 'sin_ganador'])->get();
+            $sorteos = Sorteo::with(['rifa', 'ganador.cliente'])->whereIn('estado', ['sin_ganador', 'sin_reclamo'])->get();
             $rifas = Rifa::where('estado', 'activo')->get();
 
-            $ultimoSorteo = Sorteo::with(['rifa', 'ganador.cliente'])
-                ->where('estado', 'realizado')
-                ->latest('fecha_sorteo')
-                ->first();
-
-            return view('admin.sorteo', compact('sorteos', 'rifas', 'ultimoSorteo'));
+            return view('admin.sorteo', compact('sorteos', 'rifas'));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al cargar los sorteos: ' . $e->getMessage()]);
         }
@@ -43,6 +35,15 @@ class AdminSorteosController extends Controller
             DB::beginTransaction();
 
             $sorteo = Sorteo::with('rifa')->findOrFail($request->id_sorteo);
+
+            $fechaActual = now()->toDateString();
+            if ($sorteo->fecha_sorteo <= $fechaActual) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La fecha del sorteo debe ser mayor a la fecha actual.',
+                ], 400);
+            }
+
             $cantidadBoletos = $sorteo->rifa->cantidad_boletos;
 
             $existeNumeroGanador = NumerosRifa::where('id_rifa', $sorteo->id_rifa)
@@ -51,12 +52,14 @@ class AdminSorteosController extends Controller
 
             if (!$existeNumeroGanador) {
                 return response()->json([
-                    'error' => 'No hay números asociados a un cliente para este sorteo.',
+                    'success' => false,
+                    'message' => 'No hay números asociados a un cliente para este sorteo.',
+                    'fecha_sorteo' => $sorteo->fecha_sorteo
                 ], 400);
             }
 
             $intentos = 0;
-            $maxIntentos = 100;
+            $maxIntentos = 1;
             $numeroGanador = null;
             $numeroRifa = null;
 
@@ -72,8 +75,10 @@ class AdminSorteosController extends Controller
                 if ($intentos >= $maxIntentos) {
                     DB::rollBack();
                     return response()->json([
-                        'error' => 'No se pudo determinar un ganador después de 100 intentos.',
-                    ], 500);
+                        'success' => false,
+                        'message' => 'No se pudo determinar un ganador. Por favor, modifique la fecha del sorteo.',
+                        'fecha_sorteo' => $sorteo->fecha_sorteo
+                    ]);
                 }
             } while (!$numeroRifa || !$numeroRifa->id_cliente);
 
@@ -90,6 +95,8 @@ class AdminSorteosController extends Controller
                 'id_cliente' => $clienteGanador->id_cliente,
                 'estado' => 'activo',
             ]);
+
+            $sorteo->rifa->update(['estado' => 'inactivo']);
 
             DB::commit();
 
@@ -112,6 +119,61 @@ class AdminSorteosController extends Controller
             return response()->json([
                 'error' => 'Error al realizar el sorteo: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function modificarFecha(Request $request, $id)
+    {
+        $request->validate([
+            'fecha_sorteo' => 'required|date|after:today',
+        ]);
+
+        try {
+            $sorteo = Sorteo::findOrFail($id);
+
+            if ($request->fecha_sorteo <= now()->toDateString()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'La fecha del sorteo debe ser mayor a la fecha actual.',
+                ], 400);
+            }
+
+            $sorteo->update(['fecha_sorteo' => $request->fecha_sorteo]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Fecha del sorteo actualizada correctamente.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar la fecha del sorteo.',
+            ], 500);
+        }
+    }
+
+    public function getSorteoData($id)
+    {
+        try {
+            $sorteo = Sorteo::with(['rifa', 'ganador.cliente'])->findOrFail($id);
+
+            $data = [
+                'id_sorteo' => $sorteo->id_sorteo,
+                'nombre_rifa' => $sorteo->rifa->nombre_rifa,
+                'fecha_sorteo' => $sorteo->fecha_sorteo,
+                'premio' => $sorteo->rifa->premio,
+                'ganador' => $sorteo->ganador ? [
+                    'primer_nombre' => $sorteo->ganador->cliente->primer_nombre_cliente,
+                    'segundo_nombre' => $sorteo->ganador->cliente->segundo_nombre_cliente,
+                    'primer_apellido' => $sorteo->ganador->cliente->primer_apellido_cliente,
+                    'segundo_apellido' => $sorteo->ganador->cliente->segundo_apellido_cliente,
+                    'numero_ganador' => $sorteo->numero_ganador,
+                ] : null,
+            ];
+
+            return response()->json(['success' => true, 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error al obtener los datos del sorteo.'], 500);
         }
     }
 }

@@ -6,12 +6,17 @@
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endpush
 
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/alerts.js') }}" defer></script>
+@endpush
+
 @section('content')
 <h1>Compras De Rifas</h1>
 <section class="rifas-container">
     @foreach ($rifas as $rifa)
     <div class="rifa-card">
-        <img alt="Rifa" src="{{ $rifa->imagen_rifa }}">
+        <img alt="Rifa" src="{{ filter_var($rifa->imagen_rifa, FILTER_VALIDATE_URL) ? $rifa->imagen_rifa : asset('storage/' . $rifa->imagen_rifa) }}">
         <div class="info">
             <div class="left">
                 <p><strong>Nombre:</strong> {{ $rifa->nombre_rifa }}</p>

@@ -3,79 +3,174 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Rifa;
+use App\Models\Sorteo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AdminRifasController extends Controller
 {
     public function index()
     {
-        $rifas = Rifa::withCount(['numeros as reservados_count' => function ($query) {
-            $query->where('estado', 'reservado');
-        }])->get();
+        try {
+            $rifas = Rifa::withCount(['numeros as reservados_count' => function ($query) {
+                $query->where('estado', 'reservado');
+            }])->get();
 
-        return view('admin.rifas', compact('rifas'));
+            return view('admin.rifas', compact('rifas'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un problema al cargar las rifas. Por favor, intenta nuevamente.');
+        }
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        try {
+            $validated = $this->validateRifa($request);
+
+            if ($request->hasFile('imagen_rifa')) {
+                $validated['imagen_rifa'] = $request->file('imagen_rifa')->store('rifas', 'public');
+            }
+
+            $rifa = Rifa::create($validated);
+            $this->generateNumeros($rifa->id_rifa, $validated['cantidad_boletos']);
+
+            Sorteo::create([
+                'id_rifa' => $rifa->id_rifa,
+                'fecha_sorteo' => $validated['fecha_sorteo'],
+                'estado' => 'sin_ganador',
+            ]);
+
+            return redirect()->route('admin.dashboard')->with('success', 'La rifa ha sido creada correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un problema al crear la rifa. Por favor, intenta nuevamente.');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $rifa = Rifa::findOrFail($id);
+            $validated = $this->validateRifa($request, false);
+
+            if ($request->hasFile('imagen_rifa')) {
+                $this->deleteImage($rifa->imagen_rifa);
+                $validated['imagen_rifa'] = $request->file('imagen_rifa')->store('rifas', 'public');
+            }
+
+            if (isset($validated['cantidad_boletos'])) {
+                $this->updateNumeros($rifa->id_rifa, $validated['cantidad_boletos']);
+            }
+
+            $rifa->update(array_filter($validated));
+
+            return redirect()->route('admin.dashboard')->with('success', 'La rifa ha sido modificada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un problema al modificar la rifa. Por favor, intenta nuevamente.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $rifa = Rifa::findOrFail($id);
+            $this->deleteImage($rifa->imagen_rifa);
+
+            $rifa->update(['estado' => 'inactivo']);
+            DB::table('numeros_rifa')->where('id_rifa', $id)->delete();
+
+            return redirect()->route('admin.dashboard')->with('success', 'La rifa ha sido eliminada correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hubo un problema al eliminar la rifa. Por favor, intenta nuevamente.');
+        }
+    }
+
+    public function modificarFecha(Request $request, $id)
+    {
+        $request->validate([
+            'fecha_sorteo' => 'required|date|after:today',
+        ]);
+
+        try {
+            $rifa = Rifa::findOrFail($id);
+            $rifa->update(['fecha_sorteo' => $request->fecha_sorteo]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Fecha del sorteo actualizada correctamente.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar la fecha del sorteo.',
+            ], 500);
+        }
+    }
+
+    private function validateRifa(Request $request, $isCreate = true)
+    {
+        $rules = [
             'nombre_rifa' => 'required|string|max:255',
             'precio_boleto' => 'required|numeric|min:0',
             'cantidad_boletos' => 'required|integer|min:1',
             'fecha_inicio' => 'required|date',
             'fecha_sorteo' => 'required|date|after_or_equal:fecha_inicio',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'premio' => 'required|string|max:255',
             'imagen_rifa' => 'nullable|image|max:2048',
-        ]);
+        ];
 
-        if ($request->hasFile('imagen_rifa')) {
-            $validated['imagen_rifa'] = $request->file('imagen_rifa')->store('rifas', 'public');
+        if (!$isCreate) {
+            $rules = array_map(fn($rule) => str_replace('required', 'nullable', $rule), $rules);
         }
 
-        Rifa::create($validated);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Rifa creada exitosamente.');
+        return $request->validate($rules);
     }
-    public function update(Request $request, $id)
+
+    private function generateNumeros($rifaId, $cantidad)
     {
-        $rifa = Rifa::findOrFail($id);
+        $numeros = [];
+        for ($i = 1; $i <= $cantidad; $i++) {
+            $numeros[] = [
+                'id_rifa' => $rifaId,
+                'numero' => $i,
+                'estado' => 'disponible',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+        DB::table('numeros_rifa')->insert($numeros);
+    }
 
-        $validated = $request->validate([
-            'nombre_rifa' => 'nullable|string|max:255',
-            'precio_boleto' => 'nullable|numeric|min:0',
-            'cantidad_boletos' => 'nullable|integer|min:1',
-            'fecha_inicio' => 'nullable|date',
-            'fecha_sorteo' => 'nullable|date|after_or_equal:fecha_inicio',
-            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
-            'premio' => 'nullable|string|max:255',
-            'imagen_rifa' => 'nullable|image|max:2048',
-        ]);
+    private function updateNumeros($rifaId, $cantidadNueva)
+    {
+        $cantidadActual = DB::table('numeros_rifa')->where('id_rifa', $rifaId)->count();
 
-        if ($request->hasFile('imagen_rifa')) {
-            if ($rifa->imagen_rifa) {
-                Storage::disk('public')->delete($rifa->imagen_rifa);
+        if ($cantidadNueva > $cantidadActual) {
+            $this->generateNumeros($rifaId, $cantidadNueva - $cantidadActual);
+        } elseif ($cantidadNueva < $cantidadActual) {
+            $numerosAEliminar = DB::table('numeros_rifa')
+                ->where('id_rifa', $rifaId)
+                ->where('numero', '>', $cantidadNueva)
+                ->get();
+
+            foreach ($numerosAEliminar as $numero) {
+                if ($numero->estado !== 'disponible') {
+                    throw new \Exception('No se pueden eliminar números que no estén en estado "disponible".');
+                }
             }
-            $validated['imagen_rifa'] = $request->file('imagen_rifa')->store('rifas', 'public');
+
+            DB::table('numeros_rifa')
+                ->where('id_rifa', $rifaId)
+                ->where('numero', '>', $cantidadNueva)
+                ->delete();
         }
-
-        $rifa->update(array_filter($validated));
-
-        return redirect()->route('admin.dashboard')->with('success', 'Rifa actualizada exitosamente.');
     }
 
-    public function destroy($id)
+    private function deleteImage($imagePath)
     {
-        $rifa = Rifa::findOrFail($id);
-
-        if ($rifa->imagen_rifa) {
-            Storage::disk('public')->delete($rifa->imagen_rifa);
+        if ($imagePath) {
+            Storage::disk('public')->delete($imagePath);
         }
-
-        $rifa->delete();
-
-        return response()->json(['success' => true, 'message' => 'Rifa eliminada exitosamente.']);
     }
 }

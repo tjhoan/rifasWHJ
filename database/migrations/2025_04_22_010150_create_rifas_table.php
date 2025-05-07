@@ -15,7 +15,6 @@ return new class extends Migration
             $table->decimal('precio_boleto', 10, 2);
             $table->integer('cantidad_boletos');
             $table->date('fecha_inicio');
-            $table->date('fecha_fin');
             $table->date('fecha_sorteo');
             $table->text('premio');
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');

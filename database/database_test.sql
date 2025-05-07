@@ -25,7 +25,6 @@ CREATE TABLE
         precio_boleto DECIMAL(10, 2) NOT NULL,
         cantidad_boletos INT NOT NULL,
         fecha_inicio DATE NOT NULL,
-        fecha_fin DATE NOT NULL,
         fecha_sorteo DATE NOT NULL,
         premio TEXT NOT NULL,
         estado ENUM ('activo', 'inactivo') DEFAULT 'activo'
