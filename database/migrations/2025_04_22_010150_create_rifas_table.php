@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id('id_rifa');
             $table->string('nombre_rifa');
             $table->string('imagen_rifa', 512)->nullable();
-            $table->decimal('precio_boleto', 10, 2);
+            $table->decimal('precio_boleto');
             $table->integer('cantidad_boletos');
             $table->date('fecha_inicio');
             $table->date('fecha_sorteo');

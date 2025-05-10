@@ -9,28 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-@if(session('success'))
-<script>
-  Swal.fire({
-    icon: 'success',
-    title: '¡Éxito!',
-    text: "{{ session('success') }}",
-    confirmButtonColor: '#3085d6',
-  });
-</script>
-@endif
-
-@if(session('error'))
-<script>
-  Swal.fire({
-    icon: 'error',
-    title: '¡Error!',
-    text: "{{ session('error') }}",
-    confirmButtonColor: '#d33',
-  });
-</script>
-@endif
-
 <body>
   <!-- Sidebar / Menú lateral -->
   <div class="sidebar">
@@ -52,6 +30,12 @@
       <h1>Rifas</h1>
       <button class="btn-nueva" id="btnAbrirModal">+ Nueva</button>
     </header>
+
+    @if (!$hayRifas)
+    <div class="no-sorteos">
+      <p>No hay rifas disponibles en este momento.</p>
+    </div>
+    @else
     <section class="rifas-container">
       @foreach ($rifas as $rifa)
       <div class="rifa-card">
@@ -62,7 +46,7 @@
         <div class="rifa-info">
           <p><strong>Nombre:</strong> {{ $rifa->nombre_rifa }}</p>
           <p><strong>Cantidad vendida:</strong> {{ $rifa->numeros()->where('estado', 'vendido')->count() }}</p>
-          <p><strong>Precio:</strong> ${{ $rifa->precio_boleto }}</p>
+          <p><strong>Precio:</strong> ${{ number_format($rifa->precio_boleto, 0) }}</p>
           <p><strong>Fecha inicio:</strong> {{ $rifa->fecha_inicio }}</p>
           <p><strong>Fecha sorteo:</strong> {{ $rifa->fecha_sorteo }}</p>
           <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
@@ -77,6 +61,7 @@
       </div>
       @endforeach
     </section>
+    @endif
   </div>
   <!-- Modal para crear nueva rifa -->
   <div class="modal" id="modalRifa">
@@ -267,25 +252,49 @@
       });
     });
 
-    if (successMessage) {
-      Swal.fire({
-        icon: "success",
-        title: "¡Éxito!",
-        text: successMessage,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "Aceptar",
-      });
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+      const successMessage = "{{ session('success') }}";
+      const errorMessage = "{{ session('error') }}";
 
-    if (errorMessage) {
-      Swal.fire({
-        icon: "error",
-        title: "¡Error!",
-        text: errorMessage,
-        confirmButtonColor: "#d33",
-        confirmButtonText: "Aceptar",
+      if (successMessage) {
+        Swal.fire({
+          icon: "success",
+          title: "¡Éxito!",
+          text: successMessage,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Aceptar",
+        });
+      }
+
+      if (errorMessage) {
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: errorMessage,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Aceptar",
+        });
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const premioInputs = document.querySelectorAll('input[name="premio"]');
+
+      premioInputs.forEach(input => {
+        input.addEventListener("input", function() {
+          if (this.value.includes(".")) {
+            Swal.fire({
+              icon: "error",
+              title: "¡Error!",
+              text: "El campo 'Premio' no puede contener puntos.",
+              confirmButtonColor: "#d33",
+              confirmButtonText: "Aceptar",
+            });
+            this.value = this.value.replace(/\./g, "");
+          }
+        });
       });
-    }
+    });
   </script>
 </body>
 

@@ -20,12 +20,12 @@
             <div class="left">
                 <p><strong>Nombre:</strong> {{ $rifa->nombre_rifa }}</p>
                 <p><strong>Cantidad de boletos:</strong> {{ $rifa->cantidad_boletos }}</p>
-                <p><strong>Precio por boleto:</strong> ${{ number_format($rifa->precio_boleto, 2, ',', '.') }}</p>
+                <p><strong>Precio por boleto:</strong> ${{ number_format((float) $rifa->precio_boleto, 0) }}</p>
             </div>
             <div class="right">
                 <p><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>
                 <p><strong>Fecha sorteo:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_sorteo)->format('d/m/Y') }}</p>
-                <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
+                <p><strong>Premio:</strong> ${{ number_format((float) $rifa->premio, 0) }}</p>
             </div>
         </div>
         <a href="{{ route('compras.show', $rifa->id_rifa) }}" class="comprar-btn">Comprar</a>

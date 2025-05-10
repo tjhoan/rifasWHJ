@@ -261,3 +261,15 @@ body {
 .btn-modificar-fecha:hover {
     background-color: #e0a800;
 }
+
+.no-sorteos {
+    text-align: center;
+    max-width: 70%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}

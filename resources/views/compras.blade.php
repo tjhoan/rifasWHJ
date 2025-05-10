@@ -21,7 +21,7 @@
     <div class="info-container">
         <div class="left-info">
             <p><strong>Nombre Rifa:</strong> {{ $rifa->nombre_rifa }}</p>
-            <p><strong>Premio:</strong> {{ $rifa->premio }}</p>
+            <p><strong>Premio:</strong> ${{ number_format($rifa->premio) }}</p>
         </div>
         <div class="right-info">
             <p class="pp"><strong>Fecha inicio:</strong> {{ \Carbon\Carbon::parse($rifa->fecha_inicio)->format('d/m/Y') }}</p>

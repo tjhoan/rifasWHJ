@@ -28,15 +28,12 @@
   <!-- Contenido principal -->
   <div class="content">
     <h1>Sorteo</h1>
-    @if ($errors->any())
-    <div class="error-box">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
+
+    @if (!$haySorteos)
+    <div class="no-sorteos">
+      <p>No hay sorteos disponibles en este momento.</p>
     </div>
-    @endif
+    @else
     <!-- Seleccionar Rifa y Botón Sortear -->
     <div class="sortear-box">
       <form action="{{ route('admin.sorteo.sortear') }}" method="POST">
@@ -50,56 +47,57 @@
         <button type="submit" class="btn-sortear">Sortear</button>
       </form>
     </div>
+    @endif
+  </div>
 
-    <!-- Sección Ganador (Oculta por defecto) -->
-    <div class="ganador-box" style="display: none;">
-      <h2>GANADOR</h2>
-      <div class="fields">
-        <div class="field">
-          <label>Primer Nombre:</label>
-          <p class="valor" id="ganador-primer-nombre">N/A</p>
-        </div>
-        <div class="field">
-          <label>Segundo Nombre:</label>
-          <p class="valor" id="ganador-segundo-nombre">N/A</p>
-        </div>
-        <div class="field">
-          <label>Primer Apellido:</label>
-          <p class="valor" id="ganador-primer-apellido">N/A</p>
-        </div>
-        <div class="field">
-          <label>Segundo Apellido:</label>
-          <p class="valor" id="ganador-segundo-apellido">N/A</p>
-        </div>
-        <div class="field">
-          <label>Nombre de la Rifa:</label>
-          <p class="valor" id="ganador-nombre-rifa">N/A</p>
-        </div>
-        <div class="field">
-          <label>Fecha Inicio:</label>
-          <p class="valor" id="ganador-fecha-inicio">N/A</p>
-        </div>
-        <div class="field">
-          <label>Fecha Sorteo:</label>
-          <p class="valor" id="ganador-fecha-sorteo">N/A</p>
-        </div>
-        <div class="field">
-          <label>Premio:</label>
-          <p class="valor" id="ganador-premio">N/A</p>
-        </div>
-        <div class="field">
-          <label>Número Ganador:</label>
-          <p class="valor" id="ganador-numero">N/A</p>
-        </div>
+  <!-- Sección Ganador (Oculta por defecto) -->
+  <div class="ganador-box" style="display: none;">
+    <h2>GANADOR</h2>
+    <div class="fields">
+      <div class="field">
+        <label>Primer Nombre:</label>
+        <p class="valor" id="ganador-primer-nombre">N/A</p>
+      </div>
+      <div class="field">
+        <label>Segundo Nombre:</label>
+        <p class="valor" id="ganador-segundo-nombre">N/A</p>
+      </div>
+      <div class="field">
+        <label>Primer Apellido:</label>
+        <p class="valor" id="ganador-primer-apellido">N/A</p>
+      </div>
+      <div class="field">
+        <label>Segundo Apellido:</label>
+        <p class="valor" id="ganador-segundo-apellido">N/A</p>
+      </div>
+      <div class="field">
+        <label>Nombre de la Rifa:</label>
+        <p class="valor" id="ganador-nombre-rifa">N/A</p>
+      </div>
+      <div class="field">
+        <label>Fecha Inicio:</label>
+        <p class="valor" id="ganador-fecha-inicio">N/A</p>
+      </div>
+      <div class="field">
+        <label>Fecha Sorteo:</label>
+        <p class="valor" id="ganador-fecha-sorteo">N/A</p>
+      </div>
+      <div class="field">
+        <label>Premio:</label>
+        <p class="valor" id="ganador-premio">N/A</p>
+      </div>
+      <div class="field">
+        <label>Número Ganador:</label>
+        <p class="valor" id="ganador-numero">N/A</p>
       </div>
     </div>
+  </div>
 
-    <!-- Sección Modificar Fecha (Oculta por defecto) -->
-    <div class="fecha-sorteo-container" style="display: none;">
-      <label for="fechaSorteo">Fecha del sorteo:</label>
-      <input type="date" id="fechaSorteo" value="{{ $sorteo->fecha_sorteo }}">
-      <button class="btn-modificar-fecha">Modificar fecha</button>
-    </div>
+  <!-- Sección Modificar Fecha (Oculta por defecto) -->
+  <div class="fecha-sorteo-container" style="display: none;">
+    <label for="fechaSorteo">Fecha del sorteo:</label>
+    <input type="date" id="fechaSorteo" value="{{ $sorteo ? $sorteo->fecha_sorteo : '' }}">
+    <button class="btn-modificar-fecha">Modificar fecha</button>
   </div>
 
   <script>

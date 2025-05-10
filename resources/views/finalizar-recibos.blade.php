@@ -72,7 +72,7 @@
             </div>
 
             <div class="total-pagar-container">
-                <h2 class="total-pagar">Total a pagar: <span>${{ $factura->total }}</span></h2>
+                <h2 class="total-pagar">Total a pagar: <span>${{ number_format($factura->total) }}</span></h2>
             </div>
 
             <!-- Raffle Information -->
@@ -104,7 +104,7 @@
                         </div>
                         <div class="row">
                             <label>Premio:</label>
-                            <span>{{ $carrito->numeros->first()->rifa->premio }}</span>
+                            <span>{{ number_format($carrito->numeros->first()->rifa->premio) }}</span>
                         </div>
                     </div>
                 </div>

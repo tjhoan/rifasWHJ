@@ -18,7 +18,7 @@ class RifasSeeder extends Seeder
                 'cantidad_boletos' => 20,
                 'fecha_inicio' => '2025-04-01',
                 'fecha_sorteo' => '2025-04-22',
-                'premio' => '1.000.000',
+                'premio' => '1000000',
                 'estado' => 'activo',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -31,7 +31,7 @@ class RifasSeeder extends Seeder
                 'cantidad_boletos' => 100,
                 'fecha_inicio' => '2025-05-01',
                 'fecha_sorteo' => '2025-05-22',
-                'premio' => '500.000',
+                'premio' => '500000',
                 'estado' => 'activo',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -44,7 +44,7 @@ class RifasSeeder extends Seeder
                 'cantidad_boletos' => 100,
                 'fecha_inicio' => '2025-06-01',
                 'fecha_sorteo' => '2025-06-22',
-                'premio' => '200.000',
+                'premio' => '200000',
                 'estado' => 'activo',
                 'created_at' => now(),
                 'updated_at' => now()

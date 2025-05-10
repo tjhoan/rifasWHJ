@@ -34,7 +34,7 @@
       <div class="col">
         <p><strong>Fecha inicio:</strong> {{ $ganador->sorteo->rifa->fecha_inicio }}</p>
         <p><strong>Fecha sorteo:</strong> {{ $ganador->sorteo->rifa->fecha_sorteo }}</p>
-        <p><strong>Premio:</strong> {{ $ganador->sorteo->rifa->premio }}</p>
+        <p><strong>Premio:</strong> {{ number_format($ganador->sorteo->rifa->premio) }}</p>
       </div>
     </div>
   </div>

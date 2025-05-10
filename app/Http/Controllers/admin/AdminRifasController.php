@@ -20,7 +20,9 @@ class AdminRifasController extends Controller
                 }])
                 ->get();
 
-            return view('admin.rifas', compact('rifas'));
+            $hayRifas = $rifas->isNotEmpty();
+
+            return view('admin.rifas', compact('rifas', 'hayRifas'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Hubo un problema al cargar las rifas. Por favor, intenta nuevamente.');
         }
@@ -82,7 +84,6 @@ class AdminRifasController extends Controller
             $rifa->update(['estado' => 'inactivo']);
             DB::table('numeros_rifa')->where('id_rifa', $id)->delete();
 
-            // Cambiar el estado de los sorteos asociados a la rifa a anulado, solo se debe editar el estado
             $sorteos = Sorteo::where('id_rifa', $id)->get();
             foreach ($sorteos as $sorteo) {
                 $sorteo->update(['estado' => 'anulado']);
@@ -131,7 +132,7 @@ class AdminRifasController extends Controller
             'fecha_inicio' => 'required|date',
             'fecha_sorteo' => 'required|date|after_or_equal:fecha_inicio',
             'premio' => 'required|string|max:255',
-            'imagen_rifa' => 'nullable|image|max:2048',
+            'imagen_rifa' => 'nullable|image|max:2048'
         ];
 
         if (!$isCreate) {
@@ -144,16 +145,30 @@ class AdminRifasController extends Controller
     private function generateNumeros($rifaId, $cantidad)
     {
         $numeros = [];
-        for ($i = 1; $i <= $cantidad; $i++) {
-            $numeros[] = [
-                'id_rifa' => $rifaId,
-                'numero' => $i,
-                'estado' => 'disponible',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        $chunkSize = 200;
+
+        try {
+            for ($i = 1; $i <= $cantidad; $i++) {
+                $numeros[] = [
+                    'id_rifa' => $rifaId,
+                    'numero' => $i,
+                    'estado' => 'disponible',
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+
+                if (count($numeros) === $chunkSize) {
+                    DB::table('numeros_rifa')->insert($numeros);
+                    $numeros = [];
+                }
+            }
+
+            if (!empty($numeros)) {
+                DB::table('numeros_rifa')->insert($numeros);
+            }
+        } catch (\Exception $e) {
+            throw $e;
         }
-        DB::table('numeros_rifa')->insert($numeros);
     }
 
     private function updateNumeros($rifaId, $cantidadNueva)

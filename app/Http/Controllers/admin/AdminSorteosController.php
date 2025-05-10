@@ -19,7 +19,10 @@ class AdminSorteosController extends Controller
             $sorteos = Sorteo::with(['rifa', 'ganador.cliente'])->whereIn('estado', ['sin_ganador', 'sin_reclamo'])->get();
             $rifas = Rifa::where('estado', 'activo')->get();
 
-            return view('admin.sorteo', compact('sorteos', 'rifas'));
+            $haySorteos = $sorteos->isNotEmpty();
+            $sorteo = $haySorteos ? $sorteos->first() : null;
+
+            return view('admin.sorteo', compact('sorteos', 'rifas', 'haySorteos', 'sorteo'));
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al cargar los sorteos: ' . $e->getMessage()]);
         }

@@ -10,17 +10,17 @@
 <h1 class="titulo-carrito">Carrito</h1>
 
 @if (session('error'))
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Swal.fire({
-                icon: "error",
-                title: "¡Error!",
-                text: "{{ session('error') }}",
-                confirmButtonColor: "#d33",
-                confirmButtonText: "Aceptar",
-            });
-        });
-    </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    Swal.fire({
+      icon: "error",
+      title: "¡Error!",
+      text: "{{ session('error') }}",
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Aceptar",
+    });
+  });
+</script>
 @endif
 
 <div class="carrito-container">
@@ -36,7 +36,7 @@
       <div class="info-right">
         <p>Inicio: <strong>{{ \Carbon\Carbon::parse($numero->rifa->fecha_inicio)->format('d/m/Y') }}</strong></p>
         <p>Sorteo: <strong>{{ \Carbon\Carbon::parse($numero->rifa->fecha_sorteo)->format('d/m/Y') }}</strong></p>
-        <p>Premio: <strong>{{ $numero->rifa->premio }}</strong></p>
+        <p>Premio: <strong>{{ number_format((float) $numero->rifa->premio, 0 ) }}</strong></p>
       </div>
     </div>
     <form method="POST" action="{{ route('carrito.remove') }}" class="form-inline">
