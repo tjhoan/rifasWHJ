@@ -21,7 +21,7 @@ class CarritoController extends Controller
             if ($carrito) {
                 $carrito->load('numeros');
             } else {
-                $carrito = [];
+                $carrito = null;
             }
 
             return view('carrito', compact('carrito'));

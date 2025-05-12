@@ -24,7 +24,7 @@
 @endif
 
 <div class="carrito-container">
-  @if (!empty($carrito) && is_iterable($carrito->numeros))
+  @if ($carrito && is_iterable($carrito->numeros))
   @foreach ($carrito->numeros as $numero)
   <div class="carrito-item">
     <img alt="Icono" class="item-icono" src="{{ filter_var($numero->rifa->imagen_rifa, FILTER_VALIDATE_URL) ? $numero->rifa->imagen_rifa : asset('storage/' . $numero->rifa->imagen_rifa) }}">
@@ -55,11 +55,13 @@
 </div>
 
 <div class="carrito-actions">
+  @if ($carrito)
   <form method="POST" action="{{ route('carrito.clear') }}">
     @csrf
     <input type="hidden" name="id_carrito" value="{{ $carrito->id_carrito }}">
     <button type="submit" class="btn btn-clear">Vaciar Carrito</button>
   </form>
+  @endif
 
   <form action="{{ url('/facturar') }}" method="GET">
     <button type="submit" class="btn btn-facturar">Facturar</button>

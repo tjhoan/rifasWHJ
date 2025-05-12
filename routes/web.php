@@ -14,7 +14,7 @@ use App\Http\Controllers\CarritoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/ganadores', [GanadoresController::class, 'index']);
 Route::get('/compras/{id}', [ComprasController::class, 'show'])->name('compras.show');
 
