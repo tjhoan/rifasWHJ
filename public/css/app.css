@@ -19,7 +19,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #373F47;
+    background-color: #6C91C2;
     padding: 10px 15px;
     color: white;
     height: 50px;
@@ -104,7 +104,7 @@ ul li a {
 }
 
 .carrito-icon:hover {
-    color: #C3C9E9;
+    color: #373F47;
 }
 
 .carrito-imagen {
@@ -118,7 +118,7 @@ ul li a {
     left: -340px;
     width: 230px;
     height: 100%;
-    background-color: #373F47;
+    background-color: #6C91C2;
     color: white;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
@@ -140,7 +140,7 @@ ul li a {
 .sidebar-header h3 {
     margin: 0;
     font-size: 22px;
-    color: #C3C9E9;
+    color: white;
 }
 
 /* Botón cerrar */
@@ -156,7 +156,7 @@ ul li a {
 }
 
 .close-btn:hover {
-    background-color: #6C91C2;
+    background-color: #373F47;
     transform: scale(1.1);
 }
 
@@ -187,14 +187,14 @@ ul li a {
 }
 
 .nav-links a:hover {
-    background-color: #6C91C2;
+    background-color: #373F47;
     transform: translateX(5px);
 }
 
 .footer {
     display: flex;
     justify-content: center;
-    background-color: #373F47;
+    background-color: #6C91C2;
     color: white;
     padding: 15px 0;
     position: fixed;

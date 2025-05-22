@@ -18,7 +18,7 @@ body {
     top: 0;
     width: 220px;            /* Ancho fijo para el menú */
     height: 100vh;           /* Ocupa toda la altura de la pantalla */
-    background-color: #333;
+    background-color: #373F47;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -62,7 +62,7 @@ body {
     
 .menu li:hover,
 .menu li.active {
-    background-color: #444;
+    background-color: #6C91C2 ;
 }
     
     /* Enlaces en el menú */
@@ -194,7 +194,7 @@ body {
 }
 
 .btn-edit {
-    background: #3b82f6;
+    background: #6C91C2;
     color: #fff;
 }
 

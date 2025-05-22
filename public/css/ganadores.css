@@ -26,6 +26,7 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 90%;
+    background-color: #C3C9E9
 }
 
 .ganador-card:hover {
@@ -38,6 +39,7 @@ h1{
     flex: 1;
     justify-content: space-between;
     gap: 15px;
+
 }
 
 .ganador-card .info .col {
@@ -59,4 +61,25 @@ h1{
     margin-right: 20px;
     border-radius: 8px;
     object-fit: cover;
+}
+
+.empty-message {
+    text-align: center;
+    margin-top: 150px;
+    font-size: 1.2rem;
+    color: #555;
+    font-weight: 500;
+    background: #eceff3;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+  
+.empty-message:hover {
+    transform: scale(1.02);
+    background-color: #C3C9E9;
 }

@@ -16,7 +16,7 @@
     align-items: center;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #C3C9E9;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
@@ -83,18 +83,18 @@
 }
 
 .btn-clear {
-    background-color: #f0ad4e;
+    background-color: #373F47;
     color: #fff;
     margin-right: 10px;
 }
 
 .btn-clear:hover {
-    background-color: #ec971f;
+    background-color: #8b8982;
     transform: scale(1.05);
 }
 
 .btn-facturar {
-    background-color: #5cb85c;
+    background-color: #6C91C2;
     color: #fff;
 }
 

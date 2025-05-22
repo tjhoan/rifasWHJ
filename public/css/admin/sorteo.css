@@ -47,7 +47,7 @@ body {
     top: 0;
     width: 220px;
     height: 100vh;
-    background-color: #333;
+    background-color: #373F47;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -90,7 +90,7 @@ body {
 
 .menu li:hover,
 .menu li.active {
-    background-color: #444;
+    background-color: #6C91C2;
 }
 
 .menu li a {
@@ -143,7 +143,7 @@ body {
 }
 
 .btn-sortear {
-    background-color: #007bff;
+    background-color: #6C91C2;
     border: none;
     color: #fff;
     padding: 10px 15px;
@@ -162,8 +162,10 @@ body {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 15px;
-    padding: 20px;
+    padding: 5px;
     margin-bottom: 30px;
+    margin-left: 260px;
+    width: 1223px;
 }
 
 .ganador-box h2 {
@@ -177,8 +179,9 @@ body {
 .fields {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 25px;
     margin-bottom: 20px;
+    margin-left: 5px;
 }
 
 .field {
@@ -232,6 +235,8 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    width: 1223px;
+    margin-left: 260px;
 }
 
 .fecha-sorteo-container label {

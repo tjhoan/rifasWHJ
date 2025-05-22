@@ -21,7 +21,7 @@ body {
     top: 0;
     width: 220px;
     height: 100vh;
-    background-color: #333;
+    background-color: #373F47;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@ body {
 
 .menu li:hover,
 .menu li.active {
-    background-color: #444;
+    background-color: #6C91C2;
 }
 
 /* Enlaces en el menú */
@@ -162,7 +162,7 @@ body {
 
 .button-area button {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #6C91C2;
     border: none;
     color: white;
     font-size: 14px;
@@ -172,5 +172,5 @@ body {
 }
 
 .button-area button:hover {
-    background-color: #218838;
+    background-color: #2563eb;
 }

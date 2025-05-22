@@ -39,7 +39,10 @@
     </div>
   </div>
   @empty
-  <p>No hay ganadores registrados.</p>
+  <div class="empty-message">
+    <i class="fas fa-trophy" style="font-size: 2rem; color: #c0a30c;"></i><br><br>
+    No hay ganadores registrados.
+</div>
   @endforelse
 </section>
 <script>

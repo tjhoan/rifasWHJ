@@ -12,8 +12,8 @@ class NumerosRifaSeeder extends Seeder
         $numeros = [];
         $rifas = [
             1 => 20,
-            2 => 100,
-            3 => 100
+            2 => 15,
+            3 => 20
         ];
 
         foreach ($rifas as $idRifa => $cantidadBoletos) {

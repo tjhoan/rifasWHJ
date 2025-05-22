@@ -18,7 +18,7 @@ h1 {
 .rifa-card {
     display: flex;
     flex-direction: column;
-    background: #c3c9e9;
+    background: #C3C9E9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -60,7 +60,7 @@ h1 {
 }
 
 .comprar-btn {
-    background-color: #28a745;
+    background-color: #6C91C2;
     color: white;
     padding: 7px 20px;
     border: none;

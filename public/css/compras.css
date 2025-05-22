@@ -135,9 +135,10 @@
 }
 
 .number.selected {
-    background-color: #ffc107;
+   background-color: #6C91C2; /* azul para seleccionados */
     color: #fff;
     transform: scale(1.1);
+    border: 1px solid #3b5c88;
 }
 
 button:disabled {
@@ -150,7 +151,9 @@ button:disabled {
 }
 
 .number.comprado {
-    background-color: #ffcccc;
+     background-color: #ffcccc; /* rosado para comprados */
+    color: #333;
+    border: 1px solid #cc9999;
 }
 
 .number.empty {
@@ -168,12 +171,16 @@ button:disabled {
 
 .action-button {
     padding: 12px 22px;
-    background-color: #28a745;
+    background-color: #6C91C2;
     border: none;
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
     font-size: 16px;
+}
+
+.action-button:hover{
+    background-color: #218838;
 }
 .pagination {
     display: flex;
@@ -210,13 +217,23 @@ button:disabled {
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #007bff;
+    background-color: #6C91C2;
     color: #fff;
-    border-color: #007bff;
+    border-color: #007bff; 
+    
 }
 
 .pagination .page-item.disabled .page-link {
     color: #ccc;
     cursor: not-allowed;
     border-color: #ddd;
+}
+
+/*Estado VENDIDO DESHABILITADO: atributo disabled */
+.numbers-section .number:disabled {
+  background-color: #ff4d4d;     
+  color: #fff;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  transform: none;
 }
