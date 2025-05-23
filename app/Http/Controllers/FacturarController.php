@@ -48,7 +48,7 @@ class FacturarController extends Controller
 
             $carrito = $cliente->carritos()->where('estado', 'activo')->first();
             if (!$carrito) {
-                redirect()->back()->with('error', 'Hubo un problema al encontrar el carrito activo.');
+                return redirect()->back()->with('error', 'Hubo un problema al encontrar el carrito activo.');
             }
 
             $factura = Factura::create([
@@ -60,7 +60,7 @@ class FacturarController extends Controller
                 'total' => $this->calculateTotal($carrito),
                 'tipo_compra' => $request->tipo_accion,
             ]);
-
+            
             $carrito->update(['estado' => 'inactivo']);
 
             foreach ($carrito->numeros as $numero) {

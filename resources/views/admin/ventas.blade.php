@@ -16,7 +16,7 @@
   <div class="sidebar">
     <div class="admin-info">
       <span>ADMINISTRADOR</span>
-      <h3>Hernando Vivas Franco</h3>
+      <h3>{{ session('admin')->nombre_admin }}</h3>
     </div>
     <ul class="menu">
       <li><a href="{{ url('/admin') }}">Rifas</a></li>
@@ -58,8 +58,13 @@
       <div class="card">
         <i class="fas fa-crown icon"></i>
         <h2>Rifa Más Vendida</h2>
-        <p class="value">{{ $rifaMasVendida->nombre_rifa }}</p>
-        <p class="description">{{ $rifaMasVendida->boletos_vendidos }} boletos vendidos</p>
+        @if ($rifaMasVendida)
+          <p class="value">{{ $rifaMasVendida->nombre_rifa }}</p>
+          <p class="description">{{ $rifaMasVendida->boletos_vendidos }} boletos vendidos</p>
+        @else
+          <p class="value">No Hay</p>
+          <p class="description">No hay datos disponibles</p>
+        @endif
       </div>
       <div class="card">
         <i class="fas fa-user icon"></i>

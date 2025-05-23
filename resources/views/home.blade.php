@@ -11,7 +11,7 @@
 @endpush
 
 @section('content')
-<h1>Compras De Rifas</h1>
+<h1>Compras de Rifas</h1>
 <section class="rifas-container">
     @foreach ($rifas as $rifa)
     <div class="rifa-card">

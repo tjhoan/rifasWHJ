@@ -34,8 +34,10 @@ Route::post('/guardar-datos-empresa', [FinalizarReciboController::class, 'store'
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/', [AdminRifasController::class, 'index'])->name('admin.dashboard');
     Route::post('/rifas', [AdminRifasController::class, 'store'])->name('admin.rifas.store');
     Route::put('/rifas/{id}', [AdminRifasController::class, 'update'])->name('admin.rifas.update');

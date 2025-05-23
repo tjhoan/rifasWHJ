@@ -14,7 +14,7 @@
   <div class="sidebar">
     <div class="admin-info">
       <span>ADMINISTRADOR</span>
-      <h3>Hernando Vivas Franco</h3>
+      <h3>{{ session('admin')->nombre_admin }}</h3>
     </div>
     <ul class="menu">
       <li><a href="{{ url('/admin') }}">Rifas</a></li>

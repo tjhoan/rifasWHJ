@@ -62,7 +62,7 @@ class AdminSorteosController extends Controller
             }
 
             $intentos = 0;
-            $maxIntentos = 50;
+            $maxIntentos = 20;
             $numeroGanador = null;
             $numeroRifa = null;
 

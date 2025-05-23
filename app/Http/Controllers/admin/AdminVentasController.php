@@ -12,6 +12,10 @@ class AdminVentasController extends Controller
     public function index()
     {
         try {
+            if (Rifa::count() === 0 || NumerosRifa::count() === 0 || Cliente::count() === 0) {
+                return redirect()->back()->with('error', 'Hubo un problema al cargar los datos. Por favor, intenta nuevamente.');
+            }
+
             $totalRifas = Rifa::count();
             $rifasActivas = Rifa::where('estado', 'activo')->count();
             $totalBoletos = Rifa::sum('cantidad_boletos');

@@ -1,57 +1,55 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  /* Body & fuente */
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f4;
 }
-  
-    /* Estructura principal de la barra de navegacion ya establecido */
+
+/* Estructura principal de la barra de navegacion ya establecido */
 .sidebar {
-    position: fixed;         /* Fijo en la pantalla */
+    position: fixed;
     left: 0;
     top: 0;
-    width: 220px;            /* Ancho fijo para el menú */
-    height: 100vh;           /* Ocupa toda la altura de la pantalla */
-    background-color: #373F47;
+    width: 220px;
+    height: 100vh;
+    background-color: #373f47;
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;
 }
-    
+
 .main-content {
-    margin-left: 220px;      /* Deja espacio para la sidebar */
+    margin-left: 220px;
     padding: 30px;
 }
-    
-    /* Información del administrador */
+
+/* Información del administrador */
 .admin-info {
     margin-bottom: 40px;
     font-size: 30px;
 }
-    
+
 .admin-info span {
     font-size: 15px;
     color: #bbb;
 }
-    
+
 .admin-info h3 {
     font-size: 20px;
     margin-top: 5px;
 }
-    
-    /* Menú lateral */
+
+/* Menú lateral */
 .menu {
     list-style: none;
 }
-    
+
 .menu li {
     margin: 10px 0;
     cursor: pointer;
@@ -59,48 +57,42 @@ body {
     padding: 8px;
     border-radius: 4px;
 }
-    
+
 .menu li:hover,
 .menu li.active {
-    background-color: #6C91C2 ;
+    background-color: #6c91c2;
 }
-    
-    /* Enlaces en el menú */
+
 .menu li a {
     color: #fff;
     text-decoration: none;
     display: block;
 }
-    
-    /* Encabezado de contenido principal */
+
 .main-content header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-    
+
 .main-content header h2 {
     font-size: 24px;
     color: #333;
 }
-  
-  /* de la vista de los clientes  */
-  /* Contenido principal */
+
 .main-content {
     margin-left: 240px;
     padding: 30px;
 }
-  
-  /* Título de la página */
+
 .page-title {
     font-size: 33px;
     color: #333;
     margin-bottom: 20px;
-    /* text-align: center; */
 }
-  
-  /* BUSCADOR */
+
+/* BUSCADOR */
 .search-box {
     width: 100%;
     max-width: 800px;
@@ -131,19 +123,19 @@ body {
     font-size: 20px;
     color: #333;
 }
-  
-  /* TARJETA DE CLIENTE */
+
+/* TARJETA DE CLIENTE */
 .client-card {
     background: #fff;
     border-radius: 30px;
     padding: 30px 40px;
     width: 90%;
     margin: 0 auto 40px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 300px;
 }
-  
-  /* FILAS DE INFO */
+
+/* FILAS DE INFO */
 .info-row {
     display: flex;
     justify-content: space-between;
@@ -166,8 +158,8 @@ body {
     font-size: 16px;
     color: #333;
 }
-  
-  /* BOTONES */
+
+/* BOTONES */
 .client-buttons {
     display: flex;
     justify-content: center;
@@ -181,7 +173,7 @@ body {
     border-radius: 6px;
     font-size: 15px;
     cursor: pointer;
-    transition: background .2s;
+    transition: background 0.2s;
 }
 
 .btn-delete {
@@ -194,40 +186,38 @@ body {
 }
 
 .btn-edit {
-    background: #6C91C2;
-    color: #fff;
+    background: #ffc107;
+    color: #000;
 }
 
 .btn-edit:hover {
-    background: #2563eb;
+    background: #e0a800;
 }
-  
-  
-  /* Responsive */
+
+/* Responsive */
 @media (max-width: 768px) {
     .info-row {
-      flex-direction: column;
-      gap: 15px;
+        flex-direction: column;
+        gap: 15px;
     }
     .info-item {
-      text-align: left;
+        text-align: left;
     }
     .search-box {
-      max-width: 95%;
+        max-width: 95%;
     }
     .client-card {
-      padding: 20px;
+        padding: 20px;
     }
 }
-  
- /*==========================
- MODAL OVERLAY & CONTENIDO
- ========================== */
+
 .modal {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
     display: none;
     justify-content: center;
     align-items: center;
@@ -237,17 +227,16 @@ body {
 .modal.show {
     display: flex;
 }
-    
+
 .modal-content {
     background: #fff;
     border-radius: 12px;
     padding: 20px 30px;
-    width: 650px;           /* ++ ancho */
+    width: 650px; /* ++ ancho */
     max-width: 95%;
     position: relative;
 }
-    
-    
+
 /* título y cierre */
 .modal-content h3 {
     text-align: center;
@@ -258,34 +247,32 @@ body {
 
 .modal-content .close {
     position: absolute;
-    top: 12px; right: 16px;
+    top: 12px;
+    right: 16px;
     font-size: 24px;
     cursor: pointer;
     color: #888;
-    transition: color .2s;
+    transition: color 0.2s;
 }
 
 .modal-content .close:hover {
     color: #333;
 }
-    
-/*==========================
-    FORMULARIO GRIDS
-========================== */
+
 .edit-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;              /* separación entrefilas */
+    gap: 20px;
 }
-    
-    /* cada fila adapta sus columnas al número de hijos */
+
+/* cada fila adapta sus columnas al número de hijos */
 .edit-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
-    
-    /* etiquetas + inputs */
+
+/* etiquetas + inputs */
 .edit-row label {
     display: flex;
     flex-direction: column;
@@ -300,7 +287,7 @@ body {
     font-size: 17px;
     outline: none;
 }
-    
+
 /* botón guardar centrado bajo todas las filas */
 .edit-buttons {
     text-align: center;
@@ -314,17 +301,15 @@ body {
     border-radius: 6px;
     font-size: 15px;
     cursor: pointer;
-    transition: background .2s;
+    transition: background 0.2s;
 }
 
 .btn-save:hover {
     background: #218838;
 }
-    
-/* responsivo: filas pasan a 1 columna */
+
 @media (max-width: 768px) {
     .edit-row {
         grid-template-columns: 1fr !important;
     }
 }
-    

@@ -83,23 +83,23 @@
 }
 
 .btn-clear {
-    background-color: #373F47;
+    background-color: #df0000;
     color: #fff;
     margin-right: 10px;
 }
 
 .btn-clear:hover {
-    background-color: #8b8982;
+    background-color: #960000;
     transform: scale(1.05);
 }
 
 .btn-facturar {
-    background-color: #6C91C2;
+    background-color: #00b327;
     color: #fff;
 }
 
 .btn-facturar:hover {
-    background-color: #4cae4c;
+    background-color: #229622;
     transform: scale(1.05);
 }
 

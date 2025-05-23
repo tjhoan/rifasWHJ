@@ -15,7 +15,7 @@
   <div class="sidebar">
     <div class="admin-info">
       <span>ADMINISTRADOR</span>
-      <h3>Hernando Vivas Franco</h3>
+      <h3>{{ session('admin')->nombre_admin }}</h3>
     </div>
     <ul class="menu">
       <li><a href="{{ url('/admin') }}">Rifas</a></li>
@@ -115,8 +115,8 @@
             <input type="text" name="digito_cuenta" placeholder="Número de cuenta o referencia">
           </div>
         </div>
-        <div class="button-area">
-          <button type="submit">Agregar</button>
+        <div class="button-area-last">
+          <button type="submit" class="btn-agregar">Agregar</button>
         </div>
       </form>
     </div>

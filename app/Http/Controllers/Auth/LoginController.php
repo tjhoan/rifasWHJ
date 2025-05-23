@@ -45,4 +45,10 @@ class LoginController extends Controller
             ], 500);
         }
     }
+    
+    public function logout(Request $request)
+    {
+        $request->session()->forget('admin');
+        return redirect()->route('login.index')->with('success', 'Has cerrado sesión correctamente.');
+    }
 }

@@ -21,7 +21,7 @@ body {
     top: 0;
     width: 220px;
     height: 100vh;
-    background-color: #373F47;
+    background-color: #373f47;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@ body {
 
 .menu li:hover,
 .menu li.active {
-    background-color: #6C91C2;
+    background-color: #6c91c2;
 }
 
 /* Enlaces en el menú */
@@ -160,11 +160,19 @@ body {
     margin-top: 20px;
 }
 
+.button-area,
+.button-area-last {
+    grid-column: span 4;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .button-area button {
     padding: 10px 20px;
-    background-color: #6C91C2;
+    background-color: #ffc107;
     border: none;
-    color: white;
+    color: #000;
     font-size: 14px;
     border-radius: 6px;
     cursor: pointer;
@@ -172,5 +180,20 @@ body {
 }
 
 .button-area button:hover {
-    background-color: #2563eb;
+    background-color: #e0a800;
+}
+
+.btn-agregar {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-agregar:hover {
+    background-color: #218838;
 }

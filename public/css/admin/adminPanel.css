@@ -16,7 +16,7 @@ body {
     top: 0;
     width: 220px;
     height: 100vh;
-    background-color: #373F47;
+    background-color: #373f47;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -59,7 +59,7 @@ body {
 
 .menu li:hover,
 .menu li.active {
-    background-color: #6C91C2;
+    background-color: #6c91c2;
     color: #007bff;
 }
 
@@ -179,12 +179,12 @@ body {
 }
 
 .btn-modificar {
-    background: #6c91c2;
-    color: #fff;
+    background: #ffc107;
+    color: #000;
 }
 
 .btn-modificar:hover {
-    background: #5579a1;
+    background: #e0a800;
 }
 
 /* MODAL */
@@ -248,7 +248,7 @@ body {
 .btn-agregar {
     grid-column: span 2;
     margin-top: 5px;
-    background-color: #6c91c2;
+    background: #28a745; /* Verde */
     color: #fff;
     padding: 10px 16px;
     border-radius: 8px;
@@ -260,8 +260,23 @@ body {
     margin-left: 325px;
 }
 
+.btn-agregar-verde {
+    grid-column: span 2;
+    margin-top: 5px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+    width: 200px;
+    margin-left: 325px;
+    background: #28a745;
+    color: #fff;
+}
+
 .btn-agregar:hover {
-    background-color: #0056b3;
+    background: #218838; /* Verde oscuro */
 }
 
 .close {

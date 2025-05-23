@@ -14,7 +14,7 @@
   <div class="sidebar">
     <div class="admin-info">
       <span>ADMINISTRADOR</span>
-      <h3>Hernando Vivas Franco</h3>
+      <h3>{{ session('admin')->nombre_admin }}</h3>
     </div>
     <ul class="menu">
       <li class="active"><a href="{{ url('/admin') }}">Rifas</a></li>
@@ -98,7 +98,7 @@
           Cantidad de números:
           <input type="number" name="cantidad_boletos" min="1" placeholder="Ej. 1000" required>
         </label>
-        <button type="submit" class="btn-agregar">Agregar</button>
+        <button type="submit" class="btn-agregar-verde">Agregar</button>
       </form>
     </div>
   </div>
@@ -106,7 +106,7 @@
   <div class="modal" id="modificarRifa">
     <div class="modal-content">
       <span class="close" id="cerrarModal">&times;</span>
-      <h3>Modificar la rifa</h3>
+      <h3>Modificar Rifa</h3>
       <form id="formModificarRifa" action="{{ route('admin.rifas.update', ['id' => 0]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
