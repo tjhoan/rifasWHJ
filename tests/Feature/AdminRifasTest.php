@@ -5,10 +5,24 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Rifa;
+use App\Models\Admin;
 
 class AdminRifasTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $admin = Admin::factory()->create([
+            'nombre_admin' => 'Admin Test',
+            'correo' => 'admin@test.com',
+            'contrasena' => bcrypt('password123')
+        ]);
+
+        session(['admin' => $admin]);
+    }
 
     public function test_rifas_index_carga_correctamente()
     {
@@ -30,9 +44,14 @@ class AdminRifasTest extends TestCase
             'fecha_inicio' => now()->format('Y-m-d'),
             'fecha_sorteo' => now()->addMonth()->format('Y-m-d'),
             'premio' => 'Premio de prueba',
+            'estado' => 'activo',
         ];
 
+        $rifasAntes = Rifa::count();
+
         $response = $this->post(route('admin.rifas.store'), $data);
+
+        $this->assertEquals($rifasAntes + 1, Rifa::count());
 
         $this->assertDatabaseHas('rifas', [
             'nombre_rifa' => $data['nombre_rifa'],
@@ -47,7 +66,15 @@ class AdminRifasTest extends TestCase
 
     public function test_actualizar_rifa_funciona_correctamente()
     {
-        $rifa = Rifa::factory()->create();
+        $rifa = Rifa::factory()->create([
+            'nombre_rifa' => 'Rifa original',
+            'precio_boleto' => 50.25,
+            'cantidad_boletos' => 100,
+            'premio' => 'Premio original',
+            'estado' => 'activo',
+            'fecha_inicio' => now()->format('Y-m-d'),
+            'fecha_sorteo' => now()->addWeek()->format('Y-m-d'),
+        ]);
 
         $data = [
             'nombre_rifa' => 'Rifa actualizada',
@@ -56,6 +83,7 @@ class AdminRifasTest extends TestCase
             'fecha_inicio' => now()->format('Y-m-d'),
             'fecha_sorteo' => now()->addMonth()->format('Y-m-d'),
             'premio' => 'Premio actualizado',
+            'estado' => 'activo',
         ];
 
         $response = $this->put(route('admin.rifas.update', $rifa->id_rifa), $data);
@@ -74,7 +102,15 @@ class AdminRifasTest extends TestCase
 
     public function test_eliminar_rifa_funciona_correctamente()
     {
-        $rifa = Rifa::factory()->create();
+        $rifa = Rifa::factory()->create([
+            'nombre_rifa' => 'Rifa para eliminar',
+            'estado' => 'activo'
+        ]);
+
+        $this->assertDatabaseHas('rifas', [
+            'id_rifa' => $rifa->id_rifa,
+            'estado' => 'activo',
+        ]);
 
         $response = $this->delete(route('admin.rifas.destroy', $rifa->id_rifa));
 
